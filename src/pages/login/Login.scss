@@ -1,0 +1,75 @@
+.login {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &::before {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
+      url("https://img.freepik.com/premium-vector/mayan-patchwork-seamless-pattern-black-gold-colors_454705-917.jpg");
+    position: absolute;
+    background-size: cover;
+    content: "";
+    bottom: -5px;
+    left: -5px;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    z-index: -1;
+    filter: blur(1px);
+  }
+
+  .login__container {
+    --width: 560px;
+    background: #fff;
+    border-radius: 8px;
+    max-width: calc(100vw - 32px);
+    min-height: 480px;
+    padding: 24px 16px;
+    position: relative;
+    width: var(--width);
+    align-items: center;
+    .login__form {
+      width: calc(var(--width) - 160px);
+      margin: auto;
+      .login__desc {
+        text-align: center;
+        margin-top: 12px;
+      }
+      .login__register {
+        color: #f05123;
+        cursor: pointer;
+        margin-left: 4px;
+      }
+    }
+    .login__wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .login__logo {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .login__title {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 16px 0;
+    }
+  }
+  .login__button {
+    margin: 16px 0;
+    width: 100%;
+    background-color: #1dbfaf;
+  }
+}

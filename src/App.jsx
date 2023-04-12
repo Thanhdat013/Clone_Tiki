@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import "./App.css";
@@ -8,6 +8,9 @@ import BookPage from "~/pages/book";
 import Header from "~/components/Header";
 import Home from "~/components/Home";
 import Footer from "~/components/Footer";
+import { useDispatch } from "react-redux";
+import { getFetchAccount } from "~/services/Api";
+import { doFetchAccount } from "~/redux/reducer/userReducer/userSlice";
 
 const Layout = () => {
   return (
@@ -44,6 +47,17 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useDispatch();
+  // lấy lại data khi F5 lại trang
+  const callFetchAccount = async () => {
+    const res = await getFetchAccount();
+    if (res && res.data) {
+      dispatch(doFetchAccount(res.data));
+    }
+  };
+  useEffect(() => {
+    callFetchAccount();
+  }, []);
   return (
     <>
       <RouterProvider router={router} />
