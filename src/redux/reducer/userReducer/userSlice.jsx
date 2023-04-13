@@ -13,6 +13,7 @@ const initialState = {
     id: "",
   },
   isAuthenticated: false,
+  isLoading: true,
 };
 
 //  handle actions in your reducers:
@@ -23,13 +24,15 @@ const usersSlice = createSlice({
     // set các giá trị khi đăng nhập thành công
     doLoginAction: (state, action) => {
       state.isAuthenticated = true;
-      state.user = action.payload;
+      state.isLoading = false;
+      state.user = action.payload.user;
     },
 
     // dùng để fetch lại account khi F5 lại trang
     doFetchAccount: (state, action) => {
+      state.isLoading = false;
       state.isAuthenticated = true;
-      state.user = action.payload;
+      state.user = action.payload.user;
     },
   },
 });

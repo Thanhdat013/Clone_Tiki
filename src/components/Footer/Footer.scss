@@ -1,0 +1,76 @@
+.footer {
+  background-color: #f5f5fa;
+  .footer__container {
+    flex-wrap: wrap;
+    padding: 12px 0;
+    display: flex !important;
+    .footer__list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 1.8rem;
+      font-weight: 700;
+      .footer__list--item {
+        font-size: 1.6rem;
+        font-weight: 300;
+      }
+      .footer__list--social {
+        display: flex;
+        gap: 12px;
+        .footer__social--icon {
+          font-size: 2.3rem;
+        }
+        .footer__fb {
+          color: #3b5998;
+        }
+        .footer__youtube {
+          color: #ff0000;
+        }
+        .footer__twitter {
+          color: #1da1f2;
+        }
+      }
+      .footer__list--app {
+        .footer__app--download {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          .footer__app--qr {
+            cursor: pointer;
+            margin-top: 8px;
+            .footer__app--qr--img {
+              width: 80px;
+              height: 80px;
+            }
+          }
+          .footer__app--download {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            .footer__app--download--img {
+              width: 120px;
+              height: 36px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/* Mobile and Tablet */
+@media (max-width: 739px) {
+  .footer {
+    .footer__container {
+      gap: 12px;
+      padding-left: 24px;
+      flex-direction: column;
+      .footer__list {
+        font-size: 1.6rem;
+        font-weight: 500;
+      }
+    }
+  }
+}
