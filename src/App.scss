@@ -1,14 +1,9 @@
 .layout__admin {
   display: flex;
   flex-direction: row;
-  .layout__admin--body {
-    height: auto;
+  min-height: 100vh;
+
+  .layout__admin--outlet {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    .layout__admin--outlet {
-      flex: 1;
-    }
   }
 }

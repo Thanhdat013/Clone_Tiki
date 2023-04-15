@@ -1,10 +1,15 @@
 .admin__sidebar {
+  flex-shrink: 0;
   .admin__sidebar--wrap {
-    height: 100vh;
     // width: 250px;
     display: flex;
     background-color: #fefefe;
-
+    padding: 0 8px;
+    position: -webkit-sticky;
+    position: sticky;
+    z-index: 10;
+    left: 0;
+    top: 66px;
     .admin__sidebar--btn {
       margin-top: 12px;
       margin-left: 12px;
@@ -18,6 +23,7 @@ body {
   .ant-menu {
     padding-top: 12px;
     font-size: 1.6rem;
+    border-inline-end: none !important;
     .ant-menu-item {
       margin-top: 12px;
     }

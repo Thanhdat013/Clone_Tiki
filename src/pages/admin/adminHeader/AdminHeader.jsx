@@ -1,28 +1,42 @@
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "./AdminHeader.scss";
 import {
   AiOutlineMenuFold,
   AiOutlineMenuUnfold,
   AiOutlineBars,
 } from "react-icons/ai";
-import { useSelector } from "react-redux";
 
-const AdminHeader = ({
-  collapsed,
-  setCollapsed,
-  onClose,
-  open,
-  showDrawer,
-}) => {
+import {
+  postLogOut,
+  doLogOutAction,
+} from "~/redux/reducer/userReducer/userSlice";
+import { message } from "antd";
+
+const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const handleLogOut = async () => {
+    const res = await dispatch(postLogOut());
+    console.log(res);
+    if (res && res.payload) {
+      dispatch(doLogOutAction());
+      navigate("/");
+      message.success("You have successfully logged out");
+    }
+  };
   return (
-    <div className="admin__header--grid grid ">
-      <div className="admin__header row no-gutters">
+    <header className="admin__header grid ">
+      <div className="admin__header--grid row no-gutters">
         <div className="admin__header--bar l-2 m-2 c-2">
-          <AiOutlineBars onClick={showDrawer} className="admin__header--bar" />
+          <AiOutlineBars
+            onClick={showDrawer}
+            className="admin__header--bar--btn"
+          />
           {collapsed ? (
             <AiOutlineMenuUnfold
               className="admin__header--btn"
@@ -34,6 +48,12 @@ const AdminHeader = ({
               onClick={toggleCollapsed}
             />
           )}
+          <img
+            onClick={() => navigate("/")}
+            className="admin__header--logo"
+            src="https://salt.tikicdn.com/ts/upload/e4/49/6c/270be9859abd5f5ec5071da65fab0a94.png"
+            alt="Tiki_logo"
+          />
         </div>
 
         <div
@@ -48,20 +68,23 @@ const AdminHeader = ({
               Thành Đạt
               <ul className="admin__user--list">
                 <li className="admin__user--item">Quản lý tài khoản</li>
-                <li className="admin__user--item">Đăng Xuất</li>
+                <div onClick={handleLogOut} className="admin__user--item">
+                  Đăng Xuất
+                </div>
               </ul>
             </div>
           ) : (
-            <div className="admin__header--user">
+            <div
+              onClick={() => navigate("/login")}
+              className="admin__header--user"
+            >
               Tài Khoản
-              <ul className="admin__user--list">
-                <li className="admin__user--item">Đăng Nhập</li>
-              </ul>
+              <ul className="admin__user--list"></ul>
             </div>
           )}
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 export default AdminHeader;

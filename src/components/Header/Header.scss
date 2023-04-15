@@ -73,6 +73,7 @@
         padding-left: 24px;
         align-items: center;
         display: flex;
+        justify-content: flex-end;
 
         .header__user--cart {
           position: relative;
@@ -98,7 +99,6 @@
           }
         }
         .header__user--manage {
-          flex: 1;
           position: relative;
 
           &:hover {
@@ -113,6 +113,7 @@
           border: 1px solid #ebe5eb;
           border-radius: 4px;
           position: absolute;
+          left: -30%;
           display: none;
           box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.07);
           .header__user--item {

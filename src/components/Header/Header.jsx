@@ -1,18 +1,39 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai";
-import { Badge, Drawer } from "antd";
+import { Badge, Drawer, message } from "antd";
 
 import "./Header.scss";
 
+import {
+  postLogOut,
+  doLogOutAction,
+} from "~/redux/reducer/userReducer/userSlice";
+
 const Header = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
+  const isRole = useSelector((state) => state.users.user.role);
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
+  };
+
+  const handleLogOut = async () => {
+    const res = await dispatch(postLogOut());
+    console.log(res);
+    if (+res.payload.statusCode === 201) {
+      dispatch(doLogOutAction());
+      message.success("You have successfully logged out");
+      navigate("./");
+    }
   };
   return (
     <header className="header grid ">
@@ -37,11 +58,21 @@ const Header = () => {
                 keyboard={13}
               >
                 <ul className="logo__bar--list">
+                  {isRole === "ADMIN" && (
+                    <li
+                      onClick={() => navigate("/admin")}
+                      className="logo__bar--item"
+                    >
+                      Admin
+                    </li>
+                  )}
                   <li className="logo__bar--item">Quản lý tài khoản</li>
                   <li className="logo__bar--item">Cài đặt</li>
                 </ul>
                 <ul className="logo__bar--list">
-                  <li className="logo__bar--item">Đăng xuất</li>
+                  <li onClick={handleLogOut} className="logo__bar--item">
+                    Đăng xuất
+                  </li>
                 </ul>
               </Drawer>
             </div>
@@ -66,13 +97,36 @@ const Header = () => {
                 <Badge count={99} overflowCount={10}></Badge>
               </div>
             </div>
-            <div className="header__user--manage">
-              Tài Khoản
-              <ul className="header__user--list">
-                <li className="header__user--item">Quản lý tài khoản</li>
-                <li className="header__user--item">Đăng Xuất</li>
-              </ul>
-            </div>
+            {isAuthenticated ? (
+              <>
+                <div className="header__user--manage l-7">
+                  Thành Đạt
+                  <ul className="header__user--list">
+                    <li className="header__user--item">Quản lý tài khoản</li>
+                    {isRole === "ADMIN" && (
+                      <li
+                        onClick={() => navigate("/admin")}
+                        className="header__user--item"
+                      >
+                        Admin
+                      </li>
+                    )}
+                    <li onClick={handleLogOut} className="header__user--item">
+                      Đăng Xuất
+                    </li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <>
+                <div
+                  onClick={() => navigate("/login")}
+                  className="header__user--manage l-7"
+                >
+                  Tài Khoản
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

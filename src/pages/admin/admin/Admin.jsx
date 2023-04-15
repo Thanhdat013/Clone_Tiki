@@ -1,8 +1,10 @@
 import "./Admin.scss";
+
+import ManageUser from "~/pages//manage/manageUser";
 const Admin = () => {
   return (
     <div className="admin">
-      <h1>Admin</h1>
+      <ManageUser />
     </div>
   );
 };

@@ -19,3 +19,7 @@ export const postLogin = (username, password, delay) => {
 export const getFetchAccount = () => {
   return axios.get("/api/v1/auth/account");
 };
+
+export const getAllUserPaginate = (page, pageSize) => {
+  return axios.get(`/api/v1/user?pageSize=${pageSize}&current=4`);
+};

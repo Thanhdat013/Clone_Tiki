@@ -33,13 +33,6 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
     getItem("Manage order", "7", <AiOutlineDollar />),
   ];
 
-  // const [open, setOpen] = useState(false);
-  // const showDrawer = () => {
-  //   setOpen(true);
-  // };
-  // const onClose = () => {
-  //   setOpen(false);
-  // };
   return (
     <div className="admin__sidebar">
       <div className="admin__sidebar--wrap">

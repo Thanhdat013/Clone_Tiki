@@ -10,11 +10,18 @@ import { doLoginAction } from "~/redux/reducer/userReducer/userSlice";
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
-  const emailRegex =
-    /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  const validateEmail = (email) => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+  };
   const onFinish = async (values) => {
     setIsLoading(true);
-    if (!values.email.length || !emailRegex.test(values.email)) {
+    const isValidEmail = validateEmail(values.email);
+    if (!isValidEmail) {
       notification.error({
         message: "Registration failed",
         description: "Email is incorrect",

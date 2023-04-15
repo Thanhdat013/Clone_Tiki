@@ -5,7 +5,6 @@ import NotPermit from "~/pages/protectedPage/notPermit";
 const CheckAdmin = ({ children }) => {
   const isAdminRoute = window.location.pathname.startsWith("/admin");
   const isRole = useSelector((state) => state.users.user.role);
-  console.log(isRole);
 
   if (isAdminRoute && isRole === "ADMIN") {
     return children;

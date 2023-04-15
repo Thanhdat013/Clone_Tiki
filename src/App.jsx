@@ -41,25 +41,27 @@ const LayoutAdmin = () => {
   };
 
   return (
-    <div className="layout__admin">
-      <AdminSideBar
+    <>
+      <AdminHeader
         collapsed={collapsed}
+        setCollapsed={setCollapsed}
         open={open}
         showDrawer={showDrawer}
         onClose={onClose}
       />
-      <div className="layout__admin--body">
-        <AdminHeader
+      <div className="layout__admin">
+        <AdminSideBar
           collapsed={collapsed}
-          setCollapsed={setCollapsed}
           open={open}
           showDrawer={showDrawer}
           onClose={onClose}
+          className="layout__admin--sidebar"
         />
+
         <Outlet className="layout__admin--outlet" />
-        <Footer />
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 
