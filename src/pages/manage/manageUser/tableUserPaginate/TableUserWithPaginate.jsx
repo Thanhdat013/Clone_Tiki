@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { GrRefresh } from "react-icons/gr";
+import { TfiImport, TfiExport } from "react-icons/tfi";
+import { IoPersonAddOutline } from "react-icons/io5";
 
 import { Table, Button, Row, Col } from "antd";
 import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice";
 import FormFIlter from "~/pages/manage/manageUser/formFilter";
 import "./TableUserWithPaginate";
-import { GrRefresh } from "react-icons/gr";
-import { TfiImport, TfiExport } from "react-icons/tfi";
-import { IoPersonAddOutline } from "react-icons/io5";
 import "./TableUserWithPaginate.scss";
+import DetailUser from "~/pages/manage/manageUser/detailUser";
 
 const TableUserWithPaginate = () => {
   const listUsersPaginate = useSelector(
@@ -31,16 +32,16 @@ const TableUserWithPaginate = () => {
     dispatch(getAllUserWithPaginate(query));
   }, [pageSize, currentPage, filterInput, arrangeColumn]);
 
-  const dataSource = listUsersPaginate.map((item, index) => {
-    return {
-      key: item._id,
-      no: index + 1,
-      fullName: item.fullName,
-      email: item.email,
-      phone: item.phone,
-      role: item.role,
-    };
-  });
+  // const dataSource = listUsersPaginate.map((item, index) => {
+  //   return {
+  //     key: item._id,
+  //     no: index + 1,
+  //     fullName: item.fullName,
+  //     email: item.email,
+  //     phone: item.phone,
+  //     role: item.role,
+  //   };
+  // });
 
   const columns = [
     {
@@ -90,9 +91,17 @@ const TableUserWithPaginate = () => {
       align: "left",
       children: [
         {
-          title: "No.",
-          dataIndex: "no",
+          title: "Id.",
+          dataIndex: "_id",
           width: "5%",
+          render: (text, index, record) => (
+            <span
+              onClick={() => showDetailUser(text, record, index)}
+              className="table__detail"
+            >
+              {text}
+            </span>
+          ),
         },
         {
           title: "Email",
@@ -136,12 +145,14 @@ const TableUserWithPaginate = () => {
       ],
     },
   ];
-
+  // refresh filter sort
   const handleRefresh = () => {
     setIsLoading(true);
     SetArrangeColumn("");
     setTimeout(() => setIsLoading(false), 300);
   };
+
+  // change table
   const handleChange = (pagination, filters, sorter) => {
     let sorterClick = "";
     if (sorter && sorter.field) {
@@ -161,30 +172,46 @@ const TableUserWithPaginate = () => {
     }
   };
 
+  // show detail users
+  const [open, setOpen] = useState(false);
+  const [dataViewUser, setDataViewUser] = useState("");
+  const showDetailUser = (text, index, record) => {
+    // setDataViewUser(listUsersPaginate[index]);
+    setDataViewUser(record);
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   return (
-    <Row>
-      <Col span={24}>
-        <FormFIlter handleFilter={handleFilter} />
-      </Col>
-      <Col span={24}>
-        <Table
-          dataSource={dataSource}
-          columns={columns}
-          onChange={handleChange}
-          style={{ padding: "12px 24px" }}
-          bordered
-          pagination={{
-            position: ["bottomCenter"],
-            showQuickJumper: true,
-            current: currentPage,
-            pageSize: pageSize,
-            total: totalPages,
-            pageSizeOptions: [2, 4, 6, 10],
-            showSizeChanger: true,
-          }}
-        />
-      </Col>
-    </Row>
+    <>
+      <Row>
+        <Col span={24}>
+          <FormFIlter handleFilter={handleFilter} />
+        </Col>
+        <Col span={24}>
+          <Table
+            dataSource={listUsersPaginate}
+            columns={columns}
+            onChange={handleChange}
+            rowKey="_id"
+            style={{ padding: "12px 24px" }}
+            bordered
+            pagination={{
+              position: ["bottomCenter"],
+              showQuickJumper: true,
+              current: currentPage,
+              pageSize: pageSize,
+              total: totalPages,
+              pageSizeOptions: [2, 4, 6, 10],
+              showSizeChanger: true,
+            }}
+          />
+        </Col>
+      </Row>
+
+      <DetailUser open={open} onClose={onClose} dataViewUser={dataViewUser} />
+    </>
   );
 };
 
