@@ -1,17 +1,17 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import "./AdminHeader.scss";
 import {
   AiOutlineMenuFold,
   AiOutlineMenuUnfold,
   AiOutlineBars,
 } from "react-icons/ai";
 
+import "./AdminHeader.scss";
 import {
   postLogOut,
   doLogOutAction,
 } from "~/redux/reducer/userReducer/userSlice";
-import { message } from "antd";
+import { message, Avatar } from "antd";
 
 const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
@@ -20,6 +20,8 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
   };
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const avatar = useSelector((state) => state.users.user.avatar);
+  const fullName = useSelector((state) => state.users.user.fullName);
   const handleLogOut = async () => {
     const res = await dispatch(postLogOut());
     console.log(res);
@@ -65,7 +67,11 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
         >
           {isAuthenticated ? (
             <div className="admin__header--user">
-              Thành Đạt
+              <Avatar
+                size={42}
+                src={`http://localhost:8080/images/avatar/${avatar}`}
+              />
+              {fullName}
               <ul className="admin__user--list">
                 <li className="admin__user--item">Quản lý tài khoản</li>
                 <div onClick={handleLogOut} className="admin__user--item">

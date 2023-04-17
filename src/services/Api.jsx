@@ -23,3 +23,13 @@ export const getFetchAccount = () => {
 export const getAllUserPaginate = (page, pageSize) => {
   return axios.get(`/api/v1/user?pageSize=${pageSize}&current=4`);
 };
+
+// create a new user
+export const postCreateNewUser = (fullName, email, password, phone) => {
+  return axios.post("/api/v1/user", {
+    fullName,
+    email,
+    password,
+    phone,
+  });
+};

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai";
-import { Badge, Drawer, message } from "antd";
+import { Badge, Drawer, message, Avatar } from "antd";
 
 import "./Header.scss";
 
@@ -18,6 +18,8 @@ const Header = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
   const isRole = useSelector((state) => state.users.user.role);
+  const avatar = useSelector((state) => state.users.user.avatar);
+  const fullName = useSelector((state) => state.users.user.fullName);
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
@@ -49,13 +51,20 @@ const Header = () => {
               <AiOutlineBars onClick={showDrawer} className="logo__bar--icon" />
 
               <Drawer
-                title="Menu chức năng"
+                title={
+                  <Avatar
+                    size={78}
+                    src={`http://localhost:8080/images/avatar/${avatar}`}
+                    className="logo__bar--avatar"
+                  />
+                }
                 width={250}
                 closable={false}
                 onClose={onClose}
                 open={open}
                 placement={"left"}
                 keyboard={13}
+                extra={fullName}
               >
                 <ul className="logo__bar--list">
                   {isRole === "ADMIN" && (
@@ -100,7 +109,12 @@ const Header = () => {
             {isAuthenticated ? (
               <>
                 <div className="header__user--manage l-7">
-                  Thành Đạt
+                  <Avatar
+                    size={42}
+                    src={`http://localhost:8080/images/avatar/${avatar}`}
+                    className="header__user--avatar"
+                  />
+                  {fullName}
                   <ul className="header__user--list">
                     <li className="header__user--item">Quản lý tài khoản</li>
                     {isRole === "ADMIN" && (

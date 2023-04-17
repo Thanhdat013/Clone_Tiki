@@ -107,13 +107,16 @@
               display: block;
             }
           }
+          .header__user--avatar {
+            margin-right: 4px;
+          }
         }
         .header__user--list {
           background-color: #fffbfb;
           border: 1px solid #ebe5eb;
           border-radius: 4px;
           position: absolute;
-          left: -30%;
+          left: -10%;
           display: none;
           box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.07);
           .header__user--item {
@@ -220,7 +223,7 @@ body {
       display: flex;
       flex-direction: column;
       border-bottom: 1px solid #f8f6f6;
-      margin: 12px;
+      margin: 4px;
       .logo__bar--item {
         font-size: 1.8rem;
         list-style: none;
@@ -270,5 +273,21 @@ body {
         }
       }
     }
+  }
+}
+
+body {
+  .ant-drawer-header {
+    flex-direction: column;
+    height: 250px;
+
+    .ant-avatar {
+      border: 1px solid #ccc;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+  }
+  .ant-drawer-body {
+    padding-top: 12px !important;
   }
 }

@@ -40,6 +40,8 @@ export const getAllUserWithPaginate = createAsyncThunk(
   }
 );
 
+// create a new user
+
 //  handle actions in your reducers:
 const usersSlice = createSlice({
   name: "users",
@@ -70,6 +72,10 @@ const usersSlice = createSlice({
         id: "",
       };
     },
+    doAddUserAction: (state, action) => {
+      console.log(action);
+      state.listUsersPaginate = [action.payload, ...state.listUsersPaginate];
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -83,6 +89,10 @@ const usersSlice = createSlice({
   },
 });
 
-export const { doLoginAction, doFetchAccount, doLogOutAction } =
-  usersSlice.actions;
+export const {
+  doLoginAction,
+  doFetchAccount,
+  doLogOutAction,
+  doAddUserAction,
+} = usersSlice.actions;
 export default usersSlice.reducer;

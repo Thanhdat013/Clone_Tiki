@@ -4,15 +4,16 @@ const DetailUser = ({ onClose, open, dataViewUser }) => {
   return (
     <>
       <Drawer
-        title={"Detail user"}
         placement="right"
         width={"50vw"}
         onClose={onClose}
         open={open}
+        keyboard={13}
+        closable={false}
       >
         {dataViewUser && (
           <>
-            <Descriptions title="User Info" bordered column={2}>
+            <Descriptions title="User Information" bordered column={2}>
               <Descriptions.Item label="Id">
                 {dataViewUser?._id}
               </Descriptions.Item>
@@ -51,7 +52,12 @@ const DetailUser = ({ onClose, open, dataViewUser }) => {
               </Descriptions.Item>
 
               <Descriptions.Item label="Avatar">
-                <img src={dataViewUser?.avatar} />
+                <img
+                  style={{
+                    maxHeight: "250px",
+                  }}
+                  src={`http://localhost:8080/images/avatar/${dataViewUser?.avatar}`}
+                />
               </Descriptions.Item>
             </Descriptions>
           </>

@@ -10,6 +10,7 @@ import FormFIlter from "~/pages/manage/manageUser/formFilter";
 import "./TableUserWithPaginate";
 import "./TableUserWithPaginate.scss";
 import DetailUser from "~/pages/manage/manageUser/detailUser";
+import AddNewUser from "~/pages/manage/manageUser/addNewUser";
 
 const TableUserWithPaginate = () => {
   const listUsersPaginate = useSelector(
@@ -31,17 +32,6 @@ const TableUserWithPaginate = () => {
     let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
     dispatch(getAllUserWithPaginate(query));
   }, [pageSize, currentPage, filterInput, arrangeColumn]);
-
-  // const dataSource = listUsersPaginate.map((item, index) => {
-  //   return {
-  //     key: item._id,
-  //     no: index + 1,
-  //     fullName: item.fullName,
-  //     email: item.email,
-  //     phone: item.phone,
-  //     role: item.role,
-  //   };
-  // });
 
   const columns = [
     {
@@ -68,7 +58,7 @@ const TableUserWithPaginate = () => {
                   <span className="table__header--btn--name"> Import</span>
                 </Button>
                 <Button
-                  onClick={() => console.log({ text, record, index })}
+                  onClick={showModal}
                   type="primary"
                   className=" table__header--btn"
                 >
@@ -183,6 +173,17 @@ const TableUserWithPaginate = () => {
   const onClose = () => {
     setOpen(false);
   };
+  // show modal add new user
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
   return (
     <>
       <Row>
@@ -205,12 +206,25 @@ const TableUserWithPaginate = () => {
               total: totalPages,
               pageSizeOptions: [2, 4, 6, 10],
               showSizeChanger: true,
+              showTotal: (total, range) => {
+                return (
+                  <div>
+                    {range[0]}-{range[1]} trên {total} trang
+                  </div>
+                );
+              },
             }}
           />
         </Col>
       </Row>
 
       <DetailUser open={open} onClose={onClose} dataViewUser={dataViewUser} />
+      <AddNewUser
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleCancelModal={handleCancel}
+        handleOk={handleOk}
+      />
     </>
   );
 };
