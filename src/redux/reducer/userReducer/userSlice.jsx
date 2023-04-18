@@ -51,7 +51,8 @@ const usersSlice = createSlice({
     doLoginAction: (state, action) => {
       state.isAuthenticated = true;
       state.isLoading = false;
-      state.user = action.payload.user;
+      state.user = action.payload;
+      console.log(action);
     },
     // dùng để fetch lại account khi F5 lại trang
     doFetchAccount: (state, action) => {

@@ -33,3 +33,8 @@ export const postCreateNewUser = (fullName, email, password, phone) => {
     phone,
   });
 };
+
+// add import data from excel file
+export const postImportData = (data) => {
+  return axios.post("/api/v1/user/bulk-create", data);
+};

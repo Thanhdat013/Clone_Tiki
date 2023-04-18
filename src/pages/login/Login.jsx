@@ -11,29 +11,16 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const validateEmail = (email) => {
-    return String(email)
-      .toLowerCase()
-      .match(
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-      );
-  };
   const onFinish = async (values) => {
     setIsLoading(true);
-    const isValidEmail = validateEmail(values.email);
-    if (!isValidEmail) {
-      notification.error({
-        message: "Registration failed",
-        description: "Email is incorrect",
-        duration: 5,
-      });
-      return;
-    }
-    let res = await postLogin(values.email, values.password, 2000);
+
+    const { email, password } = values;
+
+    let res = await postLogin(email, password, 500);
     setIsLoading(false);
     if (res?.data) {
       localStorage.setItem("access_token", res.data.access_token);
-      dispatch(doLoginAction(res.data.user));
+      await dispatch(doLoginAction(res.data.user));
       message.success("You have successfully login");
       navigate("/");
     } else {

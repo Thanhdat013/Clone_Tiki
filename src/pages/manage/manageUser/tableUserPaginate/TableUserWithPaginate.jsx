@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { GrRefresh } from "react-icons/gr";
+import * as XLSX from "xlsx/xlsx.mjs";
+
 import { TfiImport, TfiExport } from "react-icons/tfi";
 import { IoPersonAddOutline } from "react-icons/io5";
 
@@ -11,6 +13,7 @@ import "./TableUserWithPaginate";
 import "./TableUserWithPaginate.scss";
 import DetailUser from "~/pages/manage/manageUser/detailUser";
 import AddNewUser from "~/pages/manage/manageUser/addNewUser";
+import ImportFileExcel from "~/pages/manage/manageUser/importFileExcel";
 
 const TableUserWithPaginate = () => {
   const listUsersPaginate = useSelector(
@@ -42,7 +45,7 @@ const TableUserWithPaginate = () => {
             <div className="table__header--right l-o-4 l-6 ">
               <div className="table__header--wrap row no-gutters">
                 <Button
-                  onClick={() => console.log({ text, record, index })}
+                  onClick={handleExportData}
                   type="primary"
                   className=" table__header--btn"
                 >
@@ -50,7 +53,7 @@ const TableUserWithPaginate = () => {
                   <span className="table__header--btn--name">Export</span>
                 </Button>
                 <Button
-                  onClick={() => console.log({ text, record, index })}
+                  onClick={() => setIsModalImportFile(true)}
                   type="primary"
                   className=" table__header--btn"
                 >
@@ -184,6 +187,18 @@ const TableUserWithPaginate = () => {
   const handleOk = () => {
     setIsModalOpen(false);
   };
+
+  // show modal import file
+  const [isModalImportFile, setIsModalImportFile] = useState(false);
+
+  // export data to excel file
+  const handleExportData = () => {
+    const wb = XLSX.utils.book_new();
+    let ws = XLSX.utils.json_to_sheet(listUsersPaginate); // convert json to sheet
+
+    XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
+    XLSX.writeFile(wb, "myExcel.xlsx");
+  };
   return (
     <>
       <Row>
@@ -224,6 +239,10 @@ const TableUserWithPaginate = () => {
         setIsModalOpen={setIsModalOpen}
         handleCancelModal={handleCancel}
         handleOk={handleOk}
+      />
+      <ImportFileExcel
+        isModalImportFile={isModalImportFile}
+        setIsModalImportFile={setIsModalImportFile}
       />
     </>
   );

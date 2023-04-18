@@ -17,9 +17,8 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
-  const isRole = useSelector((state) => state.users.user.role);
-  const avatar = useSelector((state) => state.users.user.avatar);
-  const fullName = useSelector((state) => state.users.user.fullName);
+  const users = useSelector((state) => state.users.user);
+
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
@@ -54,7 +53,11 @@ const Header = () => {
                 title={
                   <Avatar
                     size={78}
-                    src={`http://localhost:8080/images/avatar/${avatar}`}
+                    src={
+                      users.avatar
+                        ? `http://localhost:8080/images/avatar/${users.avatar}`
+                        : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
+                    }
                     className="logo__bar--avatar"
                   />
                 }
@@ -64,10 +67,10 @@ const Header = () => {
                 open={open}
                 placement={"left"}
                 keyboard={13}
-                extra={fullName}
+                extra={users.fullName}
               >
                 <ul className="logo__bar--list">
-                  {isRole === "ADMIN" && (
+                  {users.role === "ADMIN" && (
                     <li
                       onClick={() => navigate("/admin")}
                       className="logo__bar--item"
@@ -111,13 +114,17 @@ const Header = () => {
                 <div className="header__user--manage l-7">
                   <Avatar
                     size={42}
-                    src={`http://localhost:8080/images/avatar/${avatar}`}
+                    src={
+                      users.avatar
+                        ? `http://localhost:8080/images/avatar/${users.avatar}`
+                        : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
+                    }
                     className="header__user--avatar"
                   />
-                  {fullName}
+                  {users.fullName}
                   <ul className="header__user--list">
                     <li className="header__user--item">Quản lý tài khoản</li>
-                    {isRole === "ADMIN" && (
+                    {users.role === "ADMIN" && (
                       <li
                         onClick={() => navigate("/admin")}
                         className="header__user--item"
