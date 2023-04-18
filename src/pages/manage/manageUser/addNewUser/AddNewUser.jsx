@@ -1,12 +1,4 @@
-import {
-  Button,
-  Modal,
-  Form,
-  Input,
-  notification,
-  message,
-  Upload,
-} from "antd";
+import { Modal, Form, Input, notification } from "antd";
 
 import { useDispatch } from "react-redux";
 

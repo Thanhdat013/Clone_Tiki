@@ -38,3 +38,13 @@ export const postCreateNewUser = (fullName, email, password, phone) => {
 export const postImportData = (data) => {
   return axios.post("/api/v1/user/bulk-create", data);
 };
+
+// update the user
+export const putUpdateUser = (_id, fullName, phone) => {
+  return axios.put("/api/v1/user", { _id, fullName, phone });
+};
+
+// delete the user
+export const deleteUser = (id) => {
+  return axios.delete(`/api/v1/user/${id}`);
+};

@@ -18,6 +18,8 @@ import AdminHeader from "~/pages/admin/adminHeader/";
 import AdminFooter from "~/pages/admin/adminFooter/";
 import Admin from "~/pages/admin/admin/";
 import ProtectedPage from "~/pages/protectedPage/protectedPage";
+import ManageBook from "~/pages/manage/manageBook";
+import ManageUser from "~/pages/manage/manageUser";
 import "./App.scss";
 
 const Layout = () => {
@@ -87,7 +89,11 @@ const router = createBrowserRouter([
       </ProtectedPage>
     ),
     errorElement: <ErrorPage />,
-    children: [{ index: true, element: <Admin /> }],
+    children: [
+      { index: true, element: <Admin /> },
+      { path: "manage-user", element: <ManageUser /> },
+      { path: "manage-book", element: <ManageBook /> },
+    ],
   },
 
   {

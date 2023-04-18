@@ -43,4 +43,24 @@ body {
     cursor: pointer;
     color: rgb(102, 135, 207);
   }
+
+  .ant-table-cell {
+    .table__icon {
+      align-items: center;
+      display: flex !important;
+      gap: 12px;
+    }
+    .table__delete--user,
+    .table__edit--user {
+      font-size: 2.2rem;
+      cursor: pointer;
+      text-align: center;
+    }
+    .table__delete--user {
+      color: #f5222d;
+    }
+    .table__edit--user {
+      color: #fa8c16;
+    }
+  }
 }

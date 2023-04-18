@@ -5,20 +5,23 @@ import * as XLSX from "xlsx/xlsx.mjs";
 
 import { TfiImport, TfiExport } from "react-icons/tfi";
 import { IoPersonAddOutline } from "react-icons/io5";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
 import { Table, Button, Row, Col } from "antd";
 import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice";
 import FormFIlter from "~/pages/manage/manageUser/formFilter";
-import "./TableUserWithPaginate";
 import "./TableUserWithPaginate.scss";
 import DetailUser from "~/pages/manage/manageUser/detailUser";
 import AddNewUser from "~/pages/manage/manageUser/addNewUser";
 import ImportFileExcel from "~/pages/manage/manageUser/importFileExcel";
+import UpdateUser from "~/pages/manage/manageUser/updateUser";
+import DeleteUser from "~/pages/manage/manageUser/deleteUser";
 
 const TableUserWithPaginate = () => {
   const listUsersPaginate = useSelector(
     (state) => state.users.listUsersPaginate
   );
+
   const totalPages = useSelector((state) => state.users.totalPages);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
@@ -48,6 +51,7 @@ const TableUserWithPaginate = () => {
                   onClick={handleExportData}
                   type="primary"
                   className=" table__header--btn"
+                  disabled={listUsersPaginate.length === 0}
                 >
                   <TfiExport className=" table__header--btn--icon" />
                   <span className="table__header--btn--name">Export</span>
@@ -89,7 +93,10 @@ const TableUserWithPaginate = () => {
           width: "5%",
           render: (text, index, record) => (
             <span
-              onClick={() => showDetailUser(text, record, index)}
+              onClick={() => {
+                showDetailUser(text, record, index);
+                console.log("record,", record);
+              }}
               className="table__detail"
             >
               {text}
@@ -124,15 +131,16 @@ const TableUserWithPaginate = () => {
           title: "Action ",
           width: "15%",
           render: (text, record, index) => (
-            <>
-              <Button
-                onClick={() => console.log({ text, record, index })}
-                type="primary"
-                danger
-              >
-                Delete
-              </Button>
-            </>
+            <div className="table__icon">
+              <AiOutlineDelete
+                onClick={() => showModalDelete(text, record, index)}
+                className="table__delete--user "
+              />
+              <AiOutlineEdit
+                onClick={() => showModalUpdate(text, record, index)}
+                className="table__edit--user "
+              />
+            </div>
           ),
         },
       ],
@@ -169,7 +177,7 @@ const TableUserWithPaginate = () => {
   const [open, setOpen] = useState(false);
   const [dataViewUser, setDataViewUser] = useState("");
   const showDetailUser = (text, index, record) => {
-    // setDataViewUser(listUsersPaginate[index]);
+    console.log(record);
     setDataViewUser(record);
     setOpen(true);
   };
@@ -188,16 +196,33 @@ const TableUserWithPaginate = () => {
     setIsModalOpen(false);
   };
 
+  // show modal update  user
+  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
+  const [dataUpdate, setDataUpdate] = useState("");
+  const showModalUpdate = (text, record, index) => {
+    setDataUpdate(record);
+    setIsModalOpenUpdate(true);
+  };
+
+  // show modal delete  user
+  const [isModalOpenDelete, setIsModalOpenDelete] = useState(false);
+  const [dataDelete, setDataDelete] = useState("");
+  const showModalDelete = (text, record, index) => {
+    setDataDelete(record);
+    setIsModalOpenDelete(true);
+  };
+
   // show modal import file
   const [isModalImportFile, setIsModalImportFile] = useState(false);
 
   // export data to excel file
   const handleExportData = () => {
-    const wb = XLSX.utils.book_new();
-    let ws = XLSX.utils.json_to_sheet(listUsersPaginate); // convert json to sheet
-
-    XLSX.utils.book_append_sheet(wb, ws, "MySheet1");
-    XLSX.writeFile(wb, "myExcel.xlsx");
+    // export csv file
+    if (listUsersPaginate.length > 0) {
+      const workbook = XLSX.utils.book_new();
+      const worksheet = XLSX.utils.json_to_sheet(listUsersPaginate);
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+    }
   };
   return (
     <>
@@ -239,6 +264,17 @@ const TableUserWithPaginate = () => {
         setIsModalOpen={setIsModalOpen}
         handleCancelModal={handleCancel}
         handleOk={handleOk}
+      />
+      <UpdateUser
+        isModalOpenUpdate={isModalOpenUpdate}
+        setIsModalOpenUpdate={setIsModalOpenUpdate}
+        dataUpdate={dataUpdate}
+      />
+      <DeleteUser
+        isModalOpenDelete={isModalOpenDelete}
+        setIsModalOpenDelete={setIsModalOpenDelete}
+        dataDelete={dataDelete}
+        setDataDelete={setDataDelete}
       />
       <ImportFileExcel
         isModalImportFile={isModalImportFile}

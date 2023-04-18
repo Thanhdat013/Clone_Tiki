@@ -1,0 +1,51 @@
+body {
+  .ant-pagination {
+    &.ant-table-pagination
+      &.ant-table-pagination-right
+      &.css-dev-only-do-not-override-mxhywb {
+      justify-content: center !important;
+    }
+  }
+  .manageBook__header {
+    .manageBook__header--wrap {
+      display: flex;
+      align-items: center;
+      .manageBook__header--title {
+        padding-left: 16px;
+      }
+
+      .manageBook__header--btn--refresh {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+        margin-left: 18px;
+        cursor: pointer;
+      }
+    }
+  }
+  .manageBook__detail {
+    cursor: pointer;
+    color: rgb(102, 135, 207);
+  }
+
+  .ant-table-cell {
+    .manageBook__icon {
+      align-items: center;
+      display: flex !important;
+      gap: 14px;
+    }
+    .manageBook__delete--user,
+    .manageBook__edit--user {
+      font-size: 2.2rem;
+      cursor: pointer;
+      text-align: center;
+    }
+    .manageBook__delete--user {
+      color: #f5222d;
+    }
+    .manageBook__edit--user {
+      color: #fa8c16;
+    }
+  }
+}

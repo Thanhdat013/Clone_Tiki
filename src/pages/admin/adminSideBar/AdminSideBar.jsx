@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { RxDashboard } from "react-icons/rx";
 import {
@@ -17,33 +17,43 @@ import { Menu, Drawer } from "antd";
 import "./AdminSideBar.scss";
 
 const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
+  const navigate = useNavigate();
   function getItem(label, key, icon, children, type) {
     return { key, icon, children, label, type };
   }
+
   const items = [
     getItem("Admin", "1", <GrUserAdmin />),
     getItem("Dashboard", "2", <RxDashboard />),
 
-    getItem("Manage user", "sub1", <AiOutlineUser />, [
-      getItem("Create new user", "3", <AiOutlineUserAdd />),
-      getItem("Update user", "4", <AiOutlineUserSwitch />),
-      getItem("Delete user", "5", <AiOutlineUserDelete />),
+    getItem("Manage user", "3", <AiOutlineUser />, [
+      getItem("Table  user", "3.1", <AiOutlineUserAdd />),
+      getItem("Add new user", "3.2", <AiOutlineUserSwitch />),
+      getItem("Delete user", "3.3", <AiOutlineUserDelete />),
     ]),
-    getItem("Manage Book", "6", <FiBook />),
+    getItem("Manage Book", "4", <FiBook />, [
+      getItem("Table book", "4.1", <AiOutlineUserAdd />),
+      getItem("Add new book", "4.3", <AiOutlineUserDelete />),
+    ]),
     getItem("Manage order", "7", <AiOutlineDollar />),
   ];
+  const onClick = (e) => {
+    console.log(e);
+    if (+e.key === 3.1) navigate("manage-user");
 
+    if (+e.key === 4.1) navigate("manage-book");
+  };
   return (
     <div className="admin__sidebar">
       <div className="admin__sidebar--wrap">
         <Menu
           className="admin__sidebar--menu"
           defaultSelectedKeys={["2"]}
-          defaultOpenKeys={["sub1"]}
           mode="inline"
           theme="light"
           inlineCollapsed={collapsed}
           items={items}
+          onClick={onClick}
         />
       </div>
       <div className="admin__sidebar--bar">
@@ -58,11 +68,11 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
           <Menu
             className="admin__sidebar--menu"
             defaultSelectedKeys={["2"]}
-            defaultOpenKeys={["sub1"]}
             mode="inline"
             theme="light"
             inlineCollapsed={false}
             items={items}
+            onClick={onClick}
           />
           <ul className="admin__sidebar--list">
             <li className="admin__sidebar--item">
