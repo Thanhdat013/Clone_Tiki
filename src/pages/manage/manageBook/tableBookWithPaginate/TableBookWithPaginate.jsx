@@ -1,16 +1,17 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import moment from "moment";
+
 import { GrRefresh } from "react-icons/gr";
 
 import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
-import { IoPersonAddOutline } from "react-icons/io5";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
 import { Table, Button, Row, Col } from "antd";
 import FormFilterBook from "~/pages/manage/manageBook/formFilterBook";
 import DetailItem from "~/pages/manage/components/detailItem";
 
-import moment from "moment";
+import AddNewBook from "~/pages/manage/manageBook/addNewBook";
 
 import "./TableBookWithPaginate.scss";
 
@@ -27,10 +28,12 @@ const TableUserWithPaginate = () => {
     (state) => state.books.listBooksPaginate
   );
   useEffect(() => {
+    getAllBook();
+  }, [pageSize, currentPage, filterInput, arrangeColumn]);
+  const getAllBook = async () => {
     let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
     dispatch(getAllBookWithPaginate(query));
-  }, [pageSize, currentPage, filterInput, arrangeColumn]);
-
+  };
   const columns = [
     {
       title: (text, record, index) => (
@@ -234,6 +237,7 @@ const TableUserWithPaginate = () => {
         </Col>
       </Row>
       <DetailItem dataViewBook={dataViewBook} open={open} setOpen={setOpen} />
+      <AddNewBook getAllBook={getAllBook} />
     </>
   );
 };

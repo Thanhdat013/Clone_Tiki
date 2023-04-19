@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { RxDashboard } from "react-icons/rx";
+import { useState } from "react";
 import {
   AiOutlineUser,
   AiOutlineDollar,
@@ -15,6 +16,8 @@ import { FiBook } from "react-icons/fi";
 import { GrUserAdmin } from "react-icons/gr";
 import { Menu, Drawer } from "antd";
 import "./AdminSideBar.scss";
+
+import AddNewBook from "~/pages/manage/manageBook/addNewBook";
 
 const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
   const navigate = useNavigate();
@@ -33,7 +36,7 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
     ]),
     getItem("Manage Book", "4", <FiBook />, [
       getItem("Table book", "4.1", <AiOutlineUserAdd />),
-      getItem("Add new book", "4.3", <AiOutlineUserDelete />),
+      getItem("Add new book", "4.2", <AiOutlineUserDelete />),
     ]),
     getItem("Manage order", "7", <AiOutlineDollar />),
   ];
@@ -42,47 +45,56 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
     if (+e.key === 3.1) navigate("manage-user");
 
     if (+e.key === 4.1) navigate("manage-book");
+    if (+e.key === 4.2) {
+      setOpenAddBook(true);
+    }
   };
+
+  // Add new book
+  const [openAddBook, setOpenAddBook] = useState(false);
   return (
-    <div className="admin__sidebar">
-      <div className="admin__sidebar--wrap">
-        <Menu
-          className="admin__sidebar--menu"
-          defaultSelectedKeys={["2"]}
-          mode="inline"
-          theme="light"
-          inlineCollapsed={collapsed}
-          items={items}
-          onClick={onClick}
-        />
-      </div>
-      <div className="admin__sidebar--bar">
-        <Drawer
-          width={250}
-          closable={false}
-          onClose={onClose}
-          open={open}
-          placement={"left"}
-          keyboard={13}
-        >
+    <>
+      <div className="admin__sidebar">
+        <div className="admin__sidebar--wrap">
           <Menu
             className="admin__sidebar--menu"
             defaultSelectedKeys={["2"]}
             mode="inline"
             theme="light"
-            inlineCollapsed={false}
+            inlineCollapsed={collapsed}
             items={items}
             onClick={onClick}
           />
-          <ul className="admin__sidebar--list">
-            <li className="admin__sidebar--item">
-              <AiOutlineArrowRight className="admin__sidebar--item--icon" />
-              <span>Đăng xuất</span>
-            </li>
-          </ul>
-        </Drawer>
+        </div>
+        <div className="admin__sidebar--bar">
+          <Drawer
+            width={250}
+            closable={false}
+            onClose={onClose}
+            open={open}
+            placement={"left"}
+            keyboard={13}
+          >
+            <Menu
+              className="admin__sidebar--menu"
+              defaultSelectedKeys={["2"]}
+              mode="inline"
+              theme="light"
+              inlineCollapsed={false}
+              items={items}
+              onClick={onClick}
+            />
+            <ul className="admin__sidebar--list">
+              <li className="admin__sidebar--item">
+                <AiOutlineArrowRight className="admin__sidebar--item--icon" />
+                <span>Đăng xuất</span>
+              </li>
+            </ul>
+          </Drawer>
+        </div>
       </div>
-    </div>
+      <AddNewBook openAddBook={openAddBook} setOpenAddBook={setOpenAddBook} />
+    </>
   );
 };
 

@@ -1,5 +1,6 @@
 import axios from "~/utils";
 
+/* ========================= User ===============================*/
 export const postRegister = (fullName, email, password, phone) => {
   return axios.post("/api/v1/user/register", {
     fullName,
@@ -47,4 +48,26 @@ export const putUpdateUser = (_id, fullName, phone) => {
 // delete the user
 export const deleteUser = (id) => {
   return axios.delete(`/api/v1/user/${id}`);
+};
+
+// ********************* Book =========================*/
+// get all categories
+export const getAllCategories = () => {
+  return axios.get("/api/v1/database/category");
+};
+//
+export const postUploadImage = (fileImg) => {
+  const dataImage = new FormData();
+  dataImage.append("fileImg", fileImg);
+  return axios({
+    method: "post",
+    url: "/api/v1/file/upload",
+    data: dataImage,
+    headers: { "Content-Type": "multipart/form-data", "upload-type": "book" },
+  });
+};
+
+// create a new book
+export const postNewBook = () => {
+  return axios.post("/api/v1/book");
 };
