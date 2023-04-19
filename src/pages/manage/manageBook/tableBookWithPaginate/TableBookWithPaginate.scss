@@ -1,4 +1,7 @@
 body {
+  .ant-table-title {
+    background-color: #fafafa;
+  }
   .ant-pagination {
     &.ant-table-pagination
       &.ant-table-pagination-right
@@ -10,24 +13,29 @@ body {
     .manageBook__header--wrap {
       display: flex;
       align-items: center;
+      justify-content: space-between;
       .manageBook__header--title {
         padding-left: 16px;
       }
-
-      .manageBook__header--btn--refresh,
-      .manageBook__header--btn--add {
+      .manageBook__header--btn {
         display: flex;
         align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        margin-left: 18px;
-        cursor: pointer;
-      }
-      .manageBook__header--btn--add {
-        margin: 0;
-        gap: 2px;
-        .manageBook__btn--add--title {
-          font-size: 1.8rem;
+        justify-content: space-evenly;
+        gap: 8px;
+        .manageBook__header--btn--refresh,
+        .manageBook__header--btn--add {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2rem;
+          cursor: pointer;
+        }
+        .manageBook__header--btn--add {
+          margin: 0;
+          gap: 2px;
+          .manageBook__btn--add--title {
+            font-size: 1.8rem;
+          }
         }
       }
     }

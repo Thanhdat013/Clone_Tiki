@@ -40,13 +40,13 @@ const FormFilterBook = ({ handleFilter }) => {
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item name="Name" label="Name">
-            <Input placeholder="Enter name" />
+          <Form.Item name="mainText" label="Name book">
+            <Input placeholder="Enter name book" />
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item name="Phone" label="Phone">
-            <Input placeholder="Enter phone" />
+          <Form.Item name="category" label="Category">
+            <Input placeholder="Enter category" />
           </Form.Item>
         </Col>
       </Row>

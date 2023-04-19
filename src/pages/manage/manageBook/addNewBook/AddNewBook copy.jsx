@@ -1,9 +1,20 @@
 import { useEffect, useState } from "react";
-import { Modal, Form, notification, message, Row, Col, Upload } from "antd";
+import {
+  Modal,
+  Form,
+  Input,
+  InputNumber,
+  notification,
+  message,
+  Row,
+  Col,
+  Upload,
+  Select,
+} from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { getAllCategories, postNewBook, postUploadImage } from "~/services/Api";
-import FormInfor from "~/pages/manage/manageBook/components/form/";
+import ModalAdd from "./ModallAdd";
 
 const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
   const [form] = Form.useForm();
@@ -187,8 +198,94 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
           form={form}
         >
           <Row gutter={24}>
-            <Col span={24}>
-              <FormInfor listCategory={listCategory} />
+            <Col span={12}>
+              <Form.Item
+                label="Book title"
+                name="mainText"
+                rules={[
+                  { required: true, message: "Please input your book title!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+
+            <Col span={12}>
+              <Form.Item
+                label="Author"
+                name="author"
+                rules={[
+                  { required: true, message: "Please input your author!" },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item
+                label="Price"
+                name="price"
+                rules={[
+                  { required: true, message: "Please input your price!" },
+                ]}
+              >
+                <InputNumber
+                  addonAfter={"VND"}
+                  style={{ width: "100%" }}
+                  formatter={(value) =>
+                    value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item
+                label="Category"
+                name="category"
+                hasFeedback
+                rules={[
+                  { required: true, message: "Please input your category!" },
+                ]}
+              >
+                <Select
+                  placeholder="Please select category"
+                  allowClear
+                  showSearch
+                  options={listCategory}
+                ></Select>
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item
+                label="Quantity"
+                name="quantity"
+                rules={[
+                  { required: true, message: "Please input your quantity!" },
+                ]}
+              >
+                <InputNumber
+                  min={1}
+                  style={{ width: "100%" }}
+                  formatter={(value) =>
+                    value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                  }
+                />
+              </Form.Item>
+            </Col>
+            <Col span={6}>
+              <Form.Item
+                label="Sold"
+                name="sold"
+                rules={[{ required: true, message: "Please input your sold!" }]}
+              >
+                <InputNumber
+                  min={0}
+                  style={{ width: "100%" }}
+                  formatter={(value) =>
+                    value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                  }
+                />
+              </Form.Item>
             </Col>
             <Col span={12}>
               <Form.Item label="Thumbnail image" name="thumbnail">
@@ -242,6 +339,7 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
             >
               <img alt="example" style={{ width: "100%" }} src={previewImage} />
             </Modal>
+            <ModalAdd />
           </Row>
         </Form>
       </Modal>

@@ -13,6 +13,7 @@ import FormFilterBook from "~/pages/manage/manageBook/formFilterBook";
 import DetailItem from "~/pages/manage/components/detailItem";
 
 import AddNewBook from "~/pages/manage/manageBook/addNewBook";
+import UpdateBook from "~/pages/manage/manageBook/updateBook";
 
 import "./TableBookWithPaginate.scss";
 
@@ -36,139 +37,145 @@ const TableUserWithPaginate = () => {
     let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
     dispatch(getAllBookWithPaginate(query));
   };
-  const columns = [
-    {
-      title: (text, record, index) => (
+  const renderHeaderTitle = (text, record, index) => {
+    return (
+      <>
         <header className="manageBook__header">
           <div className=" row ">
-            <div className="manageBook__header--wrap l-2">
+            <div className="manageBook__header--wrap l-12">
               <h2 className="manageBook__header--title l-4">Table list</h2>
-              <Button
-                className="manageBook__header--btn--refresh l-2"
-                icon={<GrRefresh />}
-                onClick={handleRefresh}
-                loading={isLoading}
-                type="text"
-              ></Button>
-              <Button
-                className="manageBook__header--btn--add l-3"
-                onClick={clickOpenAddBook}
-                loading={isLoading}
-                type="primary"
-              >
-                <BiBookAdd className="manageBook__btn--add--title" />
-                <span className="manageBook__btn--add--title">Add</span>
-              </Button>
+              <div className="manageBook__header--btn row l-3">
+                <Button
+                  className="manageBook__header--btn--add l-4"
+                  onClick={clickOpenAddBook}
+                  loading={isLoading}
+                  type="primary"
+                >
+                  <BiBookAdd className="manageBook__btn--add--title" />
+                  <span className="manageBook__btn--add--title">Add</span>
+                </Button>
+                <Button
+                  className="manageBook__header--btn--refresh l-2"
+                  icon={<GrRefresh />}
+                  onClick={handleRefresh}
+                  loading={isLoading}
+                  type="text"
+                ></Button>
+              </div>
             </div>
           </div>
         </header>
+      </>
+    );
+  };
+  const columns = [
+    // {
+    //   title: "Id.",
+    //   dataIndex: "_id",
+    //   width: "15%",
+    //   fixed: "left",
+    //   render: (text, index, record) => (
+    //     <span
+    //       onClick={() => {
+    //         // showDetailUser(text, record, index)
+    //         console.log("check record", record);
+    //       }}
+    //       className="table__detail"
+    //     >
+    //       {text}
+    //     </span>
+    //   ),
+    // },
+    {
+      title: "Name book",
+      dataIndex: "mainText",
+      width: "15%",
+      sorter: true,
+      fixed: "left",
+      render: (text, index, record) => (
+        <span
+          onClick={() => {
+            showDetailBook(text, record, index);
+            // console.log("check record", record);
+          }}
+          className="table__detail"
+        >
+          {text}
+        </span>
       ),
-      width: "100%",
-      align: "left",
-      children: [
-        // {
-        //   title: "Id.",
-        //   dataIndex: "_id",
-        //   width: "15%",
-        //   fixed: "left",
-        //   render: (text, index, record) => (
-        //     <span
-        //       onClick={() => {
-        //         // showDetailUser(text, record, index)
-        //         console.log("check record", record);
-        //       }}
-        //       className="table__detail"
-        //     >
-        //       {text}
-        //     </span>
-        //   ),
-        // },
-        {
-          title: "Name book",
-          dataIndex: "mainText",
-          width: "15%",
-          sorter: true,
-          fixed: "left",
-          render: (text, index, record) => (
-            <span
-              onClick={() => {
-                showDetailBook(text, record, index);
-                // console.log("check record", record);
-              }}
-              className="table__detail"
-            >
-              {text}
-            </span>
-          ),
-        },
-        {
-          title: "Author",
-          dataIndex: "author",
-          width: "10%",
-          sorter: true,
-        },
-        {
-          title: "Price",
-          dataIndex: "price",
-          width: "8%",
-          sorter: true,
-        },
-        {
-          title: "Category ",
-          dataIndex: "category",
-          width: "10%",
-          sorter: true,
-        },
-        {
-          title: "Created at ",
-          dataIndex: "createdAt",
-          width: "15%",
-          sorter: true,
-          render: (text, index, record) => (
-            <span>{moment(text).format("DD-MM-YYYY, HH:mm:ss a")}</span>
-          ),
-        },
-        {
-          title: "Updated at ",
-          dataIndex: "updatedAt",
-          width: "15%",
-          sorter: true,
-          render: (text, index, record) => (
-            <span>{moment(text).format("DD-MM-YYYY, HH:mm:ss a")}</span>
-          ),
-        },
-        {
-          title: "Sold ",
-          dataIndex: "sold",
-          width: "10%",
+    },
+    {
+      title: "Author",
+      dataIndex: "author",
+      width: "10%",
+      sorter: true,
+    },
+    {
+      title: "Price (VNĐ)",
+      dataIndex: "price",
+      width: "8%",
+      sorter: true,
+      render: (text, index, record) => (
+        <>
+          <span>{`${text}`.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")}</span>
+        </>
+      ),
+    },
+    {
+      title: "Category ",
+      dataIndex: "category",
+      width: "10%",
+      sorter: true,
+    },
+    {
+      title: "Created at ",
+      dataIndex: "createdAt",
+      width: "15%",
+      sorter: true,
+      render: (text, index, record) => (
+        <span>{moment(text).format("DD-MM-YYYY, HH:mm:ss a")}</span>
+      ),
+    },
+    {
+      title: "Updated at ",
+      dataIndex: "updatedAt",
+      width: "15%",
+      sorter: true,
+      render: (text, index, record) => (
+        <span>{moment(text).format("DD-MM-YYYY, HH:mm:ss a")}</span>
+      ),
+    },
+    {
+      title: "Sold ",
+      dataIndex: "sold",
+      width: "10%",
 
-          sorter: true,
-        },
-        {
-          title: "Quantity ",
-          dataIndex: "quantity",
-          width: "10%",
-          sorter: true,
-        },
-        {
-          title: "Action ",
-          width: "15%",
-          render: (text, record, index) => (
-            <div className="manageBook__icon">
-              <AiOutlineDelete
-                onClick={() => showModalDelete(text, record, index)}
-                className="manageBook__delete--user "
-              />
-              <AiOutlineEdit
-                onClick={() => showModalUpdate(text, record, index)}
-                className="manageBook__edit--user "
-              />
-            </div>
-          ),
-        },
-      ],
+      sorter: true,
+    },
+    {
+      title: "Quantity ",
+      dataIndex: "quantity",
+      width: "10%",
+      sorter: true,
+    },
+    {
+      title: "Action ",
+      width: "10%",
+      render: (text, record, index) => (
+        <div className="manageBook__icon">
+          <AiOutlineDelete
+            onClick={() => showModalDelete(text, record, index)}
+            className="manageBook__delete--user "
+          />
+          <AiOutlineEdit
+            onClick={() => showModalUpdate(text, record, index)}
+            className="manageBook__edit--user "
+          />
+        </div>
+      ),
     },
   ];
+
   // refresh filter sort
   const handleRefresh = () => {
     setIsLoading(true);
@@ -217,6 +224,14 @@ const TableUserWithPaginate = () => {
   const clickOpenAddBook = () => {
     setOpenAddBook(true);
   };
+
+  // show add new book
+  const [openUpdateBook, setOpenUpdateBook] = useState(false);
+  const [dataUpdateBook, setDataUpdateBook] = useState("");
+  const showModalUpdate = (record) => {
+    setOpenUpdateBook(true);
+    setDataUpdateBook(record);
+  };
   return (
     <>
       <Row className="manage__book">
@@ -225,6 +240,7 @@ const TableUserWithPaginate = () => {
         </Col>
         <Col span={24}>
           <Table
+            title={renderHeaderTitle}
             dataSource={listBooksPaginate}
             columns={columns}
             onChange={handleChange}
@@ -256,6 +272,13 @@ const TableUserWithPaginate = () => {
         getAllBook={getAllBook}
         openAddBook={openAddBook}
         setOpenAddBook={setOpenAddBook}
+      />
+      <UpdateBook
+        getAllBook={getAllBook}
+        openUpdateBook={openUpdateBook}
+        setOpenUpdateBook={setOpenUpdateBook}
+        dataUpdateBook={dataUpdateBook}
+        setDataUpdateBook={setDataUpdateBook}
       />
     </>
   );

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { PlusOutlined } from "@ant-design/icons";
 import { Modal, Upload } from "antd";
 import { v4 as uuidv4 } from "uuid";
-import { useEffect } from "react";
 
 const PreviewImage = ({ dataViewBook }) => {
   const getBase64 = (file) =>
