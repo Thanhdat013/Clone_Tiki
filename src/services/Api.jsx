@@ -68,6 +68,24 @@ export const postUploadImage = (fileImg) => {
 };
 
 // create a new book
-export const postNewBook = () => {
-  return axios.post("/api/v1/book");
+export const postNewBook = (
+  thumbnail,
+  slider,
+  mainText,
+  author,
+  price,
+  sold,
+  quantity,
+  category
+) => {
+  return axios.post("/api/v1/book", {
+    thumbnail,
+    slider,
+    mainText,
+    author,
+    price,
+    sold,
+    quantity,
+    category,
+  });
 };

@@ -17,8 +17,6 @@ import { GrUserAdmin } from "react-icons/gr";
 import { Menu, Drawer } from "antd";
 import "./AdminSideBar.scss";
 
-import AddNewBook from "~/pages/manage/manageBook/addNewBook";
-
 const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
   const navigate = useNavigate();
   function getItem(label, key, icon, children, type) {
@@ -29,25 +27,15 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
     getItem("Admin", "1", <GrUserAdmin />),
     getItem("Dashboard", "2", <RxDashboard />),
 
-    getItem("Manage user", "3", <AiOutlineUser />, [
-      getItem("Table  user", "3.1", <AiOutlineUserAdd />),
-      getItem("Add new user", "3.2", <AiOutlineUserSwitch />),
-      getItem("Delete user", "3.3", <AiOutlineUserDelete />),
-    ]),
-    getItem("Manage Book", "4", <FiBook />, [
-      getItem("Table book", "4.1", <AiOutlineUserAdd />),
-      getItem("Add new book", "4.2", <AiOutlineUserDelete />),
-    ]),
+    getItem("Manage user", "3", <AiOutlineUser />),
+    getItem("Manage Book", "4", <FiBook />),
     getItem("Manage order", "7", <AiOutlineDollar />),
   ];
   const onClick = (e) => {
     console.log(e);
-    if (+e.key === 3.1) navigate("manage-user");
+    if (+e.key === 3) navigate("manage-user");
 
-    if (+e.key === 4.1) navigate("manage-book");
-    if (+e.key === 4.2) {
-      setOpenAddBook(true);
-    }
+    if (+e.key === 4) navigate("manage-book");
   };
 
   // Add new book
@@ -93,7 +81,6 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
           </Drawer>
         </div>
       </div>
-      <AddNewBook openAddBook={openAddBook} setOpenAddBook={setOpenAddBook} />
     </>
   );
 };

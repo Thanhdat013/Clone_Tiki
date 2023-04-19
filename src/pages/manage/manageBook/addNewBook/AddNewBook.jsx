@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import {
   Modal,
   Form,
@@ -11,18 +12,57 @@ import {
   Select,
 } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { useDispatch } from "react-redux";
 
-import { getAllCategories } from "~/services/Api";
-import { useEffect, useState } from "react";
-import { postUploadImage } from "~/services/Api";
+import { getAllCategories, postNewBook, postUploadImage } from "~/services/Api";
 
 const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
-  const dispatch = useDispatch();
   const [form] = Form.useForm();
-
+  // submit form to create new book
   const onFinish = async (values) => {
-    console.log(values);
+    console.log(dataImageThumb);
+    console.log(dataImageSlider);
+    const { mainText, author, price, sold, quantity, category } = values;
+    if (dataImageThumb.length === 0) {
+      notification.error({
+        message: "Create a new book failed",
+        description: "Please upload image for thumbnail",
+      });
+      return;
+    }
+    if (dataImageSlider.length === 0) {
+      notification.error({
+        message: "Create a new book failed",
+        description: "Please upload image for slider",
+      });
+      return;
+    }
+    const thumbnail = dataImageThumb[0].name;
+    const slider = dataImageSlider.map((item) => item.name);
+    const res = await postNewBook(
+      thumbnail,
+      slider,
+      mainText,
+      author,
+      price,
+      sold,
+      quantity,
+      category
+    );
+    console.log(res);
+    if (res && res.statusCode === 201) {
+      notification.success({
+        message: "Create a new book successfully",
+        description: "you have created",
+      });
+      form.resetFields();
+      await getAllBook();
+      setOpenAddBook(false);
+    } else {
+      notification.error({
+        message: "Create a new book failed",
+        description: "you have create failed",
+      });
+    }
   };
 
   // load images
@@ -59,11 +99,10 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
     }
   };
   // set data image of thumb into react for submit form
-  const [dataImageThumb, setDataImageThumb] = useState("");
+  const [dataImageThumb, setDataImageThumb] = useState([]);
   const handleRequestThumb = async ({ file, onSuccess, onError }) => {
-    console.log(file);
     const res = await postUploadImage(file);
-    console.log(res);
+
     if (res && res.data) {
       setDataImageThumb([{ name: res.data.fileUploaded, uid: file.uid }]);
       onSuccess("ok");
@@ -72,11 +111,10 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
     }
   };
   // set data image of slider into react for submit from
-  const [dataImageSlider, setDataImageSlider] = useState("");
+  const [dataImageSlider, setDataImageSlider] = useState([]);
   const handleRequestSlider = async ({ file, onSuccess, onError }) => {
-    console.log(file);
     const res = await postUploadImage(file);
-    console.log(res);
+
     if (res && res.data) {
       setDataImageSlider((dataImageSlider) => [
         ...dataImageSlider,

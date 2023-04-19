@@ -6,6 +6,7 @@ import { GrRefresh } from "react-icons/gr";
 
 import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
+import { BiBookAdd } from "react-icons/bi";
 
 import { Table, Button, Row, Col } from "antd";
 import FormFilterBook from "~/pages/manage/manageBook/formFilterBook";
@@ -30,6 +31,7 @@ const TableUserWithPaginate = () => {
   useEffect(() => {
     getAllBook();
   }, [pageSize, currentPage, filterInput, arrangeColumn]);
+
   const getAllBook = async () => {
     let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
     dispatch(getAllBookWithPaginate(query));
@@ -48,6 +50,15 @@ const TableUserWithPaginate = () => {
                 loading={isLoading}
                 type="text"
               ></Button>
+              <Button
+                className="manageBook__header--btn--add l-3"
+                onClick={clickOpenAddBook}
+                loading={isLoading}
+                type="primary"
+              >
+                <BiBookAdd className="manageBook__btn--add--title" />
+                <span className="manageBook__btn--add--title">Add</span>
+              </Button>
             </div>
           </div>
         </header>
@@ -201,7 +212,11 @@ const TableUserWithPaginate = () => {
     setDataViewBook(record);
     setOpen(true);
   };
-
+  // show add new book
+  const [openAddBook, setOpenAddBook] = useState(false);
+  const clickOpenAddBook = () => {
+    setOpenAddBook(true);
+  };
   return (
     <>
       <Row className="manage__book">
@@ -237,7 +252,11 @@ const TableUserWithPaginate = () => {
         </Col>
       </Row>
       <DetailItem dataViewBook={dataViewBook} open={open} setOpen={setOpen} />
-      <AddNewBook getAllBook={getAllBook} />
+      <AddNewBook
+        getAllBook={getAllBook}
+        openAddBook={openAddBook}
+        setOpenAddBook={setOpenAddBook}
+      />
     </>
   );
 };
