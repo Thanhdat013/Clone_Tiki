@@ -6,13 +6,15 @@ const DeleteUser = ({
   setIsModalOpenDelete,
   dataDelete,
   setDataDelete,
+  getAllUser,
 }) => {
   const onFinish = async () => {
     const res = await deleteUser(dataDelete._id);
     console.log(res);
     if (res && res.data) {
       message.success("delete user successfully");
-      handleCancelModal();
+      setIsModalOpenDelete(false);
+      await getAllUser();
     }
   };
 

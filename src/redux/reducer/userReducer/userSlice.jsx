@@ -73,10 +73,6 @@ const usersSlice = createSlice({
         id: "",
       };
     },
-    doAddUserAction: (state, action) => {
-      console.log(action);
-      state.listUsersPaginate = [action.payload, ...state.listUsersPaginate];
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -95,5 +91,6 @@ export const {
   doFetchAccount,
   doLogOutAction,
   doAddUserAction,
+  doUpdateUserAction,
 } = usersSlice.actions;
 export default usersSlice.reducer;

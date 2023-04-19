@@ -1,16 +1,11 @@
-import { Modal, Form, Input, notification } from "antd";
+import { Modal, Form, Input, notification, message } from "antd";
 
 import { useDispatch } from "react-redux";
 
 import { postCreateNewUser } from "~/services/Api";
 import { doAddUserAction } from "~/redux/reducer/userReducer/userSlice";
 
-const AddNewUser = ({
-  isModalOpen,
-  setIsModalOpen,
-  handleCancelModal,
-  handleOk,
-}) => {
+const AddNewUser = ({ isModalOpen, setIsModalOpen, getAllUser }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 
@@ -23,8 +18,11 @@ const AddNewUser = ({
     );
     console.log(res);
     if (res && res.data) {
-      notification.success("You have successfully created an account");
-      dispatch(doAddUserAction(res.data));
+      message.success("You have successfully created an account");
+      await getAllUser();
+      // dispatch(doAddUserAction(res.data));
+      setIsModalOpen(false);
+      form.resetFields();
     } else {
       notification.error({
         message: "Create failed",
@@ -33,6 +31,10 @@ const AddNewUser = ({
         duration: 5,
       });
     }
+  };
+  const handleCancelModal = () => {
+    setIsModalOpen(false);
+    form.resetFields();
   };
 
   return (

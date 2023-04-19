@@ -8,6 +8,8 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
 import { Table, Button, Row, Col } from "antd";
 import FormFilterBook from "~/pages/manage/manageBook/formFilterBook";
+import DetailItem from "~/pages/manage/components/detailItem";
+
 import moment from "moment";
 
 import "./TableBookWithPaginate.scss";
@@ -76,8 +78,8 @@ const TableUserWithPaginate = () => {
           render: (text, index, record) => (
             <span
               onClick={() => {
-                // showDetailUser(text, record, index)
-                console.log("check record", record);
+                showDetailBook(text, record, index);
+                // console.log("check record", record);
               }}
               className="table__detail"
             >
@@ -188,6 +190,15 @@ const TableUserWithPaginate = () => {
     setOpen(false);
   };
 
+  // show detail book'
+  const [open, setOpen] = useState(false);
+  const [dataViewBook, setDataViewBook] = useState("");
+  const showDetailBook = (text, index, record) => {
+    console.log(record);
+    setDataViewBook(record);
+    setOpen(true);
+  };
+
   return (
     <>
       <Row className="manage__book">
@@ -222,6 +233,7 @@ const TableUserWithPaginate = () => {
           />
         </Col>
       </Row>
+      <DetailItem dataViewBook={dataViewBook} open={open} setOpen={setOpen} />
     </>
   );
 };

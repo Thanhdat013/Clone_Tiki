@@ -11,7 +11,7 @@ import { Table, Button, Row, Col } from "antd";
 import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice";
 import FormFIlter from "~/pages/manage/manageUser/formFilter";
 import "./TableUserWithPaginate.scss";
-import DetailUser from "~/pages/manage/manageUser/detailUser";
+import DetailItem from "~/pages/manage/components/detailItem";
 import AddNewUser from "~/pages/manage/manageUser/addNewUser";
 import ImportFileExcel from "~/pages/manage/manageUser/importFileExcel";
 import UpdateUser from "~/pages/manage/manageUser/updateUser";
@@ -35,10 +35,13 @@ const TableUserWithPaginate = () => {
   };
 
   useEffect(() => {
-    let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
-    dispatch(getAllUserWithPaginate(query));
+    getAllUser();
   }, [pageSize, currentPage, filterInput, arrangeColumn]);
 
+  const getAllUser = async () => {
+    let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
+    dispatch(getAllUserWithPaginate(query));
+  };
   const columns = [
     {
       title: (text, record, index) => (
@@ -181,19 +184,11 @@ const TableUserWithPaginate = () => {
     setDataViewUser(record);
     setOpen(true);
   };
-  const onClose = () => {
-    setOpen(false);
-  };
+
   // show modal add new user
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-  };
-  const handleOk = () => {
-    setIsModalOpen(false);
   };
 
   // show modal update  user
@@ -258,22 +253,24 @@ const TableUserWithPaginate = () => {
         </Col>
       </Row>
 
-      <DetailUser open={open} onClose={onClose} dataViewUser={dataViewUser} />
+      <DetailItem open={open} setOpen={setOpen} dataViewUser={dataViewUser} />
       <AddNewUser
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        handleCancelModal={handleCancel}
-        handleOk={handleOk}
+        getAllUser={getAllUser}
       />
       <UpdateUser
         isModalOpenUpdate={isModalOpenUpdate}
         setIsModalOpenUpdate={setIsModalOpenUpdate}
         dataUpdate={dataUpdate}
+        getAllUser={getAllUser}
+        setDataUpdate={setDataUpdate}
       />
       <DeleteUser
         isModalOpenDelete={isModalOpenDelete}
         setIsModalOpenDelete={setIsModalOpenDelete}
         dataDelete={dataDelete}
+        getAllUser={getAllUser}
         setDataDelete={setDataDelete}
       />
       <ImportFileExcel
