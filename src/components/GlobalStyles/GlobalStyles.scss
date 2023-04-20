@@ -19,6 +19,12 @@ body {
   overflow-y: overlay;
   overflow-x: overlay;
 }
+.line-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: var(--line-clamp, 2);
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
 
 // Scroll bar css
 html ::-webkit-scrollbar {

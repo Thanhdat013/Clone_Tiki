@@ -37,10 +37,10 @@ const Header = () => {
     }
   };
   return (
-    <header className="header grid ">
+    <header className="header grid  ">
       <div className="header__container grid wide">
-        <div className="header__wrap row ">
-          <div className="header__logo l-1 m-1 c-1">
+        <div className="header__wrap row sm-gutter">
+          <div className="header__logo col row  l-2 m-1 c-1">
             <img
               className="header__logo--img"
               src="https://salt.tikicdn.com/ts/upload/e4/49/6c/270be9859abd5f5ec5071da65fab0a94.png"
@@ -89,8 +89,8 @@ const Header = () => {
               </Drawer>
             </div>
           </div>
-          <div className="header__search l-8 m-10 c-9">
-            <div className="header__search--wrap row no-gutters">
+          <div className="header__search col  l-7 m-10 c-9">
+            <div className="header__search--wrap row sm-gutter ">
               <span className="search__wrap--icon l-1 m-1 c-1">
                 <BsSearch className="search__wrap--icon--glasses" />
               </span>
@@ -102,7 +102,7 @@ const Header = () => {
               <button className="search__wrap--btn l-2  ">Tìm kiếm</button>
             </div>
           </div>
-          <div className="header__user l-3 m-1 c-2">
+          <div className="header__user col l-3 m-1 c-2">
             <div className="header__user--cart">
               <AiOutlineShoppingCart className="user__cart--icon" />
               <div className="user__cart--quantity">

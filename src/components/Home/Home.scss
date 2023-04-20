@@ -1,3 +1,168 @@
 .home {
-  height: 1000px;
+  background-color: #f5f5fa;
+  padding: 24px 0;
+  position: relative;
+  .home__left {
+    height: auto;
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 12px 8px;
+    .home__left--header {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .left__header--filter {
+        cursor: pointer;
+        font-size: 1.8rem;
+      }
+      .left__header--title {
+        font-size: 1.6rem;
+      }
+      .left__header--refresh {
+        font-size: 1.8rem;
+        cursor: pointer;
+      }
+    }
+    .home__left--container {
+      margin-top: 12px;
+      .left__container--check {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin: 12px 8px;
+      }
+      .left__container--price {
+        .left__container--price--input {
+          margin-top: 12px;
+          display: flex;
+          .ant-form-item-control-input-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+          }
+          .left__container--price--line {
+            flex: 1;
+            height: 1px;
+            background: #bdbdbd;
+            margin: 0 1rem;
+          }
+        }
+      }
+      .left__container--rate {
+        .left__container--start--wrap {
+          margin-top: 12px;
+          display: flex;
+          align-items: center;
+          .left__container--rate--text {
+            font-size: 1.3rem;
+            font-weight: 300;
+            margin-left: 12px;
+          }
+          .left__container--rate--start {
+            font-size: 1.4rem;
+            display: flex;
+
+            .ant-rate-star-second {
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  // right
+  .home__right {
+    height: auto;
+    .home__right--header {
+      display: flex;
+
+      .home__right--header--tab {
+        margin: 0 24px;
+        width: 100%;
+      }
+    }
+    .home__right--container {
+      .right__container {
+        background-color: #fff;
+        box-shadow: 0 0.0625rem 0.125rem 0 rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: visible;
+        cursor: pointer;
+        border-radius: 0.125rem;
+
+        color: rgba(0, 0, 0, 0.87);
+        &:hover {
+          z-index: 2;
+          box-shadow: 0 0.0625rem 20px 0 rgba(0, 0, 0, 0.05);
+          transform: translateY(-0.0625rem);
+        }
+        .right__container--img {
+          --width: 100%;
+          width: var(--width);
+          height: 220px;
+          object-fit: cover;
+          border-top-right-radius: 0.125rem;
+          border-top-left-radius: 0.125rem;
+        }
+        .right__container--content {
+          margin: 8px 8px;
+          .right__container--title {
+            height: 42px;
+            font-size: 1.4rem;
+            font-weight: 400;
+            margin-top: 8px;
+          }
+          .right__container--price {
+            margin-top: 8px;
+            font-size: 1.4rem;
+          }
+          .right__container--rate {
+            margin-top: 12px;
+            padding-bottom: 12px;
+            display: flex;
+            justify-content: space-between;
+            .ant-rate-star-second {
+              display: flex;
+              align-items: center;
+            }
+            .right__container--rate--start {
+              font-size: 1.2rem;
+            }
+            .right__container--rate--text {
+              font-size: 1.2rem;
+              margin-left: 4px;
+            }
+          }
+        }
+      }
+    }
+    .home__right--footer {
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+}
+body {
+  .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-inline-start: 0px;
+  }
+  .ant-tabs {
+    width: 100%;
+  }
+}
+
+/* Mobile */
+@media (max-width: 739px) {
+  .home {
+    .home__right {
+      .home__right--header {
+        display: none;
+      }
+    }
+  }
 }
