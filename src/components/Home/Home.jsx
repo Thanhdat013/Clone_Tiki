@@ -23,7 +23,7 @@ const Home = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sizePage, setSizePage] = useState(10);
   const [filterInput, setFilterInput] = useState("");
-  const [arrangeColumn, SetArrangeColumn] = useState("sort=-updatedAt");
+  const [arrangeColumn, SetArrangeColumn] = useState("sort=-sold");
 
   const dispatch = useDispatch();
 
@@ -62,13 +62,42 @@ const Home = () => {
     }
   };
 
-  const onChangeCheck = (checkedValues) => {
-    console.log("checked = ", checkedValues);
+  const handleFilterValue = (changeValues, values) => {
+    console.log("checked = ", changeValues, values);
+    if (changeValues.category && changeValues.category.length > 0) {
+      const cate = changeValues.category.join(",");
+      let filter = `&category=${cate}`;
+      setFilterInput(filter);
+    } else setFilterInput("");
   };
 
-  // list tab
+  // list tab and filter
+
   const onChangeTab = (key) => {
-    console.log(key);
+    if (+key === 1) SetArrangeColumn("sort=-sold");
+    if (+key === 2) SetArrangeColumn("sort=-createdAt");
+    if (+key === 3) SetArrangeColumn("sort=price");
+    if (+key === 4) SetArrangeColumn("sort=-price");
+  };
+
+  // filter price
+  const handleFilterPrice = (values) => {
+    console.log(values);
+    if (values?.range?.from >= 0 && values?.range?.to >= 0) {
+      let price = `price>=${values?.range?.from}&price<=${values?.range?.to}`;
+      if (values?.category?.length > 0) {
+        const cate = changeValues.category.join(",");
+        price += `&category=${cate}`;
+      }
+      setFilterInput(price);
+    }
+  };
+
+  // reset form
+  const [form] = Form.useForm();
+  const handleRefresh = () => {
+    form.resetFields();
+    setFilterInput("");
   };
 
   const items = [
@@ -88,7 +117,7 @@ const Home = () => {
       children: <></>,
     },
     {
-      key: "",
+      key: "4",
       label: `Giá Cao Đến Thấp`,
       children: <></>,
     },
@@ -101,88 +130,116 @@ const Home = () => {
             <AiOutlineFilter className="left__header--filter" />
 
             <div className="left__header--title">Bộ lọc tìm kiếm</div>
-            <GrRefresh className="left__header--refresh" />
+            <GrRefresh
+              className="left__header--refresh"
+              onClick={handleRefresh}
+            />
           </header>
           <Divider />
-          <article className="home__left--container">
-            <div>
-              Thể loại
-              <Checkbox.Group
-                className="left__container--check"
-                options={listCategory}
-                onChange={onChangeCheck}
-              />
-            </div>
-            <Divider />
-            <div className="left__container--price">
-              <p>Khoảng giá</p>
-              <Form.Item className="left__container--price--input">
-                <InputNumber
-                  placeholder="₫ TỪ"
-                  style={{ width: "40%" }}
-                  controls={false}
-                  formatter={(value) =>
-                    value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                  }
-                />
-                <div className="left__container--price--line"></div>
-                <InputNumber
-                  placeholder="₫ ĐẾN"
-                  controls={false}
-                  style={{ width: "40%" }}
-                  formatter={(value) =>
-                    value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
-                  }
-                />
-              </Form.Item>
-              <Button type="primary" style={{ width: "100%" }}>
-                Áp dụng
-              </Button>
-            </div>
-            <Divider />
-            <div className="left__container--rate">
-              <p>Đánh giá</p>
-              <div className="left__container--start--wrap">
-                <Rate
-                  defaultValue={5}
-                  disabled
-                  className="left__container--rate--start"
-                />
+          <Form
+            name="filterPrice"
+            form={form}
+            onFinish={handleFilterPrice}
+            autoComplete="off"
+            layout="horizontal"
+            onValuesChange={(changeValues, values) =>
+              handleFilterValue(changeValues, values)
+            }
+          >
+            <article className="home__left--container">
+              <div>
+                Thể loại
+                <Form.Item name="category">
+                  <Checkbox.Group
+                    className="left__container--check"
+                    options={listCategory}
+                  />
+                </Form.Item>
               </div>
-              <div className="left__container--start--wrap">
-                <Rate
-                  defaultValue={4}
-                  disabled
-                  className="left__container--rate--start"
-                />
-                <span className="left__container--rate--text">Trở lên</span>
+              <Divider />
+              <div className="left__container--price">
+                <p>Khoảng giá</p>
+
+                <div className="left__container--price--form">
+                  <Form.Item
+                    name={["range", "from"]}
+                    className="left__container--price--input"
+                  >
+                    <InputNumber
+                      placeholder="₫ TỪ"
+                      controls={false}
+                      formatter={(value) =>
+                        value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item className="left__container--price--line"></Form.Item>
+                  <Form.Item
+                    name={["range", "to"]}
+                    className="left__container--price--input"
+                  >
+                    <InputNumber
+                      placeholder="₫ ĐẾN"
+                      controls={false}
+                      formatter={(value) =>
+                        value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                      }
+                    />
+                  </Form.Item>
+                </div>
+                <Button
+                  type="primary"
+                  style={{ width: "100%" }}
+                  onClick={() => form.submit()}
+                >
+                  Áp dụng
+                </Button>
               </div>
-              <div className="left__container--start--wrap">
-                <Rate
-                  defaultValue={3}
-                  disabled
-                  className="left__container--rate--start"
-                />
-                <span className="left__container--rate--text">Trở lên</span>
+              <Divider />
+              <div className="left__container--rate">
+                <p>Đánh giá</p>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={5}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                </div>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={4}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                  <span className="left__container--rate--text">Trở lên</span>
+                </div>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={3}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                  <span className="left__container--rate--text">Trở lên</span>
+                </div>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={2}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                  <span className="left__container--rate--text">Trở lên</span>
+                </div>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={1}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                  <span className="left__container--rate--text">Trở lên</span>
+                </div>
               </div>
-              <div className="left__container--start--wrap">
-                <Rate
-                  defaultValue={2}
-                  disabled
-                  className="left__container--rate--start"
-                />
-                <span className="left__container--rate--text">Trở lên</span>
-              </div>
-              <div className="left__container--start--wrap">
-                <Rate
-                  defaultValue={1}
-                  disabled
-                  className="left__container--rate--start"
-                />
-                <span className="left__container--rate--text">Trở lên</span>
-              </div>
-            </div>
-          </article>
+            </article>
+          </Form>
         </section>
         <section className="home__right col l-10 m-12 c-12">
           <header className="home__right--header c-0">
@@ -242,6 +299,7 @@ const Home = () => {
               total={totalPages}
               onChange={handlePageChange}
               pageSizeOptions={[5, 10, 15, 20]}
+              responsive
             />
           </footer>
         </section>

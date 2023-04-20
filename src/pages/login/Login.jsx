@@ -56,7 +56,6 @@ const Login = () => {
           className="login__form"
           autoComplete="off"
           layout="vertical "
-          initialValues={{ prefix: "+84" }}
         >
           <Form.Item
             onKeyDown={handleKeyDown}
