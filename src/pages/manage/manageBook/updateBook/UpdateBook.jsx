@@ -1,9 +1,22 @@
 import { useEffect, useState, useRef } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { Modal, Form, notification, message, Row, Col, Upload } from "antd";
+import {
+  Modal,
+  Form,
+  notification,
+  message,
+  Row,
+  Col,
+  Upload,
+  Input,
+} from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
-import { getAllCategories, postUploadImage } from "~/services/Api";
+import {
+  getAllCategories,
+  postUploadImage,
+  putUpdateBook,
+} from "~/services/Api";
 import FormInfor from "~/pages/manage/manageBook/components/form/";
 
 const UpdateBook = ({
@@ -21,11 +34,7 @@ const UpdateBook = ({
 
   const formRef = useRef(null);
   useEffect(() => {
-    // if (formRef.current) {
-    //   form.setFieldsValue(dataUpdateBook);
-    //   console.log(dataUpdateBook);
-    // }
-    if (dataUpdateBook._id) {
+    if (dataUpdateBook?._id) {
       const thumb = [
         {
           uid: uuidv4(),
@@ -69,7 +78,51 @@ const UpdateBook = ({
   }, [dataUpdateBook]);
 
   // submit form to update book
-  const onFinish = async (values) => {};
+  const onFinish = async (values) => {
+    const { _id, mainText, author, price, sold, quantity, category } = values;
+    if (dataImageThumb.length === 0) {
+      notification.error({
+        message: "Update book failed",
+        description: "Please upload image for thumbnail",
+      });
+      return;
+    }
+    if (dataImageSlider.length === 0) {
+      notification.error({
+        message: "Update book failed",
+        description: "Please upload image for slider",
+      });
+      return;
+    }
+    const thumbnail = dataImageThumb[0].name;
+    const slider = dataImageSlider.map((item) => item.name);
+    const res = await putUpdateBook(
+      _id,
+      thumbnail,
+      slider,
+      mainText,
+      author,
+      price,
+      sold,
+      quantity,
+      category
+    );
+
+    if (res && +res.statusCode === 200) {
+      notification.success({
+        message: "Update book successfully",
+        description: "You have updated the book successfully",
+      });
+      form.resetFields();
+      await getAllBook();
+      setOpenUpdateBook(false);
+    } else {
+      notification.error({
+        message: "Update book failed",
+        description: "you have update failed",
+      });
+    }
+  };
 
   // load images
   const [imageUrl, setImageUrl] = useState("");
@@ -194,7 +247,7 @@ const UpdateBook = ({
   return (
     <>
       <Modal
-        title="Add new book"
+        title="Update book"
         open={openUpdateBook}
         labelCol={{ span: 8 }}
         onOk={() => {
@@ -203,11 +256,11 @@ const UpdateBook = ({
         onCancel={handleCancelModal}
         width={"60vw"}
         maskClosable={false}
-        okText={"Create"}
+        okText={"Update"}
         cancelText={"Cancel"}
       >
         <Form
-          name="addNewBookForm"
+          name="updateBookForm"
           onFinish={onFinish}
           autoComplete="off"
           layout="vertical "
@@ -215,6 +268,11 @@ const UpdateBook = ({
           ref={formRef}
         >
           <Row gutter={24}>
+            <Col span={12}>
+              <Form.Item label="id" name="_id" hidden>
+                <Input />
+              </Form.Item>
+            </Col>
             <Col span={24}>
               <FormInfor listCategory={listCategory} />
             </Col>

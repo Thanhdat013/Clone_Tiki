@@ -14,6 +14,7 @@ import DetailItem from "~/pages/manage/components/detailItem";
 
 import AddNewBook from "~/pages/manage/manageBook/addNewBook";
 import UpdateBook from "~/pages/manage/manageBook/updateBook";
+import DeleteBook from "~/pages/manage/manageBook/deleteBook";
 
 import "./TableBookWithPaginate.scss";
 
@@ -146,16 +147,16 @@ const TableUserWithPaginate = () => {
       ),
     },
     {
+      title: "Quantity ",
+      dataIndex: "quantity",
+      width: "10%",
+      sorter: true,
+    },
+    {
       title: "Sold ",
       dataIndex: "sold",
       width: "10%",
 
-      sorter: true,
-    },
-    {
-      title: "Quantity ",
-      dataIndex: "quantity",
-      width: "10%",
       sorter: true,
     },
     {
@@ -225,12 +226,20 @@ const TableUserWithPaginate = () => {
     setOpenAddBook(true);
   };
 
-  // show add new book
+  // show update book
   const [openUpdateBook, setOpenUpdateBook] = useState(false);
   const [dataUpdateBook, setDataUpdateBook] = useState("");
   const showModalUpdate = (record) => {
     setOpenUpdateBook(true);
     setDataUpdateBook(record);
+  };
+
+  // show update book
+  const [openDeleteBook, setOpenDeleteBook] = useState(false);
+  const [dataDeleteBook, setDataDeleteBook] = useState("");
+  const showModalDelete = (record) => {
+    setOpenDeleteBook(true);
+    setDataDeleteBook(record);
   };
   return (
     <>
@@ -279,6 +288,13 @@ const TableUserWithPaginate = () => {
         setOpenUpdateBook={setOpenUpdateBook}
         dataUpdateBook={dataUpdateBook}
         setDataUpdateBook={setDataUpdateBook}
+      />
+      <DeleteBook
+        getAllBook={getAllBook}
+        openUpdateBook={openDeleteBook}
+        setOpenDeleteBook={setOpenDeleteBook}
+        dataDeleteBook={dataDeleteBook}
+        setDataDeleteBook={setDataDeleteBook}
       />
     </>
   );

@@ -1,4 +1,4 @@
-import { Modal, Form, Input, notification, message } from "antd";
+import { Modal, message } from "antd";
 import { deleteUser } from "~/services/Api";
 
 const DeleteUser = ({
