@@ -38,8 +38,8 @@ const Header = () => {
   };
   return (
     <header className="header grid  ">
-      <div className="header__container grid wide">
-        <div className="header__wrap row sm-gutter">
+      <div className="header__container row  grid wide">
+        <div className="header__wrap  m-12 c-12">
           <div className="header__logo col row  l-2 m-1 c-1">
             <img
               className="header__logo--img"

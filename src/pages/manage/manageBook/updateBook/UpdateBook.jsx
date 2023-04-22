@@ -189,7 +189,7 @@ const UpdateBook = ({
   const [previewImage, setPreviewImage] = useState("");
   const [previewTitle, setPreviewTitle] = useState("");
   const handlePreview = async (file) => {
-    if (!file.url) {
+    if (file.url) {
       setPreviewImage(file.url);
       setPreviewOpen(true);
       setPreviewTitle(

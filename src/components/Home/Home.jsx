@@ -22,7 +22,7 @@ const Home = () => {
   const listBooks = useSelector((state) => state.books.listBooksPaginate);
   const totalPages = useSelector((state) => state.books.totalPages);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sizePage, setSizePage] = useState(10);
+  const [sizePage, setSizePage] = useState(20);
   const [filterInput, setFilterInput] = useState("");
   const [arrangeColumn, SetArrangeColumn] = useState("sort=-sold");
 
@@ -164,6 +164,7 @@ const Home = () => {
   const navigate = useNavigate();
   const handleNavigateBook = (item) => {
     const slug = convertSlug(item.mainText);
+
     navigate(`/book/${slug}?id=${item._id}`);
   };
   return (

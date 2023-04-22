@@ -29,7 +29,7 @@ const booksSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getAllBookWithPaginate.fulfilled, (state, action) => {
       state.listBooksPaginate = action.payload.result;
-      state.totalPages = action?.payload?.meta?.total;
+      state.totalPages = action.payload?.meta?.total;
     });
   },
 });

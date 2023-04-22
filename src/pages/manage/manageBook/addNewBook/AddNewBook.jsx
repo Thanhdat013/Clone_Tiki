@@ -47,6 +47,8 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
       form.resetFields();
       await getAllBook();
       setOpenAddBook(false);
+      setDataImageSlider([]);
+      setDataImageThumb([]);
     } else {
       notification.error({
         message: "Create a new book failed",
@@ -59,6 +61,7 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
   const [imageUrl, setImageUrl] = useState("");
   const [loadingThumb, setLoadingThumb] = useState(false);
   const [loadingSlider, setLoadingSlider] = useState(false);
+
   const getBase64 = (img, callback) => {
     const reader = new FileReader();
     reader.addEventListener("load", () => callback(reader.result));

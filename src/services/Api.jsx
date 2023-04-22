@@ -118,3 +118,8 @@ export const putUpdateBook = (
 export const deleteBook = (id) => {
   return axios.delete(`/api/v1/book/${id}`);
 };
+
+// get data book details
+export const getBookDetail = (id) => {
+  return axios.get(`/api/v1/book/${id}`);
+};

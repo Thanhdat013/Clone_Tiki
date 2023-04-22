@@ -8,6 +8,7 @@ const ModalImage = ({
   images,
   setOpenModalImage,
   currentIndex,
+  dataBookDetail,
 }) => {
   const refGallery = useRef();
   const [activeIndex, setActiveIndex] = useState("");
@@ -40,7 +41,7 @@ const ModalImage = ({
             />
           </Col>
           <Col span={8}>
-            <span>SLider image</span>
+            <h4 style={{ marginBottom: "14px" }}>{dataBookDetail.mainText}</h4>
             <div>
               <Row gutter={[10, 10]}>
                 {images &&

@@ -2,7 +2,10 @@ import { Skeleton, Row, Col, Space } from "antd";
 
 const LoadingBookDetail = () => {
   return (
-    <Row gutter={[20, 20]} style={{ maxWidth: "1200px", margin: "auto" }}>
+    <Row
+      gutter={[20, 20]}
+      style={{ maxWidth: "1200px", marginLeft: "auto", marginRight: "auto" }}
+    >
       <Col md={10} sm={0} xs={0}>
         <Skeleton.Input
           active={true}
