@@ -45,6 +45,7 @@ const Header = () => {
               className="header__logo--img"
               src="https://salt.tikicdn.com/ts/upload/e4/49/6c/270be9859abd5f5ec5071da65fab0a94.png"
               alt="Tiki_logo"
+              onClick={() => navigate("/")}
             />
             <div className="header__logo--bar">
               <AiOutlineBars onClick={showDrawer} className="logo__bar--icon" />

@@ -1,0 +1,29 @@
+.bookInfor {
+  .bookInfor__container {
+    background-color: #fff;
+    width: 100%;
+    padding: 24px 12px;
+    border-radius: 4px;
+    margin-bottom: 36px;
+    margin-top: 36px;
+    .bookInfor__head {
+      margin-bottom: 12px;
+    }
+    .bookInfor__content--infor {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 8px;
+      .bookInfor__link {
+        color: #2489f4;
+        &:hover {
+          color: rgb(224, 66, 66);
+          cursor: pointer;
+        }
+      }
+    }
+    .bookInfor__content--footer {
+      margin-top: 8px;
+    }
+  }
+}

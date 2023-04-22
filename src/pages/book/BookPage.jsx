@@ -16,11 +16,13 @@ import { Rate } from "antd";
 import { useRef, useState } from "react";
 import ModalImage from "./modalImage/ModalImage";
 import LoadingBookDetail from "./loadingBookDetail/LoadingBookDetail";
+import BookInfor from "./bookInfor/BookInfor";
+import SlideBook from "./slideBook/SlideBook";
 
 const BookPage = () => {
   const [loadingBookDetail, setLoadingBookDetail] = useState(false);
   const [dataBookDetail, setDataBookDetail] = useState({});
-  const dispatch = useDispatch();
+  const [categoryBookDetail, setCategoryBookDetail] = useState("");
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   const id = params?.get("id"); // get book id
@@ -33,11 +35,11 @@ const BookPage = () => {
   const getDataBook = async () => {
     setLoadingBookDetail(true);
     const res = await getBookDetail(id);
-    if (res && res.data) {
-      let raw = res.data;
-      setDataBookDetail(res.data);
+    if (res && res?.data) {
+      let raw = res?.data;
+      console.log(res.data);
+      setDataBookDetail(res?.data);
       getImages(raw);
-      console.log(raw);
     }
     setLoadingBookDetail(false);
   };
@@ -62,17 +64,28 @@ const BookPage = () => {
         });
       });
     }
-    setImages(listSlide);
+    if (listSlide) setImages(listSlide);
   };
 
   const [quantityBook, setQuantityBook] = useState(1);
+  const currentQuantityBook = dataBookDetail.quantity - dataBookDetail.sold;
   const clickDecreaseBook = () => {
     if (quantityBook > 1) {
-      setQuantityBook(quantityBook - 1);
+      setQuantityBook(+quantityBook - 1);
     }
   };
   const clickIncreaseBook = () => {
-    setQuantityBook(quantityBook + 1);
+    if (quantityBook < +currentQuantityBook) {
+      setQuantityBook(+quantityBook + 1);
+      console.log(currentQuantityBook);
+      console.log(quantityBook);
+    }
+  };
+  const handleChangeQuantityBook = (e) => {
+    setQuantityBook(e.target.value);
+    if (e.target.value > +currentQuantityBook) {
+      setQuantityBook(+currentQuantityBook);
+    }
   };
   // image
   const refGallery = useRef();
@@ -87,7 +100,7 @@ const BookPage = () => {
   };
   return (
     <section className="bookPage">
-      {loadingBookDetail == false && (
+      {
         <div className="row grid wide">
           <div className="bookPage__container">
             <div className="bookPage__left col l-5 m-12 ">
@@ -145,7 +158,7 @@ const BookPage = () => {
 
                   <div className="bookPage__rate--right">
                     <strong className="bookPage__rate--right--number">
-                      512
+                      {Math.floor(dataBookDetail.sold * 1.5)}
                     </strong>
                     <span className="bookPage__rate--right--title">
                       Đánh giá
@@ -196,9 +209,9 @@ const BookPage = () => {
                         <AiOutlineLine />
                       </button>
                       <input
-                        type="text"
+                        type="number"
                         value={quantityBook}
-                        onChange={(e) => setQuantityBook(e.target.value)}
+                        onChange={handleChangeQuantityBook}
                         className="bookPage__quant--wrap--input"
                       />
                       <button
@@ -226,7 +239,7 @@ const BookPage = () => {
             </div>
           </div>
         </div>
-      )}
+      }
       <ModalImage
         openModalImage={openModalImage}
         images={images}
@@ -235,6 +248,8 @@ const BookPage = () => {
         dataBookDetail={dataBookDetail}
       />
       {loadingBookDetail && <LoadingBookDetail />}
+      <SlideBook dataBookDetail={dataBookDetail} />
+      <BookInfor dataBookDetail={dataBookDetail} />
     </section>
   );
 };
