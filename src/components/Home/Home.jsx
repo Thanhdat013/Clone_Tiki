@@ -248,8 +248,8 @@ const Home = () => {
             {listBooks &&
               listBooks?.length > 0 &&
               listBooks.map((item, index) => (
-                <div className="col l-2-4 m-4 c-6">
-                  <BookItem key={index} item={item} />
+                <div className="col l-2-4 m-4 c-6" key={index}>
+                  <BookItem item={item} />
                 </div>
               ))}
           </div>

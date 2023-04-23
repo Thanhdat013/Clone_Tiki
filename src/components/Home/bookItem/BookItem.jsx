@@ -1,7 +1,7 @@
 import "./BookItem.scss";
 import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
-const BookItem = ({ item }) => {
+const BookItem = ({ item, setQuantityBook }) => {
   // remove vietnamese
 
   const nonAccentVietnamese = (str) => {
@@ -50,6 +50,7 @@ const BookItem = ({ item }) => {
   const navigate = useNavigate();
   const handleNavigateBook = (item) => {
     const slug = convertSlug(item.mainText);
+    setQuantityBook(+1);
     navigate(`/book/${slug}?id=${item._id}`);
   };
   return (

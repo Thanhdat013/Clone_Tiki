@@ -18,6 +18,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
   const users = useSelector((state) => state.users.user);
+  const carts = useSelector((state) => state.orders.carts);
 
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
@@ -107,7 +108,7 @@ const Header = () => {
             <div className="header__user--cart">
               <AiOutlineShoppingCart className="user__cart--icon" />
               <div className="user__cart--quantity">
-                <Badge count={99} overflowCount={10}></Badge>
+                <Badge count={carts?.length} overflowCount={10}></Badge>
               </div>
             </div>
             {isAuthenticated ? (

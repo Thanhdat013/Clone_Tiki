@@ -6,7 +6,6 @@ import axios from "~/utils";
 const initialState = {
   listBooksPaginate: [],
   totalPages: "",
-
   isLoading: true,
 };
 

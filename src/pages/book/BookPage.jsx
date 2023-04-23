@@ -11,18 +11,20 @@ import {
   AiOutlinePlus,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
-
-import { Rate } from "antd";
+import { useNavigate } from "react-router-dom";
+import { Rate, message } from "antd";
 import { useRef, useState } from "react";
 import ModalImage from "./modalImage/ModalImage";
-import LoadingBookDetail from "./loadingBookDetail/LoadingBookDetail";
+import LoadingBookDetail from "./loadingBookDetail";
 import BookInfor from "./bookInfor/BookInfor";
 import SlideBook from "./slideBook/SlideBook";
+import { doAddBookAction } from "~/redux/reducer/orderReducer/orderSlice";
 
 const BookPage = () => {
-  const [loadingBookDetail, setLoadingBookDetail] = useState(false);
+  // lấy thông tin xem đã đăng nhập tài khoản hay là chưa
+  const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
+  const [isLoadingBookDetail, setIsLoadingBookDetail] = useState(false);
   const [dataBookDetail, setDataBookDetail] = useState({});
-  const [categoryBookDetail, setCategoryBookDetail] = useState("");
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   const id = params?.get("id"); // get book id
@@ -33,15 +35,14 @@ const BookPage = () => {
   }, [id]);
 
   const getDataBook = async () => {
-    setLoadingBookDetail(true);
+    setIsLoadingBookDetail(true);
     const res = await getBookDetail(id);
     if (res && res?.data) {
       let raw = res?.data;
-      console.log(res.data);
       setDataBookDetail(res?.data);
       getImages(raw);
     }
-    setLoadingBookDetail(false);
+    setIsLoadingBookDetail(false);
   };
   const [images, setImages] = useState([]);
   const getImages = (raw) => {
@@ -67,18 +68,15 @@ const BookPage = () => {
     if (listSlide) setImages(listSlide);
   };
 
+  // quantity order book
   const [quantityBook, setQuantityBook] = useState(1);
   const currentQuantityBook = dataBookDetail.quantity - dataBookDetail.sold;
-  const clickDecreaseBook = () => {
-    if (quantityBook > 1) {
+  const handleChangeButton = (type) => {
+    if (type === "DECREASE" && +quantityBook > 1) {
       setQuantityBook(+quantityBook - 1);
     }
-  };
-  const clickIncreaseBook = () => {
-    if (quantityBook < +currentQuantityBook) {
+    if (type === "INCREASE" && +quantityBook < +currentQuantityBook) {
       setQuantityBook(+quantityBook + 1);
-      console.log(currentQuantityBook);
-      console.log(quantityBook);
     }
   };
   const handleChangeQuantityBook = (e) => {
@@ -98,6 +96,23 @@ const BookPage = () => {
       setOpenModalImage(false);
     }
   };
+  // add to cart
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const handleAddToCart = (quantityBook, dataBookDetail) => {
+    if (isAuthenticated === false) {
+      navigate("/login");
+    }
+    dispatch(
+      doAddBookAction({
+        quantity: quantityBook,
+        detail: dataBookDetail,
+        _id: dataBookDetail._id,
+      })
+    );
+    message.success("Sản phẩm đã được thêm vào giỏ hàng ");
+  };
+
   return (
     <section className="bookPage">
       {
@@ -174,14 +189,12 @@ const BookPage = () => {
                 <div className="bookPage__right--price">
                   <div className="bookPage__price--wrap">
                     <div className="bookPage__price--old">
-                      {" "}
                       {new Intl.NumberFormat("vi-VN", {
                         style: "currency",
                         currency: "VND",
                       }).format(+dataBookDetail.price + 30000)}
                     </div>
                     <div className="bookPage__price--new">
-                      {" "}
                       {new Intl.NumberFormat("vi-VN", {
                         style: "currency",
                         currency: "VND",
@@ -204,7 +217,7 @@ const BookPage = () => {
                     <div className="bookPage__quant--wrap--count">
                       <button
                         className="bookPage__quant--wrap--btn"
-                        onClick={clickDecreaseBook}
+                        onClick={() => handleChangeButton("DECREASE")}
                       >
                         <AiOutlineLine />
                       </button>
@@ -216,7 +229,7 @@ const BookPage = () => {
                       />
                       <button
                         className="bookPage__quant--wrap--btn"
-                        onClick={clickIncreaseBook}
+                        onClick={() => handleChangeButton("INCREASE")}
                       >
                         <AiOutlinePlus />
                       </button>
@@ -229,7 +242,12 @@ const BookPage = () => {
                   </div>
                 </div>
                 <div className="bookPage__right--add">
-                  <button className="bookPage__add--btn">
+                  <button
+                    className="bookPage__add--btn"
+                    onClick={() =>
+                      handleAddToCart(quantityBook, dataBookDetail)
+                    }
+                  >
                     <AiOutlineShoppingCart className="bookPage__add--btn--icon" />
                     <span>Thêm vào giỏ hàng</span>
                   </button>
@@ -247,8 +265,11 @@ const BookPage = () => {
         currentIndex={currentIndex}
         dataBookDetail={dataBookDetail}
       />
-      {loadingBookDetail && <LoadingBookDetail />}
-      <SlideBook dataBookDetail={dataBookDetail} />
+      {isLoadingBookDetail && <LoadingBookDetail />}
+      <SlideBook
+        dataBookDetail={dataBookDetail}
+        setQuantityBook={setQuantityBook}
+      />
       <BookInfor dataBookDetail={dataBookDetail} />
     </section>
   );

@@ -9,8 +9,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 
-const SlideBook = ({ dataBookDetail }) => {
-  const getCategory = dataBookDetail.category;
+const SlideBook = ({ dataBookDetail, setQuantityBook }) => {
+  const getCategory = dataBookDetail?.category;
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -67,7 +67,7 @@ const SlideBook = ({ dataBookDetail }) => {
             listBooks?.length > 0 &&
             listBooks.map((item, index) => (
               <div key={index} className="l-12">
-                <BookItem item={item} />
+                <BookItem item={item} setQuantityBook={setQuantityBook} />
               </div>
             ))}
         </Slider>
