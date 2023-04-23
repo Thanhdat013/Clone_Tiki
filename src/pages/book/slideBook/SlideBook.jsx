@@ -1,69 +1,88 @@
 import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BookItem from "~/components/Home/bookItem";
 import "./SlideBook.scss";
-
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 
 const SlideBook = ({ dataBookDetail }) => {
   const getCategory = dataBookDetail.category;
 
-  const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
-    let query = `pageSize=5&current=${currentPage}&category=${getCategory}`;
+    let query = `pageSize=10&current=1&category=${getCategory}`;
     dispatch(getAllBookWithPaginate(query));
-  }, [getCategory, currentPage]);
+  }, [getCategory]);
 
   const listBooks = useSelector((state) => state?.books?.listBooksPaginate);
-
-  const [hide, setHide] = useState(true);
-  const nextSlide = () => {
-    if (currentPage < 2) {
-      console.log(currentPage);
-
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-
-  const prevSlide = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
+  const slider = useRef();
+  const settings = {
+    slidesToShow: 5,
+    slidesToScroll: 2,
+    arrows: false,
+    dots: true,
+    // autoplay: true,
+    infinite: true,
+    initialSlide: 0,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 5,
+          slidesToScroll: 5,
+          infinite: true,
+          dots: true,
+          focusOnSelect: true,
+        },
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 2,
+          initialSlide: 2,
+        },
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+        },
+      },
+    ],
   };
 
   return (
-    <>
-      <section className="slideBook row grid wide">
-        <div className="slideBook__container">
-          <AiOutlineLeft
-            className="slideBook__right--arrow"
-            onClick={prevSlide}
-          />
+    <div className="slideBook grid wide">
+      <div className="slideBook__container l-11">
+        <h4 className=" slider__title">SẢN PHẨM LIÊN QUAN</h4>
 
-          <AiOutlineRight
-            className="slideBook__left--arrow"
-            onClick={nextSlide}
-          />
-
-          <h4 className=" slider__title">SẢN PHẨM LIÊN QUAN</h4>
-          <div className=" slider__wrap ">
-            {listBooks &&
-              listBooks?.length > 0 &&
-              listBooks.map((slide, index) => {
-                return (
-                  <div className=" col l-2 c-0" key={index}>
-                    {" "}
-                    <BookItem item={slide} />
-                  </div>
-                );
-              })}
-          </div>
-        </div>
-      </section>
-    </>
+        <Slider ref={slider} {...settings}>
+          {listBooks &&
+            listBooks?.length > 0 &&
+            listBooks.map((item, index) => (
+              <div key={index} className="l-12">
+                <BookItem item={item} />
+              </div>
+            ))}
+        </Slider>
+        <AiOutlineRight
+          className=" slideBook__left--arrow"
+          onClick={() => {
+            slider?.current?.slickNext();
+          }}
+        />
+        <AiOutlineLeft
+          className="slideBook__right--arrow"
+          onClick={() => slider?.current?.slickPrev()}
+        />
+      </div>
+    </div>
   );
 };
 

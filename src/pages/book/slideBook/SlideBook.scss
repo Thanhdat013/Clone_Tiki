@@ -2,8 +2,11 @@
   position: relative;
   border-radius: 4px;
   background-color: #fff;
+  max-width: 1200px;
+  margin: auto;
   .slideBook__container {
-    margin: 24px 0 36px;
+    padding: 12px 0 36px;
+    margin: auto;
     .slideBook__left--arrow {
       position: absolute;
       top: 50%;
@@ -38,4 +41,11 @@
       justify-content: center;
     }
   }
+}
+
+.slick-slide > div {
+  margin: 0 10px;
+}
+.slick-list {
+  margin: 0 -10px;
 }
