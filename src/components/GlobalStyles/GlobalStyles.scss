@@ -51,6 +51,61 @@ a {
   text-decoration: none;
 }
 
+// for popover
+.popover__container {
+  .popover__content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 8px;
+    &:hover {
+      cursor: pointer;
+      background-color: #fafafa;
+    }
+    .popover__img {
+      height: 30px;
+      width: 30px;
+      background-position: 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      border: 1px solid rgba(0, 0, 0, 0.09);
+      flex-shrink: 0;
+    }
+    .popover__desc {
+      width: 200px;
+      font-size: 1.4rem;
+    }
+    .line-clamp {
+      -webkit-line-clamp: 1 !important;
+    }
+    .popover__price {
+      color: rgb(209, 60, 60);
+    }
+  }
+  .popover__footer {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    .popover__btn {
+      height: 34px;
+      padding: 0 15px;
+      min-width: 60px;
+      color: #fff;
+      position: relative;
+      overflow: visible;
+      outline: 0;
+      background: #ee4d2d;
+      flex-shrink: 0;
+      max-width: unset;
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
 // responsive
 .grid {
   width: 100%;

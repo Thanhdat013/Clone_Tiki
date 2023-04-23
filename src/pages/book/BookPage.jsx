@@ -23,13 +23,29 @@ import { doAddBookAction } from "~/redux/reducer/orderReducer/orderSlice";
 const BookPage = () => {
   // lấy thông tin xem đã đăng nhập tài khoản hay là chưa
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
+  const carts = useSelector((state) => state.orders.carts);
   const [isLoadingBookDetail, setIsLoadingBookDetail] = useState(false);
   const [dataBookDetail, setDataBookDetail] = useState({});
   let location = useLocation();
   let params = new URLSearchParams(location.search);
   const id = params?.get("id"); // get book id
+  // xử lý lấy số lượng sách đã được đặt theo id
 
-  // get data book
+  const [quantityBookOrder, setQuantityBookOrder] = useState(0);
+  const [indexSelected, setIndexSelected] = useState("");
+
+  //// ***  bị bug chưa giải quyết được
+  // useEffect(() => {
+  //   let currentIndexBook = carts?.findIndex((i) => i._id === id);
+  //   console.log(currentIndexBook);
+  //   if (currentIndexBook > -1) {
+  //     console.log(currentIndexBook);
+  //     setIndexSelected(+currentIndexBook);
+  //     // setQuantityBookOrder(carts[+indexSelected]?.quantity);
+  //     getDataBook();
+  //   }
+  // }, [+quantityBookOrder]);
+
   useEffect(() => {
     getDataBook();
   }, [id]);
@@ -110,7 +126,9 @@ const BookPage = () => {
         _id: dataBookDetail._id,
       })
     );
+
     message.success("Sản phẩm đã được thêm vào giỏ hàng ");
+    setQuantityBook(1);
   };
 
   return (
@@ -236,7 +254,9 @@ const BookPage = () => {
                     </div>
                     <p className="bookPage__quant--wrap--desc">
                       {`${
-                        dataBookDetail.quantity - dataBookDetail.sold
+                        dataBookDetail.quantity -
+                        dataBookDetail.sold -
+                        quantityBookOrder
                       } sản phẩm có sẵn`}
                     </p>
                   </div>

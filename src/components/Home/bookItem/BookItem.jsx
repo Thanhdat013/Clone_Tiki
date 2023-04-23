@@ -50,7 +50,7 @@ const BookItem = ({ item, setQuantityBook }) => {
   const navigate = useNavigate();
   const handleNavigateBook = (item) => {
     const slug = convertSlug(item.mainText);
-    setQuantityBook(+1);
+    // setQuantityBook(+1);
     navigate(`/book/${slug}?id=${item._id}`);
   };
   return (

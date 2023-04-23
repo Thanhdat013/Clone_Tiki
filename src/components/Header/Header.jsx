@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai";
-import { Badge, Drawer, message, Avatar } from "antd";
+import { Badge, Drawer, message, Avatar, Popover } from "antd";
 
 import "./Header.scss";
 
@@ -37,6 +37,42 @@ const Header = () => {
       navigate("./");
     }
   };
+
+  const contentPopover = () => {
+    return (
+      <section className="popover__container">
+        {carts &&
+          carts.length > 0 &&
+          carts.map((item) => (
+            <div className="popover__content" key={item._id}>
+              <img
+                src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
+                  item.detail?.thumbnail
+                }`}
+                alt="Item cart"
+                className="popover__img"
+              />
+              <p className="line-clamp popover__desc">
+                {item.detail?.mainText}
+              </p>
+              <div className="popover__price">
+                {" "}
+                {new Intl.NumberFormat("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).format(+item.detail.price)}
+              </div>
+            </div>
+          ))}
+
+        <div className="popover__footer">
+          {" "}
+          <button className="popover__btn">Xem giỏ hàng</button>
+        </div>
+      </section>
+    );
+  };
+
   return (
     <header className="header grid  ">
       <div className="header__container row  grid wide">
@@ -105,12 +141,24 @@ const Header = () => {
             </div>
           </div>
           <div className="header__user col l-3 m-1 c-2">
-            <div className="header__user--cart">
-              <AiOutlineShoppingCart className="user__cart--icon" />
-              <div className="user__cart--quantity">
-                <Badge count={carts?.length} overflowCount={10}></Badge>
+            <Popover
+              placement="bottomRight"
+              arrow
+              title="Thông tin giỏ hàng"
+              className="header__popover"
+              content={contentPopover}
+            >
+              <div className="header__user--cart">
+                <AiOutlineShoppingCart className="user__cart--icon" />
+                <div className="user__cart--quantity">
+                  <Badge
+                    count={carts?.length}
+                    overflowCount={10}
+                    size="small"
+                  ></Badge>
+                </div>
               </div>
-            </div>
+            </Popover>
             {isAuthenticated ? (
               <>
                 <div className="header__user--manage l-7">

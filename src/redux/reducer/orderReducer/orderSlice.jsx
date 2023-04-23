@@ -15,11 +15,19 @@ const orderSlice = createSlice({
       let carts = state.carts;
       const item = action.payload;
       let isExistedId = carts?.findIndex((c) => c._id === item._id);
-      console.log(item);
-      console.log(item.quantity);
+
       if (isExistedId > -1) {
         carts[isExistedId].quantity =
           +carts[isExistedId].quantity + item.quantity;
+        // set lại số lượng khi đặt vượt quá số lượng sản phẩm hiện có
+        const quantityRemain =
+          carts[isExistedId].detail.quantity -
+          carts[isExistedId].detail.sold -
+          carts[isExistedId].quantity;
+        console.log(quantityRemain);
+        if (carts[isExistedId].quantity > +quantityRemain) {
+          carts[isExistedId].quantity = +quantityRemain;
+        }
       } else {
         carts.push({
           quantity: item.quantity,
