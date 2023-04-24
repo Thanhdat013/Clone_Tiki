@@ -38,8 +38,33 @@ const orderSlice = createSlice({
       // update redux
       state.carts = carts;
     },
+    doUpdateBookAction: (state, action) => {
+      let carts = state.carts;
+      const item = action.payload;
+      let isExistedId = carts?.findIndex((c) => c._id === item._id);
+
+      if (isExistedId > -1) {
+        carts[isExistedId].quantity = item.quantity;
+        // set lại số lượng khi đặt vượt quá số lượng sản phẩm hiện có
+        const quantityRemain =
+          carts[isExistedId].detail.quantity -
+          carts[isExistedId].detail.sold -
+          carts[isExistedId].quantity;
+
+        if (carts[isExistedId].quantity > +quantityRemain) {
+          carts[isExistedId].quantity = +quantityRemain;
+        }
+      }
+
+      state.carts = carts;
+    },
+
+    doDeleteBookAction: (state, action) => {
+      state.carts = state.carts.filter((c) => c._id !== action.payload._id);
+    },
   },
 });
 
 export default orderSlice.reducer;
-export const { doAddBookAction } = orderSlice.actions;
+export const { doAddBookAction, doUpdateBookAction, doDeleteBookAction } =
+  orderSlice.actions;

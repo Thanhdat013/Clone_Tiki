@@ -1,137 +1,42 @@
 .cart {
   background-color: #f5f5fa;
-  .cart__container {
-    min-height: 80vh;
-    .cart__left {
-      padding: 24px 0;
-      .cart__left--content {
-        background-color: #fff;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        border-radius: 4px;
-        padding: 16px 8px 16px 12px;
-        border: 1px solid #fbfbfb;
-        margin-top: 12px;
-        .cart__left--checked {
-          width: 5%;
-        }
-        .cart__left--img {
-          height: 70px;
-          width: 70px;
-          background-position: 50%;
-          background-size: cover;
-          background-repeat: no-repeat;
-          border: 1px solid rgba(0, 0, 0, 0.09);
-          flex-shrink: 0;
-          max-width: 10%;
-        }
-        .cart__left--desc--header {
-          width: 35%;
-        }
-        .cart__left--desc {
-          width: 45%;
-        }
-        .line-clamp {
-          -webkit-line-clamp: 1;
-        }
-        .cart__left--price {
-          width: 10%;
-          text-align: center;
-        }
-        .cart__left--quant {
-          text-align: center;
-          width: 10%;
-        }
-        .cart__left--total {
-          width: 15%;
-          text-align: center;
-        }
-        .cart__left--delete {
-          width: 10%;
-          text-align: center;
-          cursor: pointer;
-          &:hover {
-            color: #ff0000;
-          }
-        }
-      }
+  min-height: 80vh;
+  .cart__empty {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    .cart__empty--img {
+      background-position: 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 10rem;
+      height: 10rem;
+      background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/9bdd8040b334d31946f49e36beaf32db.png);
     }
-    .cart__right {
-      //   margin-left: 24px;
-      //   position: fixed;
-      padding: 24px 0 12px 24px;
-      //   box-shadow: 16px 0px 8px rgba(0, 0, 0, 0.07);
-      .cart__right--wrap {
-        width: 100%;
-        margin-top: 12px;
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-        padding: 24px 12px 0;
-        gap: 8px;
-        border-radius: 4px;
-        .cart__right--price {
-          display: flex;
-          justify-content: space-between;
-          flex-direction: row;
-          .cart__right--provisional {
-            display: flex;
-            flex-direction: row;
-          }
-          .cart__right--price--total {
-            font-size: 2rem;
-            font-weight: 500;
-            color: #ee4d2d;
-          }
-        }
-        .cart__right--btn {
-          height: 34px;
-          padding: 0 15px;
-          width: 100%;
-          color: #fff;
-          position: relative;
-          overflow: visible;
-          outline: 0;
-          background: #ee4d2d;
-          flex-shrink: 0;
-          max-width: unset;
-          border-radius: 4px;
-          margin-bottom: 24px;
-          &:hover {
-            opacity: 0.8;
-            cursor: pointer;
-          }
-        }
-      }
+    .cart__empty--title {
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 1.875rem;
+      line-height: 1rem;
+      margin-top: 1.125rem;
     }
-  }
-}
-
-/*  Tablet */
-@media (min-width: 740px) and (max-width: 1025px) {
-  .cart {
-    .cart__container {
-      .cart__right {
-        padding-left: 0;
-      }
-    }
-  }
-}
-// mobile
-@media (max-width: 740px) {
-  .cart {
-    .cart__container {
-      .cart__left {
-        padding: 0 8px;
-        .cart__left--content {
-          .cart__left--img {
-            display: none;
-          }
-        }
-      }
-      .cart__right {
-        padding: 0 8px;
+    .cart__empty--btn {
+      height: 34px;
+      padding: 0 15px;
+      width: 160px;
+      color: #fff;
+      position: relative;
+      overflow: visible;
+      outline: 0;
+      background: #ee4d2d;
+      flex-shrink: 0;
+      max-width: unset;
+      border-radius: 4px;
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
       }
     }
   }
