@@ -67,7 +67,9 @@ const Header = () => {
 
         <div className="popover__footer">
           {" "}
-          <button className="popover__btn">Xem giỏ hàng</button>
+          <button className="popover__btn" onClick={() => navigate("/cart")}>
+            Xem giỏ hàng
+          </button>
         </div>
       </section>
     );

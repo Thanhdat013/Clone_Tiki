@@ -72,11 +72,11 @@ a {
       flex-shrink: 0;
     }
     .popover__desc {
-      width: 200px;
+      width: 240px;
       font-size: 1.4rem;
     }
     .line-clamp {
-      -webkit-line-clamp: 1 !important;
+      -webkit-line-clamp: 1;
     }
     .popover__price {
       color: rgb(209, 60, 60);

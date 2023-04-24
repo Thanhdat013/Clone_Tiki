@@ -20,6 +20,7 @@ import Admin from "~/pages/admin/admin/";
 import ProtectedPage from "~/pages/protectedPage/protectedPage";
 import ManageBook from "~/pages/manage/manageBook";
 import ManageUser from "~/pages/manage/manageUser";
+import Cart from "~/pages/cart";
 import "./App.scss";
 
 const Layout = () => {
@@ -77,6 +78,10 @@ const router = createBrowserRouter([
       {
         path: "book/:slug",
         element: <BookPage />,
+      },
+      {
+        path: "cart",
+        element: <Cart />,
       },
     ],
   },
