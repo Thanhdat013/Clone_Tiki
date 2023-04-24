@@ -1,6 +1,46 @@
 .cartOrder {
   background-color: #f5f5fa;
-
+  min-height: 80vh;
+  // cart empty
+  .cartOrder__empty {
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    .cartOrder__empty--img {
+      background-position: 50%;
+      background-size: cover;
+      background-repeat: no-repeat;
+      width: 10rem;
+      height: 10rem;
+      background-image: url(https://deo.shopeemobile.com/shopee/shopee-pcmall-live-sg/9bdd8040b334d31946f49e36beaf32db.png);
+    }
+    .cartOrder__empty--title {
+      color: rgba(0, 0, 0, 0.4);
+      font-size: 1.875rem;
+      line-height: 1rem;
+      margin-top: 1.125rem;
+    }
+    .cartOrder__empty--btn {
+      height: 34px;
+      padding: 0 15px;
+      width: 160px;
+      color: #fff;
+      position: relative;
+      overflow: visible;
+      outline: 0;
+      background: #ee4d2d;
+      flex-shrink: 0;
+      max-width: unset;
+      border-radius: 4px;
+      &:hover {
+        opacity: 0.8;
+        cursor: pointer;
+      }
+    }
+  }
   // cartStart not empty
   .cartOrder__container {
     min-height: 80vh;

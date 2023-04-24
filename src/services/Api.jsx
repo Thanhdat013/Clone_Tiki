@@ -123,3 +123,8 @@ export const deleteBook = (id) => {
 export const getBookDetail = (id) => {
   return axios.get(`/api/v1/book/${id}`);
 };
+
+// send request order
+export const postDataOrder = (data) => {
+  return axios.post("/api/v1/order", { ...data });
+};

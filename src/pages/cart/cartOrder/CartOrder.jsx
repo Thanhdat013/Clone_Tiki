@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState, useRef } from "react";
 
-import { Checkbox, Form, Input, Button, Divider } from "antd";
+import { Checkbox, Form, Input, Button, Divider, message } from "antd";
 import "./CartOrder.scss";
 import { useNavigate } from "react-router-dom";
+import { postDataOrder } from "~/services/Api";
+import { doOrderBookAction } from "~/redux/reducer/orderReducer/orderSlice";
 
 const CartOrder = ({ setCurrentStep }) => {
   const carts = useSelector((state) => state.orders.carts);
@@ -21,8 +23,32 @@ const CartOrder = ({ setCurrentStep }) => {
 
   const dispatch = useDispatch();
 
-  const onFinish = (values) => {
-    console.log("Success:", values);
+  const onFinish = async (values) => {
+    const dataDetail = carts.map((item) => ({
+      bookName: item.detail.mainText,
+      quantity: item.quantity,
+      _id: item._id,
+    }));
+
+    const dataOrder = {
+      name: values.fullName,
+      address: values.address,
+      phone: values.phone,
+      totalPrice: totalPrice,
+      detail: dataDetail,
+    };
+
+    const res = await postDataOrder(dataOrder);
+    if (res && res.data) {
+      dispatch(doOrderBookAction());
+      setCurrentStep(3);
+      message.success("Bạn đã đặt hàng thành công");
+    } else {
+      message.error({
+        message: "Đã có lỗi xảy ra",
+        description: res.message,
+      });
+    }
   };
   const formRef = useRef(null);
   useEffect(() => {
@@ -31,12 +57,7 @@ const CartOrder = ({ setCurrentStep }) => {
     }
   }, [user]);
 
-  const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
-  };
-
   const { TextArea } = Input;
-  const handleBuyItem = () => {};
   return (
     <section className="cartOrder">
       {carts?.length > 0 && (
@@ -98,7 +119,6 @@ const CartOrder = ({ setCurrentStep }) => {
                 form={form}
                 name="InforUser"
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
                 autoComplete="off"
                 layout="vertical"
                 initialValues={{ checked: true }}
@@ -194,7 +214,7 @@ const CartOrder = ({ setCurrentStep }) => {
                 </Form.Item>
                 <Form.Item>
                   <Button
-                    onClick={() => setCurrentStep(3)}
+                    onClick={() => form.submit()}
                     htmlType="submit"
                     className="cartOrder__right--btn "
                   >

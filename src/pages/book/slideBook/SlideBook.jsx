@@ -30,7 +30,7 @@ const SlideBook = ({ dataBookDetail, setQuantityBook }) => {
     initialSlide: 0,
     responsive: [
       {
-        breakpoint: 1024,
+        breakpoint: 1025,
         settings: {
           slidesToShow: 5,
           slidesToScroll: 5,
@@ -40,18 +40,17 @@ const SlideBook = ({ dataBookDetail, setQuantityBook }) => {
         },
       },
       {
-        breakpoint: 600,
+        breakpoint: 1024,
         settings: {
-          slidesToShow: 2,
-          slidesToScroll: 2,
-          initialSlide: 2,
+          slidesToShow: 3,
+          slidesToScroll: 3,
         },
       },
       {
-        breakpoint: 480,
+        breakpoint: 739,
         settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
+          slidesToShow: 2,
+          slidesToScroll: 2,
         },
       },
     ],
@@ -66,7 +65,7 @@ const SlideBook = ({ dataBookDetail, setQuantityBook }) => {
           {listBooks &&
             listBooks?.length > 0 &&
             listBooks.map((item, index) => (
-              <div key={index} className="l-12">
+              <div key={index} className="l-12 m-12 c-12  slider__item">
                 <BookItem item={item} setQuantityBook={setQuantityBook} />
               </div>
             ))}

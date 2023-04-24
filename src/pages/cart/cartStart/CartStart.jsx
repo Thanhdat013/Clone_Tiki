@@ -40,7 +40,7 @@ const CartStart = ({ setCurrentStep }) => {
 
   return (
     <section className="cartStart">
-      {/* {carts.length === 0 && (
+      {carts.length === 0 && (
         <div className="cartStart__empty">
           <div className="cartStart__empty--img"></div>
           <div className="cartStart__empty--title">
@@ -53,17 +53,12 @@ const CartStart = ({ setCurrentStep }) => {
             Mua ngay
           </button>
         </div>
-      )} */}
+      )}
 
       {carts?.length > 0 && (
         <div className="cartStart__container grid wide row">
           <section className="cartStart__left l-9 m-12 c-12  ">
             <div className="cartStart__left--content l-12">
-              {/* <Checkbox
-              onChange={onCheckAllChange}
-              checked={checkAll}
-              className="cartStart__left--checked"
-            ></Checkbox> */}
               <div className="l-2 c-1">Sản phẩm</div>
               <p className="cartStart__left--desc--header"></p>
               <div className="cartStart__left--price ">Đơn giá</div>

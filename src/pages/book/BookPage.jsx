@@ -131,11 +131,26 @@ const BookPage = () => {
     setQuantityBook(1);
   };
 
+  const handleBuyItem = (quantityBook, dataBookDetail) => {
+    if (isAuthenticated === false) {
+      navigate("/login");
+    }
+    dispatch(
+      doAddBookAction({
+        quantity: quantityBook,
+        detail: dataBookDetail,
+        _id: dataBookDetail._id,
+      })
+    );
+    setQuantityBook(1);
+    navigate("/cart");
+  };
+
   return (
     <section className="bookPage">
       {
         <div className="row grid wide">
-          <div className="bookPage__container">
+          <div className="bookPage__container row">
             <div className="bookPage__left col l-5 m-12 ">
               {" "}
               <div className="display-pc">
@@ -271,7 +286,12 @@ const BookPage = () => {
                     <AiOutlineShoppingCart className="bookPage__add--btn--icon" />
                     <span>Thêm vào giỏ hàng</span>
                   </button>
-                  <button className="bookPage__add--buy">Mua ngay</button>
+                  <button
+                    onClick={() => handleBuyItem(quantityBook, dataBookDetail)}
+                    className="bookPage__add--buy"
+                  >
+                    Mua ngay
+                  </button>
                 </div>
               </div>
             </div>

@@ -119,6 +119,7 @@ const Header = () => {
                     </li>
                   )}
                   <li className="logo__bar--item">Quản lý tài khoản</li>
+                  <li className="logo__bar--item">Lịch sử mua hàng</li>
                   <li className="logo__bar--item">Cài đặt</li>
                 </ul>
                 <ul className="logo__bar--list">
@@ -176,12 +177,13 @@ const Header = () => {
                   {users.fullName}
                   <ul className="header__user--list">
                     <li className="header__user--item">Quản lý tài khoản</li>
+                    <li className="header__user--item">Lịch sử mua hàng</li>
                     {users.role === "ADMIN" && (
                       <li
                         onClick={() => navigate("/admin")}
                         className="header__user--item"
                       >
-                        Admin
+                        Trang quản trị
                       </li>
                     )}
                     <li onClick={handleLogOut} className="header__user--item">
