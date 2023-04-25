@@ -128,3 +128,10 @@ export const getBookDetail = (id) => {
 export const postDataOrder = (data) => {
   return axios.post("/api/v1/order", { ...data });
 };
+
+// get history order
+export const getHistoryOrder = (query) => {
+  // query = current=${currentPage}&pageSize=${pageSize}
+
+  return axios.get(`/api/v1/order?${query}`);
+};

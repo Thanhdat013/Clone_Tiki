@@ -22,6 +22,7 @@ import ManageBook from "~/pages/manage/manageBook";
 import ManageUser from "~/pages/manage/manageUser";
 import Cart from "~/pages/cart";
 import "./App.scss";
+import History from "~/pages/history/History";
 
 const Layout = () => {
   return (
@@ -82,6 +83,10 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+      },
+      {
+        path: "history",
+        element: <History />,
       },
     ],
   },

@@ -11,7 +11,6 @@ const CartOrder = ({ setCurrentStep }) => {
   const carts = useSelector((state) => state.orders.carts);
   const user = useSelector((state) => state.users.user);
 
-  const navigate = useNavigate();
   const [form] = Form.useForm();
   const [totalPrice, setTotalPrice] = useState(0);
   useEffect(() => {
@@ -215,7 +214,6 @@ const CartOrder = ({ setCurrentStep }) => {
                 <Form.Item>
                   <Button
                     onClick={() => form.submit()}
-                    htmlType="submit"
                     className="cartOrder__right--btn "
                   >
                     Thanh toán

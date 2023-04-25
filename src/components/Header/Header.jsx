@@ -40,37 +40,51 @@ const Header = () => {
 
   const contentPopover = () => {
     return (
-      <section className="popover__container">
-        {carts &&
-          carts.length > 0 &&
-          carts.map((item) => (
-            <div className="popover__content" key={item._id}>
-              <img
-                src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
-                  item.detail?.thumbnail
-                }`}
-                alt="Item cart"
-                className="popover__img"
-              />
-              <p className="line-clamp popover__desc">
-                {item.detail?.mainText}
-              </p>
-              <div className="popover__price">
-                {" "}
-                {new Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(+item.detail.price)}
-              </div>
-            </div>
-          ))}
+      <section className="popover">
+        {carts?.length == 0 && (
+          <div className="popover__empty">
+            <div className="popover__empty--img"></div>
+            <div className="cartStart__empty--title">chưa có sản phẩm</div>
+          </div>
+        )}
 
-        <div className="popover__footer">
-          {" "}
-          <button className="popover__btn" onClick={() => navigate("/cart")}>
-            Xem giỏ hàng
-          </button>
-        </div>
+        {carts && carts.length > 0 && (
+          <div className="popover__container">
+            {carts &&
+              carts.length > 0 &&
+              carts.map((item) => (
+                <div className="popover__content" key={item._id}>
+                  <img
+                    src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
+                      item.detail?.thumbnail
+                    }`}
+                    alt="Item cart"
+                    className="popover__img"
+                  />
+                  <p className="line-clamp popover__desc">
+                    {item.detail?.mainText}
+                  </p>
+                  <div className="popover__price">
+                    {" "}
+                    {new Intl.NumberFormat("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    }).format(+item.detail.price)}
+                  </div>
+                </div>
+              ))}
+
+            <div className="popover__footer">
+              {" "}
+              <button
+                className="popover__btn"
+                onClick={() => navigate("/cart")}
+              >
+                Xem giỏ hàng
+              </button>
+            </div>
+          </div>
+        )}
       </section>
     );
   };
@@ -119,7 +133,12 @@ const Header = () => {
                     </li>
                   )}
                   <li className="logo__bar--item">Quản lý tài khoản</li>
-                  <li className="logo__bar--item">Lịch sử mua hàng</li>
+                  <li
+                    className="logo__bar--item"
+                    onClick={() => navigate("/history")}
+                  >
+                    Lịch sử mua hàng
+                  </li>
                   <li className="logo__bar--item">Cài đặt</li>
                 </ul>
                 <ul className="logo__bar--list">
@@ -147,11 +166,14 @@ const Header = () => {
             <Popover
               placement="bottomRight"
               arrow
-              title="Thông tin giỏ hàng"
+              title={carts.length > 0 ? "Thông tin giỏ hàng" : ""}
               className="header__popover"
               content={contentPopover}
             >
-              <div className="header__user--cart">
+              <div
+                className="header__user--cart"
+                onClick={() => navigate("/cart")}
+              >
                 <AiOutlineShoppingCart className="user__cart--icon" />
                 <div className="user__cart--quantity">
                   <Badge
@@ -177,7 +199,12 @@ const Header = () => {
                   {users.fullName}
                   <ul className="header__user--list">
                     <li className="header__user--item">Quản lý tài khoản</li>
-                    <li className="header__user--item">Lịch sử mua hàng</li>
+                    <li
+                      className="header__user--item"
+                      onClick={() => navigate("/history")}
+                    >
+                      Lịch sử mua hàng
+                    </li>
                     {users.role === "ADMIN" && (
                       <li
                         onClick={() => navigate("/admin")}

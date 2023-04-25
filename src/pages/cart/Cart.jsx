@@ -14,26 +14,33 @@ const Cart = () => {
   return (
     <>
       <section className="cart">
-        <div className="grid wide cart__container">
-          <Steps
-            current={currentStep}
-            items={[
-              {
-                title: "Đơn hàng",
-              },
-              {
-                title: "Đặt hàng",
-              },
-              {
-                title: "Thành công",
-              },
-            ]}
-          />
+        {carts.length === 0 && <CartStart />}
+        {carts && carts.length > 0 && (
+          <div className="grid wide cart__container">
+            <Steps
+              current={currentStep}
+              items={[
+                {
+                  title: "Đơn hàng",
+                },
+                {
+                  title: "Đặt hàng",
+                },
+                {
+                  title: "Thành công",
+                },
+              ]}
+            />
 
-          {currentStep === +1 && <CartStart setCurrentStep={setCurrentStep} />}
-          {currentStep === +2 && <CartOrder setCurrentStep={setCurrentStep} />}
-          {currentStep === +3 && <CartFinish />}
-        </div>
+            {currentStep === +1 && (
+              <CartStart setCurrentStep={setCurrentStep} />
+            )}
+            {currentStep === +2 && (
+              <CartOrder setCurrentStep={setCurrentStep} />
+            )}
+            {currentStep === +3 && <CartFinish />}
+          </div>
+        )}
       </section>
     </>
   );
