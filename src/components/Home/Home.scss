@@ -96,6 +96,9 @@
         width: 100%;
       }
     }
+    .right__mobile {
+      display: none;
+    }
     .home__right--container {
       .right__container {
         width: 100%;
@@ -124,10 +127,49 @@ body {
 /* Mobile */
 @media (max-width: 739px) {
   .home {
+    .left__drawer {
+      .home__left--container {
+        .left__container--check {
+        }
+      }
+    }
+
     .home__right {
       .home__right--header {
         display: none;
       }
+      .right__mobile {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        margin-left: 12px;
+        cursor: pointer;
+        font-size: 2rem;
+        gap: 4px;
+        .right__filter-mobile {
+          color: rgb(46, 48, 180);
+        }
+      }
+    }
+  }
+
+  body {
+    .ant-checkbox-group {
+      display: flex;
+      flex-direction: column !important;
+      gap: 4px;
+    }
+    .ant-form label {
+      font-size: 1.6rem !important;
+    }
+    .ant-input-number {
+      width: 100%;
+    }
+    .ant-form-item-control-input {
+      min-height: 0 !important;
+    }
+    .ant-rate {
+      margin-right: 12px;
     }
   }
 }

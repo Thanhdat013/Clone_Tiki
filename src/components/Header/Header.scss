@@ -251,6 +251,9 @@ body {
     .header__container {
       .header__wrap {
         max-width: 100vw;
+        .header__logo {
+          margin: 0 12px;
+        }
         .header__search {
           margin-left: 6px;
           .header__search--wrap {
@@ -266,14 +269,14 @@ body {
           }
         }
         .header__user {
-          padding-left: 2px;
+          padding-left: 12px;
           display: flex;
           align-items: center;
           justify-content: flex-start;
           .header__user--cart {
             margin: 0;
             .user__cart--icon {
-              font-size: 2rem;
+              font-size: 2.5rem;
             }
           }
           .header__user--manage {

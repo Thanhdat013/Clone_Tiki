@@ -98,7 +98,7 @@ const Header = () => {
     <header className="header grid  ">
       <div className="header__container row  grid wide">
         <div className="header__wrap  m-12 c-12">
-          <div className="header__logo col row  l-2 m-1 c-1">
+          <div className="header__logo col row  l-2 m-1 c-1 ">
             <img
               className="header__logo--img"
               src="https://salt.tikicdn.com/ts/upload/e4/49/6c/270be9859abd5f5ec5071da65fab0a94.png"
@@ -161,7 +161,7 @@ const Header = () => {
               </Drawer>
             </div>
           </div>
-          <div className="header__search col  l-7 m-10 c-9">
+          <div className="header__search col  l-7 m-10 c-8 ">
             <div className="header__search--wrap row sm-gutter ">
               <span className="search__wrap--icon l-1 m-1 c-1">
                 <BsSearch className="search__wrap--icon--glasses" />

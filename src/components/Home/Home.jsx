@@ -9,6 +9,7 @@ import {
   Rate,
   Tabs,
   Pagination,
+  Drawer,
 } from "antd";
 import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
 import { getAllCategories } from "~/services/Api";
@@ -27,11 +28,9 @@ const Home = () => {
   const [arrangeColumn, SetArrangeColumn] = useState("sort=-sold");
 
   const dispatch = useDispatch();
-
   useEffect(() => {
     getAllBook();
   }, [sizePage, currentPage, filterInput, arrangeColumn]);
-
   const getAllBook = async () => {
     let query = `pageSize=${sizePage}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
     dispatch(getAllBookWithPaginate(query));
@@ -45,7 +44,6 @@ const Home = () => {
       setCurrentPage(1);
     }
   };
-  // list categories
   // get all categories
   const [listCategory, setListCategory] = useState();
   useEffect(() => {
@@ -58,16 +56,27 @@ const Home = () => {
       const allCategories = res.data.map((item) => {
         return { label: item, value: item };
       });
-
       setListCategory(allCategories);
     }
   };
 
   const handleFilterValue = (changeValues, values) => {
-    console.log("checked = ", changeValues, values);
-    if (changeValues.category && changeValues.category.length > 0) {
+    // for PC
+    if (changeValues?.category && changeValues?.category.length > 0) {
       const cate = changeValues.category.join(",");
       let filter = `&category=${cate}`;
+      console.log(filter);
+      setFilterInput(filter);
+    } else setFilterInput("");
+
+    // for mobile
+    if (
+      changeValues?.categoryMobile &&
+      changeValues?.categoryMobile.length > 0
+    ) {
+      const cate = changeValues.categoryMobile.join(",");
+      let filter = `&category=${cate}`;
+      console.log(filter);
       setFilterInput(filter);
     } else setFilterInput("");
   };
@@ -83,6 +92,14 @@ const Home = () => {
       }
       setFilterInput(price);
     }
+  };
+  // filter mobile
+  const handleCloseFilter = () => {
+    setOpenFilter(false);
+  };
+  const [openFilter, setOpenFilter] = useState(false);
+  const showDrawer = () => {
+    setOpenFilter(true);
   };
 
   // reset form
@@ -142,7 +159,7 @@ const Home = () => {
             <article className="home__left--container">
               <div>
                 Thể loại
-                <Form.Item name="category">
+                <Form.Item name={"category"}>
                   <Checkbox.Group
                     className="left__container--check"
                     options={listCategory}
@@ -234,6 +251,145 @@ const Home = () => {
             </article>
           </Form>
         </section>
+
+        <Drawer
+          title={
+            <div
+              style={{
+                width: "250px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+              className="left__header--title"
+            >
+              <span> Bộ lọc tìm kiếm</span>
+              <GrRefresh
+                className="left__header--refresh"
+                onClick={handleRefresh}
+              />
+            </div>
+          }
+          width={350}
+          onClose={handleCloseFilter}
+          open={openFilter}
+          placement={"left"}
+          keyboard={13}
+          className="left__drawer"
+        >
+          <Form
+            name="filterPriceMobile"
+            form={form}
+            onFinish={handleFilterPrice}
+            autoComplete="off"
+            onValuesChange={(changeValues, values) =>
+              handleFilterValue(changeValues, values)
+            }
+          >
+            <article className="home__left--container">
+              <div>
+                <p
+                  style={{
+                    fontSize: "1.6rem",
+                    fontWeight: "500",
+                    marginBottom: "12px",
+                  }}
+                >
+                  Thể loại
+                </p>
+                <Form.Item
+                  name="categoryMobile"
+                  className="left__container--check"
+                >
+                  <Checkbox.Group options={listCategory} />
+                </Form.Item>
+              </div>
+              <Divider />
+              <div className="left__container--price c-12">
+                <p>Khoảng giá</p>
+
+                <div className="left__container--price--form ">
+                  <Form.Item
+                    name={["range", "from"]}
+                    className="left__container--price--input  "
+                  >
+                    <InputNumber
+                      placeholder="₫ TỪ"
+                      controls={false}
+                      formatter={(value) =>
+                        value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                      }
+                    />
+                  </Form.Item>
+                  <Form.Item className="left__container--price--line"></Form.Item>
+                  <Form.Item
+                    name={["range", "to"]}
+                    className="left__container--price--input"
+                  >
+                    <InputNumber
+                      placeholder="₫ ĐẾN"
+                      controls={false}
+                      formatter={(value) =>
+                        value.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,")
+                      }
+                    />
+                  </Form.Item>
+                </div>
+                <Button
+                  type="primary"
+                  style={{ width: "100%" }}
+                  onClick={() => form.submit()}
+                >
+                  Áp dụng
+                </Button>
+              </div>
+              <Divider />
+              <div className="left__container--rate">
+                <p>Đánh giá</p>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={5}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                </div>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={4}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                  <span className="left__container--rate--text">Trở lên</span>
+                </div>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={3}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                  <span className="left__container--rate--text">Trở lên</span>
+                </div>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={2}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                  <span className="left__container--rate--text">Trở lên</span>
+                </div>
+                <div className="left__container--start--wrap">
+                  <Rate
+                    defaultValue={1}
+                    disabled
+                    className="left__container--rate--start"
+                  />
+                  <span className="left__container--rate--text">Trở lên</span>
+                </div>
+              </div>
+            </article>
+          </Form>
+        </Drawer>
+
         <section className="home__right col l-10 m-12 c-12">
           <header className="home__right--header c-0">
             <Tabs
@@ -244,6 +400,10 @@ const Home = () => {
               size="large"
             />
           </header>
+          <div className="right__mobile c-3" onClick={showDrawer}>
+            <AiOutlineFilter className="right__filter-mobile" />
+            <span>Lọc</span>
+          </div>
           <div className="home__right--container row sm-gutter ">
             {listBooks &&
               listBooks?.length > 0 &&
