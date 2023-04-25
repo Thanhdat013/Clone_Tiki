@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -6,6 +6,7 @@ import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai";
 import { Badge, Drawer, message, Avatar, Popover } from "antd";
 import ModalUpdateUser from "./modalUpdateUser";
+import { useDebounce } from "~/hooks";
 
 import "./Header.scss";
 
@@ -14,7 +15,7 @@ import {
   doLogOutAction,
 } from "~/redux/reducer/userReducer/userSlice";
 
-const Header = () => {
+const Header = ({ headerSearch, setHeaderSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
@@ -38,6 +39,21 @@ const Header = () => {
       navigate("./");
     }
   };
+
+  // search header
+  const handleSearchHeaderChange = (e) => {
+    console.log(e.target.value);
+    const searchValue = e.target.value;
+    if (searchValue.startsWith(" ")) {
+      // check không cho ký tự đầu tiên nhập vào là space
+      return;
+    } else {
+      setHeaderSearch(searchValue);
+    }
+  };
+  const debouncedValue = useDebounce(headerSearch, 500);
+
+  // delay search
 
   // modal for update user
   const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
@@ -167,6 +183,8 @@ const Header = () => {
                 <BsSearch className="search__wrap--icon--glasses" />
               </span>
               <input
+                value={headerSearch}
+                onChange={handleSearchHeaderChange}
                 type="text"
                 className="search__wrap--input l-9 m-11 c-11"
                 placeholder="Bạn tìm gì hôm nay"

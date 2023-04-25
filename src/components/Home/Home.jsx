@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import {
   Checkbox,
@@ -18,6 +19,8 @@ import { AiOutlineFilter } from "react-icons/ai";
 import { GrRefresh } from "react-icons/gr";
 import BookItem from "./bookItem/BookItem";
 
+import { useDebounce } from "~/hooks";
+
 const Home = () => {
   // get data book
   const listBooks = useSelector((state) => state?.books?.listBooksPaginate);
@@ -26,13 +29,14 @@ const Home = () => {
   const [sizePage, setSizePage] = useState(20);
   const [filterInput, setFilterInput] = useState("");
   const [arrangeColumn, SetArrangeColumn] = useState("sort=-sold");
+  const [filterSearchHeader, SetFilterSearchHeader] = useState("");
 
   const dispatch = useDispatch();
   useEffect(() => {
     getAllBook();
-  }, [sizePage, currentPage, filterInput, arrangeColumn]);
+  }, [sizePage, currentPage, filterInput, arrangeColumn, filterSearchHeader]);
   const getAllBook = async () => {
-    let query = `pageSize=${sizePage}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
+    let query = `pageSize=${sizePage}&current=${currentPage}&${filterInput}&${arrangeColumn}&${filterSearchHeader}`;
     dispatch(getAllBookWithPaginate(query));
   };
 
@@ -107,7 +111,21 @@ const Home = () => {
   const handleRefresh = () => {
     form.resetFields();
     setFilterInput("");
+    SetFilterSearchHeader("");
   };
+
+  // get value to filter from header search
+  const [headerSearch, setHeaderSearch] = useOutletContext();
+  const debouncedValue = useDebounce(headerSearch, 300);
+  useEffect(() => {
+    if (headerSearch) {
+      console.log(headerSearch);
+      const query = `&mainText=/${headerSearch}/i`;
+      SetFilterSearchHeader(query);
+    } else {
+      SetFilterSearchHeader("");
+    }
+  }, [debouncedValue]);
 
   const items = [
     {

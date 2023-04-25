@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useOutletContext } from "react";
+
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 
 import Login from "~/pages/login";
@@ -24,11 +25,13 @@ import Cart from "~/pages/cart";
 import "./App.scss";
 import History from "~/pages/history/History";
 
+// search from header to home
 const Layout = () => {
+  const [headerSearch, setHeaderSearch] = useState("");
   return (
     <div>
-      <Header />
-      <Outlet />
+      <Header headerSearch={headerSearch} setHeaderSearch={setHeaderSearch} />
+      <Outlet context={[headerSearch, setHeaderSearch]} />
       <Footer />
     </div>
   );
