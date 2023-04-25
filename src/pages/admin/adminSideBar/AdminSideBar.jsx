@@ -24,7 +24,6 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
   }
 
   const items = [
-    getItem("Admin", "1", <GrUserAdmin />),
     getItem("Dashboard", "2", <RxDashboard />),
 
     getItem("Manage user", "3", <AiOutlineUser />),

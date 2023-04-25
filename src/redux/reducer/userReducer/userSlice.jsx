@@ -73,7 +73,18 @@ const usersSlice = createSlice({
         id: "",
       };
     },
+    doUpdateAvatarAction: (state, action) => {
+      console.log(action);
+      state.user.avatar = action.payload.avatar;
+    },
+    doUpdateUser: (state, action) => {
+      console.log(action);
+      state.user.fullName = action.payload.fullName;
+      state.user.phone = action.payload.phone;
+      state.user.avatar = action.payload.avatar;
+    },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(getAllUser.fulfilled, (state, action) => {
@@ -90,7 +101,8 @@ export const {
   doLoginAction,
   doFetchAccount,
   doLogOutAction,
-  doAddUserAction,
   doUpdateUserAction,
+  doUpdateAvatarAction,
+  doUpdateUser,
 } = usersSlice.actions;
 export default usersSlice.reducer;

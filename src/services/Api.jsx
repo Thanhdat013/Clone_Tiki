@@ -40,16 +40,40 @@ export const postImportData = (data) => {
   return axios.post("/api/v1/user/bulk-create", data);
 };
 
-// update the user
+// update the user by admin
 export const putUpdateUser = (_id, fullName, phone) => {
   return axios.put("/api/v1/user", { _id, fullName, phone });
 };
 
-// delete the user
+// delete the user by admin
 export const deleteUser = (id) => {
   return axios.delete(`/api/v1/user/${id}`);
 };
 
+// update the user by user
+export const postUpdateAvatar = (fileImg) => {
+  const dataImage = new FormData();
+  dataImage.append("fileImg", fileImg);
+  return axios({
+    method: "post",
+    url: "/api/v1/file/upload",
+    data: dataImage,
+    headers: { "Content-Type": "multipart/form-data", "upload-type": "avatar" },
+  });
+};
+// update the user by user
+export const putUpdateUserByUser = (_id, fullName, phone, avatar) => {
+  return axios.put("/api/v1/user", { _id, fullName, phone, avatar });
+};
+
+// change password of user
+export const postChangePassword = (email, oldpass, newpass) => {
+  return axios.post("/api/v1/user/change-password", {
+    email,
+    oldpass,
+    newpass,
+  });
+};
 // ********************* Book =========================*/
 // get all categories
 export const getAllCategories = () => {

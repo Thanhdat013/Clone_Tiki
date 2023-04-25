@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai";
 import { Badge, Drawer, message, Avatar, Popover } from "antd";
+import ModalUpdateUser from "./modalUpdateUser";
 
 import "./Header.scss";
 
@@ -38,6 +39,10 @@ const Header = () => {
     }
   };
 
+  // modal for update user
+  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
+
+  // popover for cart
   const contentPopover = () => {
     return (
       <section className="popover">
@@ -129,10 +134,17 @@ const Header = () => {
                       onClick={() => navigate("/admin")}
                       className="logo__bar--item"
                     >
-                      Admin
+                      Trang quản trị
                     </li>
                   )}
-                  <li className="logo__bar--item">Quản lý tài khoản</li>
+                  <li
+                    className="logo__bar--item"
+                    onClick={() => {
+                      setIsModalOpenUpdate(true), onClose();
+                    }}
+                  >
+                    Quản lý tài khoản
+                  </li>
                   <li
                     className="logo__bar--item"
                     onClick={() => navigate("/history")}
@@ -198,7 +210,12 @@ const Header = () => {
                   />
                   {users.fullName}
                   <ul className="header__user--list">
-                    <li className="header__user--item">Quản lý tài khoản</li>
+                    <li
+                      className="header__user--item"
+                      onClick={() => setIsModalOpenUpdate(true)}
+                    >
+                      Quản lý tài khoản
+                    </li>
                     <li
                       className="header__user--item"
                       onClick={() => navigate("/history")}
@@ -232,6 +249,10 @@ const Header = () => {
           </div>
         </div>
       </div>
+      <ModalUpdateUser
+        open={isModalOpenUpdate}
+        setOpen={setIsModalOpenUpdate}
+      />
     </header>
   );
 };

@@ -33,31 +33,32 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
   };
   return (
     <header className="admin__header grid ">
-      <div className="admin__header--grid row no-gutters">
-        <div className="admin__header--bar l-2 m-2 c-2">
-          <AiOutlineBars
-            onClick={showDrawer}
-            className="admin__header--bar--btn"
-          />
-          {collapsed ? (
-            <AiOutlineMenuUnfold
-              className="admin__header--btn"
-              onClick={toggleCollapsed}
+      <div className="admin__header--grid row no-gutters  ">
+        <div className="admin__header--left l-4 m-4 c-12">
+          <div className="admin__header--bar l-2  m-2 c-2 ">
+            <AiOutlineBars
+              onClick={showDrawer}
+              className="admin__header--bar--btn"
             />
-          ) : (
-            <AiOutlineMenuFold
-              className="admin__header--btn"
-              onClick={toggleCollapsed}
-            />
-          )}
+            {collapsed ? (
+              <AiOutlineMenuUnfold
+                className="admin__header--btn"
+                onClick={toggleCollapsed}
+              />
+            ) : (
+              <AiOutlineMenuFold
+                className="admin__header--btn"
+                onClick={toggleCollapsed}
+              />
+            )}
+          </div>
           <img
             onClick={() => navigate("/")}
-            className="admin__header--logo"
+            className="admin__header--logo "
             src="https://salt.tikicdn.com/ts/upload/e4/49/6c/270be9859abd5f5ec5071da65fab0a94.png"
             alt="Tiki_logo"
           />
         </div>
-
         <div
           className={
             collapsed

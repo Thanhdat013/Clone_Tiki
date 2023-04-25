@@ -13,17 +13,20 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    .admin__header--bar {
-      position: relative;
-      .admin__header--btn {
-        margin-top: 12px;
-        margin-left: 12px;
-        font-size: 2.5rem;
-        cursor: pointer;
-      }
-      .admin__header--bar--btn {
-        display: none;
+    .admin__header--left {
+      display: flex;
+      align-items: center;
+      .admin__header--bar {
+        position: relative;
+        .admin__header--btn {
+          margin-top: 12px;
+          margin-left: 12px;
+          font-size: 2.5rem;
+          cursor: pointer;
+        }
+        .admin__header--bar--btn {
+          display: none;
+        }
       }
       .admin__header--logo {
         width: 57px;
@@ -79,21 +82,37 @@
 @media (max-width: 739px) {
   .admin__header {
     justify-content: flex-start;
-    .admin__header--bar {
-      .admin__header--bar--btn {
-        display: block;
-        margin-left: 12px;
-        font-size: 2.5rem;
-        cursor: pointer;
-      }
-      .admin__header--btn {
-        display: none;
+
+    .admin__header--grid {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .admin__header--left {
+        justify-content: space-between;
+        display: flex;
+        align-items: center;
+        position: relative;
+        .admin__header--bar {
+          .admin__header--bar--btn {
+            display: block;
+            margin-left: 12px;
+            font-size: 2.5rem;
+            cursor: pointer;
+          }
+          .admin__header--btn {
+            display: none;
+          }
+        }
+        .admin__header--logo {
+          margin-right: 24px;
+        }
       }
     }
+
     .admin__header--manage {
-      margin-left: 8px;
-      .admin__user--list {
-        left: 0;
+      .admin__header--user {
+        display: none;
       }
     }
   }
