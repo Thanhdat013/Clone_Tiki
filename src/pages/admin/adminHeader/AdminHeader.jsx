@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import {
   AiOutlineMenuFold,
   AiOutlineMenuUnfold,
@@ -12,6 +13,7 @@ import {
   doLogOutAction,
 } from "~/redux/reducer/userReducer/userSlice";
 import { message, Avatar } from "antd";
+import ModalUpdateUser from "~/components/Header/modalUpdateUser/ModalUpdateUser";
 
 const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
@@ -31,16 +33,18 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
       message.success("You have successfully logged out");
     }
   };
+  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
+
   return (
     <header className="admin__header grid ">
       <div className="admin__header--grid row no-gutters  ">
-        <div className="admin__header--left l-4 m-4 c-12">
+        <div className="admin__header--left l-1 m-4 c-12">
           <div className="admin__header--bar l-2  m-2 c-2 ">
             <AiOutlineBars
               onClick={showDrawer}
               className="admin__header--bar--btn"
             />
-            {collapsed ? (
+            {/* {collapsed ? (
               <AiOutlineMenuUnfold
                 className="admin__header--btn"
                 onClick={toggleCollapsed}
@@ -50,7 +54,7 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
                 className="admin__header--btn"
                 onClick={toggleCollapsed}
               />
-            )}
+            )} */}
           </div>
           <img
             onClick={() => navigate("/")}
@@ -74,7 +78,14 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
               />
               {fullName}
               <ul className="admin__user--list">
-                <li className="admin__user--item">Quản lý tài khoản</li>
+                <li
+                  className="admin__user--item"
+                  onClick={() => {
+                    setIsModalOpenUpdate(true), onClose();
+                  }}
+                >
+                  Quản lý tài khoản
+                </li>
                 <div onClick={handleLogOut} className="admin__user--item">
                   Đăng Xuất
                 </div>
@@ -91,6 +102,10 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
           )}
         </div>
       </div>
+      <ModalUpdateUser
+        open={isModalOpenUpdate}
+        setOpen={setIsModalOpenUpdate}
+      />
     </header>
   );
 };

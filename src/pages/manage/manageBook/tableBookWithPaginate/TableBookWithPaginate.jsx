@@ -22,7 +22,7 @@ const TableUserWithPaginate = () => {
   const totalPages = useSelector((state) => state.books.totalPages);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
+  const [pageSize, setPageSize] = useState(20);
   const [filterInput, setFilterInput] = useState("");
   const [arrangeColumn, SetArrangeColumn] = useState("sort=-updatedAt");
 
@@ -269,7 +269,7 @@ const TableUserWithPaginate = () => {
               showTotal: (total, range) => {
                 return (
                   <div>
-                    {range[0]}-{range[1]} trên {total} trang
+                    {range[0]}-{range[1]} trên {total} cuốn
                   </div>
                 );
               },

@@ -62,6 +62,7 @@ const LayoutAdmin = () => {
       />
       <div className="layout__admin">
         <AdminSideBar
+          setCollapsed={setCollapsed}
           collapsed={collapsed}
           open={open}
           showDrawer={showDrawer}

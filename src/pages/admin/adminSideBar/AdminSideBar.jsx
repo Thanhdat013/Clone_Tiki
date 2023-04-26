@@ -11,13 +11,20 @@ import {
   AiOutlineBars,
   AiOutlineArrowRight,
 } from "react-icons/ai";
+import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 
 import { FiBook } from "react-icons/fi";
 import { GrUserAdmin } from "react-icons/gr";
 import { Menu, Drawer } from "antd";
 import "./AdminSideBar.scss";
 
-const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
+const AdminSideBar = ({
+  collapsed,
+  onClose,
+  open,
+  showDrawer,
+  setCollapsed,
+}) => {
   const navigate = useNavigate();
   function getItem(label, key, icon, children, type) {
     return { key, icon, children, label, type };
@@ -52,9 +59,25 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
   }, []);
   // Add new book
   const [openAddBook, setOpenAddBook] = useState(false);
+  const toggleCollapsed = () => {
+    setCollapsed(!collapsed);
+  };
   return (
     <>
       <div className="admin__sidebar">
+        <div className="admin__sidebar--bar  ">
+          {collapsed ? (
+            <AiOutlineMenuUnfold
+              style={{ fontSize: "2.2rem" }}
+              onClick={toggleCollapsed}
+            />
+          ) : (
+            <AiOutlineMenuFold
+              onClick={toggleCollapsed}
+              style={{ fontSize: "2.2rem" }}
+            />
+          )}
+        </div>
         <div className="admin__sidebar--wrap">
           <Menu
             className="admin__sidebar--menu"

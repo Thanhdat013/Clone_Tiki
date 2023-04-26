@@ -1,5 +1,12 @@
 .admin__sidebar {
   flex-shrink: 0;
+  // background-color: #efefef;
+  .admin__sidebar--bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 12px;
+  }
   .admin__sidebar--wrap {
     // width: 250px;
     display: flex;
