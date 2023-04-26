@@ -1,0 +1,21 @@
+.order {
+  //   min-height: 80vh;
+  width: 100%;
+  background-color: #fafafa;
+  .manage__order {
+    width: 100%;
+    .manageOrder__header {
+      .manageOrder__header--wrap {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 24px;
+      }
+    }
+  }
+}
+body {
+  .ant-table-title {
+    background-color: #fff;
+  }
+}

@@ -154,7 +154,17 @@ export const postDataOrder = (data) => {
 };
 
 // get history order
-export const getHistoryOrder = (query) => {
+export const getHistory = () => {
+  return axios.get("/api/v1/history");
+};
+
+// get dashboard
+export const getDashboard = () => {
+  return axios.get("/api/v1/database/dashboard");
+};
+
+// get history order
+export const getManageOrder = (query) => {
   // query = current=${currentPage}&pageSize=${pageSize}
 
   return axios.get(`/api/v1/order?${query}`);

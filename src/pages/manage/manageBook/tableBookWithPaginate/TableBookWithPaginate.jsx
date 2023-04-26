@@ -265,6 +265,7 @@ const TableUserWithPaginate = () => {
               total: totalPages,
               pageSizeOptions: [2, 4, 6, 10],
               showSizeChanger: true,
+              responsive,
               showTotal: (total, range) => {
                 return (
                   <div>

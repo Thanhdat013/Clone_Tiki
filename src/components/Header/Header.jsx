@@ -6,8 +6,6 @@ import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai";
 import { Badge, Drawer, message, Avatar, Popover } from "antd";
 import ModalUpdateUser from "./modalUpdateUser";
-import { useDebounce } from "~/hooks";
-
 import "./Header.scss";
 
 import {
@@ -51,7 +49,6 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
       setHeaderSearch(searchValue);
     }
   };
-  const debouncedValue = useDebounce(headerSearch, 500);
 
   // delay search
 

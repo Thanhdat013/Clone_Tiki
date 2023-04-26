@@ -3,36 +3,23 @@ import { CiDeliveryTruck } from "react-icons/ci";
 import { useState, useEffect } from "react";
 import moment from "moment";
 import "./History.scss";
-import { getHistoryOrder } from "~/services/Api";
+import { getHistory } from "~/services/Api";
 
 const History = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [sizePage, setSizePage] = useState(10);
-  const [totalPage, setTotalPage] = useState();
   const [dataHistory, setDataHistory] = useState([]);
   const [dateHistory, SetDateHistory] = useState("sort=-createdAt");
 
   useEffect(() => {
-    getHistory();
-  }, [currentPage, sizePage, dateHistory]);
-  const getHistory = async () => {
-    let query = `current=${currentPage}&pageSize=${sizePage}&${dateHistory}`;
-    const res = await getHistoryOrder(query);
+    fetchHistory();
+  }, []);
+
+  const fetchHistory = async () => {
+    const res = await getHistory();
     if (res && res.data) {
       let raw = res.data;
       console.log(raw);
-      setCurrentPage(raw.meta.current);
-      setSizePage(raw.meta.pageSize);
-      setTotalPage(raw.meta.total);
-      setDataHistory(raw.result);
-    }
-  };
 
-  const handlePageChange = (page, pageSize) => {
-    if (page !== currentPage) setCurrentPage(page);
-    if (sizePage !== pageSize) {
-      setSizePage(pageSize);
-      setCurrentPage(1);
+      setDataHistory(raw);
     }
   };
 
@@ -129,16 +116,6 @@ const History = () => {
               </div>
             </div>
           ))}
-
-        <footer className="history--footer">
-          <Pagination
-            current={currentPage}
-            pageSize={sizePage}
-            total={totalPage}
-            onChange={handlePageChange}
-            responsive
-          />
-        </footer>
       </div>
     </section>
   );

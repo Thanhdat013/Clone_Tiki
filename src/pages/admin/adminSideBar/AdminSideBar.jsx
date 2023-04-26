@@ -24,17 +24,14 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
   }
 
   const items = [
-    getItem("Dashboard", "2", <RxDashboard />),
+    getItem("Dashboard", "/admin", <RxDashboard />),
 
-    getItem("Manage user", "3", <AiOutlineUser />),
-    getItem("Manage Book", "4", <FiBook />),
-    getItem("Manage order", "7", <AiOutlineDollar />),
+    getItem("Manage user", "manage-user", <AiOutlineUser />),
+    getItem("Manage Book", "manage-book", <FiBook />),
+    getItem("Manage order", "manage-order", <AiOutlineDollar />),
   ];
   const onClick = (e) => {
-    console.log(e);
-    if (+e.key === 3) navigate("manage-user");
-
-    if (+e.key === 4) navigate("manage-book");
+    navigate(e.key);
   };
 
   // Add new book
@@ -45,7 +42,7 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
         <div className="admin__sidebar--wrap">
           <Menu
             className="admin__sidebar--menu"
-            defaultSelectedKeys={["2"]}
+            defaultSelectedKeys={["/admin"]}
             mode="inline"
             theme="light"
             inlineCollapsed={collapsed}

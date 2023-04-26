@@ -21,6 +21,7 @@ import Admin from "~/pages/admin/admin/";
 import ProtectedPage from "~/pages/protectedPage/protectedPage";
 import ManageBook from "~/pages/manage/manageBook";
 import ManageUser from "~/pages/manage/manageUser";
+import ManageOrder from "~/pages/manage/manageOrder";
 import Cart from "~/pages/cart";
 import "./App.scss";
 import History from "~/pages/history/History";
@@ -106,6 +107,7 @@ const router = createBrowserRouter([
       { index: true, element: <Admin /> },
       { path: "manage-user", element: <ManageUser /> },
       { path: "manage-book", element: <ManageBook /> },
+      { path: "manage-order", element: <ManageOrder /> },
     ],
   },
 

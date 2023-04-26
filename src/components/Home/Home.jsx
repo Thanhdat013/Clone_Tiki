@@ -11,7 +11,10 @@ import {
   Tabs,
   Pagination,
   Drawer,
+  Dropdown,
+  Space,
 } from "antd";
+import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
 import { getAllCategories } from "~/services/Api";
 import "./Home.scss";
@@ -37,6 +40,7 @@ const Home = () => {
   }, [sizePage, currentPage, filterInput, arrangeColumn, filterSearchHeader]);
   const getAllBook = async () => {
     let query = `pageSize=${sizePage}&current=${currentPage}&${filterInput}&${arrangeColumn}&${filterSearchHeader}`;
+
     dispatch(getAllBookWithPaginate(query));
   };
 
@@ -66,20 +70,20 @@ const Home = () => {
 
   const handleFilterValue = (changeValues, values) => {
     // for PC
+    console.log(changeValues.categoryMobile);
     if (changeValues?.category && changeValues?.category.length > 0) {
       const cate = changeValues.category.join(",");
-      let filter = `&category=${cate}`;
+      let filter = `category=${cate}`;
       console.log(filter);
       setFilterInput(filter);
-    } else setFilterInput("");
-
+    }
     // for mobile
     if (
       changeValues?.categoryMobile &&
       changeValues?.categoryMobile.length > 0
     ) {
       const cate = changeValues.categoryMobile.join(",");
-      let filter = `&category=${cate}`;
+      let filter = `category=${cate}`;
       console.log(filter);
       setFilterInput(filter);
     } else setFilterInput("");
@@ -91,7 +95,11 @@ const Home = () => {
     if (values?.range?.from >= 0 && values?.range?.to >= 0) {
       let price = `price>=${values?.range?.from}&price<=${values?.range?.to}`;
       if (values?.category?.length > 0) {
-        const cate = changeValues.category.join(",");
+        const cate = values.category.join(",");
+        price += `&category=${cate}`;
+      }
+      if (values?.categoryMobile?.length > 0) {
+        const cate = values.categoryMobile.join(",");
         price += `&category=${cate}`;
       }
       setFilterInput(price);
@@ -120,7 +128,7 @@ const Home = () => {
   useEffect(() => {
     if (headerSearch) {
       console.log(headerSearch);
-      const query = `&mainText=/${headerSearch}/i`;
+      const query = `mainText=/${headerSearch}/i`;
       SetFilterSearchHeader(query);
     } else {
       SetFilterSearchHeader("");
@@ -409,12 +417,12 @@ const Home = () => {
         </Drawer>
 
         <section className="home__right col l-10 m-12 c-12">
-          <header className="home__right--header c-0">
+          <header className="home__right--header ">
             <Tabs
               defaultActiveKey="1"
               items={items}
               onChange={(key) => SetArrangeColumn(key)}
-              className="home__right--header--tab1"
+              className="home__right--header--tab"
               size="large"
             />
           </header>
@@ -422,6 +430,7 @@ const Home = () => {
             <AiOutlineFilter className="right__filter-mobile" />
             <span>Lọc</span>
           </div>
+
           <div className="home__right--container row sm-gutter ">
             {listBooks &&
               listBooks?.length > 0 &&
