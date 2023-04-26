@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { RxDashboard } from "react-icons/rx";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   AiOutlineUser,
   AiOutlineDollar,
@@ -31,9 +31,25 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
     getItem("Manage order", "manage-order", <AiOutlineDollar />),
   ];
   const onClick = (e) => {
+    console.log(e);
     navigate(e.key);
+    setKeySideBar(e.key);
   };
-
+  const [keySideBar, setKeySideBar] = useState("/admin");
+  const handleChange = (e) => {
+    console.log(e);
+  };
+  useEffect(() => {
+    if (window.location.pathname.includes("user")) {
+      setKeySideBar("manage-user");
+    }
+    if (window.location.pathname.includes("book")) {
+      setKeySideBar("manage-book");
+    }
+    if (window.location.pathname.includes("order")) {
+      setKeySideBar("manage-order");
+    }
+  }, []);
   // Add new book
   const [openAddBook, setOpenAddBook] = useState(false);
   return (
@@ -42,7 +58,8 @@ const AdminSideBar = ({ collapsed, onClose, open, showDrawer }) => {
         <div className="admin__sidebar--wrap">
           <Menu
             className="admin__sidebar--menu"
-            defaultSelectedKeys={["/admin"]}
+            selectedKeys={keySideBar}
+            onChange={handleChange}
             mode="inline"
             theme="light"
             inlineCollapsed={collapsed}

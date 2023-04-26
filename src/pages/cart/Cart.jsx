@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Steps } from "antd";
 import "./Cart.scss";
@@ -11,6 +11,12 @@ const Cart = () => {
   const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const carts = useSelector((state) => state.orders.carts);
+
+  useEffect(() => {
+    if (window.location.pathname === "/cart") setCurrentStep(1);
+    if (window.location.pathname === "/cart/payment") setCurrentStep(2);
+    if (window.location.pathname === "/cart/finish") setCurrentStep(3);
+  }, [window.location.pathname]);
   return (
     <>
       <section className="cart">
@@ -18,6 +24,7 @@ const Cart = () => {
         {carts && carts.length > 0 && (
           <div className="grid wide cart__container">
             <Steps
+              responsive={true}
               current={currentStep}
               items={[
                 {
@@ -38,6 +45,7 @@ const Cart = () => {
             {currentStep === +2 && (
               <CartOrder setCurrentStep={setCurrentStep} />
             )}
+
             {currentStep === +3 && <CartFinish />}
           </div>
         )}

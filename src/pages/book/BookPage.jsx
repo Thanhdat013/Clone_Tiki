@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -12,13 +12,14 @@ import {
   AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { Rate, message } from "antd";
+import { Breadcrumb, Rate, message } from "antd";
 import { useRef, useState } from "react";
 import ModalImage from "./modalImage/ModalImage";
 import LoadingBookDetail from "./loadingBookDetail";
 import BookInfor from "./bookInfor/BookInfor";
 import SlideBook from "./slideBook/SlideBook";
 import { doAddBookAction } from "~/redux/reducer/orderReducer/orderSlice";
+import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 
 const BookPage = () => {
   // lấy thông tin xem đã đăng nhập tài khoản hay là chưa
@@ -33,18 +34,6 @@ const BookPage = () => {
 
   const [quantityBookOrder, setQuantityBookOrder] = useState(0);
   const [indexSelected, setIndexSelected] = useState("");
-
-  //// ***  bị bug chưa giải quyết được
-  // useEffect(() => {
-  //   let currentIndexBook = carts?.findIndex((i) => i._id === id);
-  //   console.log(currentIndexBook);
-  //   if (currentIndexBook > -1) {
-  //     console.log(currentIndexBook);
-  //     setIndexSelected(+currentIndexBook);
-  //     // setQuantityBookOrder(carts[+indexSelected]?.quantity);
-  //     getDataBook();
-  //   }
-  // }, [+quantityBookOrder]);
 
   useEffect(() => {
     getDataBook();
@@ -145,13 +134,36 @@ const BookPage = () => {
     setQuantityBook(1);
     navigate("/cart");
   };
-
+  // random rate
+  function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+  }
   return (
     <section className="bookPage">
       {
         <div className="row grid wide">
-          <div className="bookPage__container row">
-            <div className="bookPage__left col l-5 m-12 ">
+          <Breadcrumb
+            className="breadcrumb l-12 m-12 c-0"
+            style={{ margin: "12px 0" }}
+            items={[
+              {
+                title: (
+                  <Link to="/">
+                    {" "}
+                    <HomeOutlined style={{ fontSize: "2rem" }} />
+                  </Link>
+                ),
+              },
+
+              {
+                title: (
+                  <span style={{ fontSize: "1.6rem" }}> "Detail book"</span>
+                ),
+              },
+            ]}
+          />
+          <div className="bookPage__container row  ">
+            <div className="bookPage__left col l-5 m-12 c-12">
               {" "}
               <div className="display-pc">
                 <ImageGallery
@@ -198,7 +210,7 @@ const BookPage = () => {
                   <div className="bookPage__rate--left">
                     <strong className="bookPage__rate--left--text">3</strong>
                     <Rate
-                      defaultValue={3}
+                      defaultValue={getRandomInt(5)}
                       disabled
                       className="bookPage__rate--left--start"
                     />

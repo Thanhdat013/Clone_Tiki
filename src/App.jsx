@@ -25,13 +25,16 @@ import ManageOrder from "~/pages/manage/manageOrder";
 import Cart from "~/pages/cart";
 import "./App.scss";
 import History from "~/pages/history/History";
-
+import CartStart from "~/pages/cart/cartStart";
+import CartOrder from "~/pages/cart/cartOrder";
+import CartFinish from "~/pages/cart/cartFinish";
 // search from header to home
 const Layout = () => {
   const [headerSearch, setHeaderSearch] = useState("");
   return (
     <div>
       <Header headerSearch={headerSearch} setHeaderSearch={setHeaderSearch} />
+
       <Outlet context={[headerSearch, setHeaderSearch]} />
       <Footer />
     </div>
@@ -87,6 +90,11 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: <Cart />,
+        children: [
+          { index: true, element: <CartStart /> },
+          { path: "payment", element: <CartOrder /> },
+          { path: "finish", element: <CartFinish /> },
+        ],
       },
       {
         path: "history",

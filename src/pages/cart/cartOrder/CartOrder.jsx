@@ -21,6 +21,7 @@ const CartOrder = ({ setCurrentStep }) => {
   }, [carts]);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     const dataDetail = carts.map((item) => ({
@@ -40,6 +41,7 @@ const CartOrder = ({ setCurrentStep }) => {
     const res = await postDataOrder(dataOrder);
     if (res && res.data) {
       dispatch(doOrderBookAction());
+      navigate("finish");
       setCurrentStep(3);
       message.success("Bạn đã đặt hàng thành công");
     } else {

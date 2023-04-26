@@ -53,6 +53,10 @@ const BookItem = ({ item, setQuantityBook }) => {
     // setQuantityBook(+1);
     navigate(`/book/${slug}?id=${item._id}`);
   };
+  // random rate
+  function getRandomInt(max) {
+    return Math.ceil(Math.random() * max);
+  }
   return (
     <div className="l-12 m-12 c-12" onClick={() => handleNavigateBook(item)}>
       <div className="bookItem__container  ">
@@ -75,7 +79,7 @@ const BookItem = ({ item, setQuantityBook }) => {
           </div>
           <div className="bookItem__container--rate">
             <Rate
-              defaultValue={4}
+              defaultValue={getRandomInt(5)}
               disabled
               className="bookItem__container--rate--start"
             />

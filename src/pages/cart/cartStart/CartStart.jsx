@@ -38,6 +38,12 @@ const CartStart = ({ setCurrentStep }) => {
     dispatch(doDeleteBookAction({ _id: item._id }));
   };
 
+  //payment
+  const clickPayment = () => {
+    navigate("payment");
+    setCurrentStep(2);
+  };
+
   return (
     <section className="cartStart">
       {carts.length === 0 && (
@@ -158,10 +164,7 @@ const CartStart = ({ setCurrentStep }) => {
                 </div>
               </div>
               <Divider />
-              <button
-                className="cartStart__right--btn"
-                onClick={() => setCurrentStep(2)}
-              >
+              <button className="cartStart__right--btn" onClick={clickPayment}>
                 {`Mua Hàng (${carts.length}) `}{" "}
               </button>
             </div>
