@@ -18,7 +18,7 @@ import ModalImage from "./modalImage/ModalImage";
 import LoadingBookDetail from "./loadingBookDetail";
 import BookInfor from "./bookInfor/BookInfor";
 import SlideBook from "./slideBook/SlideBook";
-import { doAddBookAction } from "~/redux/reducer/orderReducer/orderSlice";
+import { doAddCartAction } from "~/redux/reducer/orderReducer/orderSlice";
 import { HomeOutlined, UserOutlined } from "@ant-design/icons";
 
 const BookPage = () => {
@@ -33,8 +33,6 @@ const BookPage = () => {
   // xử lý lấy số lượng sách đã được đặt theo id
 
   const [quantityBookOrder, setQuantityBookOrder] = useState(0);
-  const [indexSelected, setIndexSelected] = useState("");
-
   useEffect(() => {
     getDataBook();
   }, [id]);
@@ -44,6 +42,7 @@ const BookPage = () => {
     const res = await getBookDetail(id);
     if (res && res?.data) {
       let raw = res?.data;
+      console.log(raw);
       setDataBookDetail(res?.data);
       getImages(raw);
     }
@@ -75,7 +74,7 @@ const BookPage = () => {
 
   // quantity order book
   const [quantityBook, setQuantityBook] = useState(1);
-  const currentQuantityBook = dataBookDetail.quantity - dataBookDetail.sold;
+  const currentQuantityBook = dataBookDetail.quantity;
   const handleChangeButton = (type) => {
     if (type === "DECREASE" && +quantityBook > 1) {
       setQuantityBook(+quantityBook - 1);
@@ -109,7 +108,7 @@ const BookPage = () => {
       navigate("/login");
     }
     dispatch(
-      doAddBookAction({
+      doAddCartAction({
         quantity: quantityBook,
         detail: dataBookDetail,
         _id: dataBookDetail._id,
@@ -125,7 +124,7 @@ const BookPage = () => {
       navigate("/login");
     }
     dispatch(
-      doAddBookAction({
+      doAddCartAction({
         quantity: quantityBook,
         detail: dataBookDetail,
         _id: dataBookDetail._id,
@@ -208,7 +207,7 @@ const BookPage = () => {
                 </h3>
                 <div className="bookPage__right--rate">
                   <div className="bookPage__rate--left">
-                    <strong className="bookPage__rate--left--text">3</strong>
+                    {/* <strong className="bookPage__rate--left--text">3</strong> */}
                     <Rate
                       defaultValue={getRandomInt(5)}
                       disabled
@@ -280,11 +279,7 @@ const BookPage = () => {
                       </button>
                     </div>
                     <p className="bookPage__quant--wrap--desc">
-                      {`${
-                        dataBookDetail.quantity -
-                        dataBookDetail.sold -
-                        quantityBookOrder
-                      } sản phẩm có sẵn`}
+                      {`${dataBookDetail.quantity} sản phẩm có sẵn`}
                     </p>
                   </div>
                 </div>

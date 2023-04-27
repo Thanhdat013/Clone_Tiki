@@ -11,7 +11,7 @@ const orderSlice = createSlice({
   initialState,
   reducers: {
     // set các giá trị khi order
-    doAddBookAction: (state, action) => {
+    doAddCartAction: (state, action) => {
       let carts = state.carts;
       const item = action.payload;
       let isExistedId = carts?.findIndex((c) => c._id === item._id);
@@ -21,9 +21,7 @@ const orderSlice = createSlice({
           +carts[isExistedId].quantity + item.quantity;
         // set lại số lượng khi đặt vượt quá số lượng sản phẩm hiện có
         const quantityRemain =
-          carts[isExistedId].detail.quantity -
-          carts[isExistedId].detail.sold -
-          carts[isExistedId].quantity;
+          carts[isExistedId].detail.quantity - carts[isExistedId].quantity;
         console.log(quantityRemain);
         if (carts[isExistedId].quantity > +quantityRemain) {
           carts[isExistedId].quantity = +quantityRemain;
@@ -38,7 +36,7 @@ const orderSlice = createSlice({
       // update redux
       state.carts = carts;
     },
-    doUpdateBookAction: (state, action) => {
+    doUpdateCartAction: (state, action) => {
       let carts = state.carts;
       const item = action.payload;
       let isExistedId = carts?.findIndex((c) => c._id === item._id);
@@ -47,9 +45,7 @@ const orderSlice = createSlice({
         carts[isExistedId].quantity = item.quantity;
         // set lại số lượng khi đặt vượt quá số lượng sản phẩm hiện có
         const quantityRemain =
-          carts[isExistedId].detail.quantity -
-          carts[isExistedId].detail.sold -
-          carts[isExistedId].quantity;
+          carts[isExistedId].detail.quantity - carts[isExistedId].quantity;
 
         if (carts[isExistedId].quantity > +quantityRemain) {
           carts[isExistedId].quantity = +quantityRemain;
@@ -59,10 +55,13 @@ const orderSlice = createSlice({
       state.carts = carts;
     },
 
-    doDeleteBookAction: (state, action) => {
+    doDeleteCartAction: (state, action) => {
       state.carts = state.carts.filter((c) => c._id !== action.payload._id);
     },
-    doOrderBookAction: (state, action) => {
+    doOrderCartAction: (state, action) => {
+      state.carts = [];
+    },
+    doClearCartAction: (state, action) => {
       state.carts = [];
     },
   },
@@ -70,8 +69,9 @@ const orderSlice = createSlice({
 
 export default orderSlice.reducer;
 export const {
-  doAddBookAction,
-  doUpdateBookAction,
-  doDeleteBookAction,
-  doOrderBookAction,
+  doAddCartAction,
+  doUpdateCartAction,
+  doDeleteCartAction,
+  doOrderCartAction,
+  doClearCartAction,
 } = orderSlice.actions;

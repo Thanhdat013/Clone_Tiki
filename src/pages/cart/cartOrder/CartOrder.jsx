@@ -5,7 +5,7 @@ import { Checkbox, Form, Input, Button, Divider, message } from "antd";
 import "./CartOrder.scss";
 import { useNavigate } from "react-router-dom";
 import { postDataOrder } from "~/services/Api";
-import { doOrderBookAction } from "~/redux/reducer/orderReducer/orderSlice";
+import { doOrderCartAction } from "~/redux/reducer/orderReducer/orderSlice";
 
 const CartOrder = ({ setCurrentStep }) => {
   const carts = useSelector((state) => state.orders.carts);
@@ -40,7 +40,7 @@ const CartOrder = ({ setCurrentStep }) => {
 
     const res = await postDataOrder(dataOrder);
     if (res && res.data) {
-      dispatch(doOrderBookAction());
+      dispatch(doOrderCartAction());
       navigate("finish");
       setCurrentStep(3);
       message.success("Bạn đã đặt hàng thành công");

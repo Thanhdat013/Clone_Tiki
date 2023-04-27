@@ -9,8 +9,6 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
   const [form] = Form.useForm();
   // submit form to create new book
   const onFinish = async (values) => {
-    console.log(dataImageThumb);
-    console.log(dataImageSlider);
     const { mainText, author, price, sold, quantity, category } = values;
     if (dataImageThumb.length === 0) {
       notification.error({
@@ -23,6 +21,13 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
       notification.error({
         message: "Create a new book failed",
         description: "Please upload image for slider",
+      });
+      return;
+    }
+    if (mainText.startsWith(" ")) {
+      notification.error({
+        message: "Create a new book failed",
+        description: "Tên sách không được bắt đầu bằng khoảng trắng",
       });
       return;
     }
@@ -42,7 +47,7 @@ const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
     if (res && res.statusCode === 201) {
       notification.success({
         message: "Create a new book successfully",
-        description: "you have created",
+        description: "Bạn đã tạo mới thành công",
       });
       form.resetFields();
       await getAllBook();

@@ -11,8 +11,6 @@ import {
   Tabs,
   Pagination,
   Drawer,
-  Dropdown,
-  Space,
 } from "antd";
 import { DownOutlined, UserOutlined } from "@ant-design/icons";
 import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
@@ -69,8 +67,9 @@ const Home = () => {
   };
 
   const handleFilterValue = (changeValues, values) => {
+    console.log(changeValues);
     // for PC
-    console.log(changeValues.categoryMobile);
+    console.log(changeValues.category);
     if (changeValues?.category && changeValues?.category.length > 0) {
       const cate = changeValues.category.join(",");
       let filter = `category=${cate}`;
@@ -86,7 +85,14 @@ const Home = () => {
       let filter = `category=${cate}`;
       console.log(filter);
       setFilterInput(filter);
-    } else setFilterInput("");
+    }
+    if (
+      (changeValues?.category && changeValues?.category.length === 0) ||
+      (changeValues?.categoryMobile &&
+        changeValues?.categoryMobile.length === 0)
+    ) {
+      setFilterInput("");
+    }
   };
 
   // filter price
@@ -426,7 +432,7 @@ const Home = () => {
               size="large"
             />
           </header>
-          <div className="right__mobile c-3" onClick={showDrawer}>
+          <div className="right__mobile m-3 c-3" onClick={showDrawer}>
             <AiOutlineFilter className="right__filter-mobile" />
             <span>Lọc</span>
           </div>

@@ -188,6 +188,8 @@ const TableUserWithPaginate = () => {
   const handleChange = (pagination, filters, sorter) => {
     let sorterClick = "";
     if (sorter && sorter.field) {
+      console.log(sorter);
+      console.log(sorter.field);
       sorter.order === "ascend"
         ? (sorterClick += `sort=${sorter.field}`)
         : (sorterClick += `sort=-${sorter.field}`);

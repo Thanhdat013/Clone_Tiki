@@ -6,6 +6,7 @@ import { BsSearch } from "react-icons/bs";
 import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai";
 import { Badge, Drawer, message, Avatar, Popover } from "antd";
 import ModalUpdateUser from "./modalUpdateUser";
+import { doClearCartAction } from "~/redux/reducer/orderReducer/orderSlice";
 import "./Header.scss";
 
 import {
@@ -33,6 +34,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
     console.log(res);
     if (+res.payload.statusCode === 201) {
       dispatch(doLogOutAction());
+      dispatch(doClearCartAction());
       message.success("You have successfully logged out");
       navigate("./");
     }

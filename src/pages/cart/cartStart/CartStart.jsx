@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { InputNumber, Checkbox, Divider } from "antd";
 import "./CartStart.scss";
 import {
-  doUpdateBookAction,
-  doDeleteBookAction,
+  doUpdateCartAction,
+  doDeleteCartAction,
 } from "~/redux/reducer/orderReducer/orderSlice";
 import { useNavigate } from "react-router-dom";
 
@@ -26,7 +26,7 @@ const CartStart = ({ setCurrentStep }) => {
     if (!value && value < 1) return;
     if (!isNaN(value)) {
       dispatch(
-        doUpdateBookAction({
+        doUpdateCartAction({
           quantity: value,
           detail: bookOrder,
           _id: bookOrder._id,
@@ -35,7 +35,7 @@ const CartStart = ({ setCurrentStep }) => {
     }
   };
   const handleDeleteItem = (item) => {
-    dispatch(doDeleteBookAction({ _id: item._id }));
+    dispatch(doDeleteCartAction({ _id: item._id }));
   };
 
   //payment
