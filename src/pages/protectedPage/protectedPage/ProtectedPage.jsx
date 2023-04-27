@@ -6,7 +6,10 @@ const CheckAdmin = ({ children }) => {
   const isAdminRoute = window.location.pathname.startsWith("/admin");
   const isRole = useSelector((state) => state.users.user.role);
 
-  if (isAdminRoute && isRole === "ADMIN") {
+  if (
+    (isAdminRoute && isRole === "ADMIN") || // để ai có quyên admin mới vào đc trang admin
+    (!isAdminRoute && (isRole === "ADMIN" || isRole === "USER")) // để cho ai đăng nhập mới vào đc trang giỏ hangg
+  ) {
     return children;
   }
 

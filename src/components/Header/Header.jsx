@@ -121,57 +121,101 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
             <div className="header__logo--bar">
               <AiOutlineBars onClick={showDrawer} className="logo__bar--icon" />
 
-              <Drawer
-                title={
-                  <Avatar
-                    size={78}
-                    src={
-                      users.avatar
-                        ? `http://localhost:8080/images/avatar/${users.avatar}`
-                        : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
+              {isAuthenticated ? (
+                <>
+                  <Drawer
+                    title={
+                      <Avatar
+                        size={78}
+                        src={
+                          users.avatar
+                            ? `http://localhost:8080/images/avatar/${users.avatar}`
+                            : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
+                        }
+                        className="logo__bar--avatar"
+                      />
                     }
-                    className="logo__bar--avatar"
-                  />
-                }
-                width={250}
-                closable={false}
-                onClose={onClose}
-                open={open}
-                placement={"left"}
-                keyboard={13}
-                extra={users.fullName}
-              >
-                <ul className="logo__bar--list">
-                  {users.role === "ADMIN" && (
-                    <li
-                      onClick={() => navigate("/admin")}
-                      className="logo__bar--item"
-                    >
-                      Trang quản trị
-                    </li>
-                  )}
-                  <li
-                    className="logo__bar--item"
-                    onClick={() => {
-                      setIsModalOpenUpdate(true), onClose();
-                    }}
+                    width={250}
+                    closable={false}
+                    onClose={onClose}
+                    open={open}
+                    placement={"left"}
+                    keyboard={13}
+                    extra={users.fullName}
                   >
-                    Quản lý tài khoản
-                  </li>
-                  <li
-                    className="logo__bar--item"
-                    onClick={() => navigate("/history")}
+                    <ul className="logo__bar--list">
+                      {users.role === "ADMIN" && (
+                        <li
+                          onClick={() => navigate("/admin")}
+                          className="logo__bar--item"
+                        >
+                          Trang quản trị
+                        </li>
+                      )}
+                      <li
+                        className="logo__bar--item"
+                        onClick={() => {
+                          setIsModalOpenUpdate(true), onClose();
+                        }}
+                      >
+                        Quản lý tài khoản
+                      </li>
+                      <li
+                        className="logo__bar--item"
+                        onClick={() => navigate("/history")}
+                      >
+                        Lịch sử mua hàng
+                      </li>
+                      <li className="logo__bar--item">Cài đặt</li>
+                    </ul>
+                    <ul className="logo__bar--list">
+                      <li onClick={handleLogOut} className="logo__bar--item">
+                        Đăng xuất
+                      </li>
+                    </ul>
+                  </Drawer>
+                </>
+              ) : (
+                <>
+                  <Drawer
+                    title={
+                      <Avatar
+                        size={78}
+                        src={
+                          "https://atplink.com/blog/wp-content/uploads/2021/06/z.jpg"
+                        }
+                        className="logo__bar--avatar"
+                      />
+                    }
+                    width={250}
+                    closable={false}
+                    onClose={onClose}
+                    open={open}
+                    placement={"left"}
+                    keyboard={13}
+                    extra={"Chào mừng bạn đến với Tiki"}
                   >
-                    Lịch sử mua hàng
-                  </li>
-                  <li className="logo__bar--item">Cài đặt</li>
-                </ul>
-                <ul className="logo__bar--list">
-                  <li onClick={handleLogOut} className="logo__bar--item">
-                    Đăng xuất
-                  </li>
-                </ul>
-              </Drawer>
+                    <ul className="logo__bar--list">
+                      <li
+                        style={{ backgroundColor: "#fadb14" }}
+                        className="logo__bar--item logo__bar--item--sign"
+                        onClick={() => navigate("/login")}
+                      >
+                        Đăng nhập
+                      </li>
+                      <li
+                        style={{
+                          backgroundColor: "#69b1ff",
+                        }}
+                        className="logo__bar--item logo__bar--item--sign"
+                        onClick={() => navigate("/register")}
+                      >
+                        Đăng ký
+                      </li>
+                    </ul>
+                  </Drawer>
+                </>
+              )}
             </div>
           </div>
           <div className="header__search col  l-7 m-10 c-8 ">
@@ -190,27 +234,40 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
             </div>
           </div>
           <div className="header__user col l-3 m-1 c-2">
-            <Popover
-              placement="bottomRight"
-              arrow
-              title={carts.length > 0 ? "Thông tin giỏ hàng" : ""}
-              className="header__popover"
-              content={contentPopover}
-            >
+            {isAuthenticated ? (
+              <Popover
+                placement="bottomRight"
+                arrow
+                title={carts.length > 0 ? "Thông tin giỏ hàng" : ""}
+                className="header__popover"
+                content={contentPopover}
+              >
+                <div
+                  className="header__user--cart"
+                  onClick={() => navigate("/cart")}
+                >
+                  <AiOutlineShoppingCart className="user__cart--icon" />
+                  <div className="user__cart--quantity">
+                    <Badge
+                      count={carts?.length}
+                      overflowCount={10}
+                      size="small"
+                    ></Badge>
+                  </div>
+                </div>
+              </Popover>
+            ) : (
               <div
                 className="header__user--cart"
-                onClick={() => navigate("/cart")}
+                onClick={() => navigate("/login")}
               >
                 <AiOutlineShoppingCart className="user__cart--icon" />
                 <div className="user__cart--quantity">
-                  <Badge
-                    count={carts?.length}
-                    overflowCount={10}
-                    size="small"
-                  ></Badge>
+                  <Badge count={0} overflowCount={10} size="small"></Badge>
                 </div>
               </div>
-            </Popover>
+            )}
+
             {isAuthenticated ? (
               <>
                 <div className="header__user--manage l-7">

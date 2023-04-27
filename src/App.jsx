@@ -90,7 +90,11 @@ const router = createBrowserRouter([
       },
       {
         path: "cart",
-        element: <Cart />,
+        element: (
+          <ProtectedPage>
+            <Cart />
+          </ProtectedPage>
+        ),
         children: [
           { index: true, element: <CartStart /> },
           { path: "payment", element: <CartOrder /> },
