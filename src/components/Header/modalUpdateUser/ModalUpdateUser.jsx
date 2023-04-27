@@ -1,4 +1,4 @@
-import UpdateUser from "./updateUser";
+import UpdateUser from "./updateUser/UpdateUser";
 import ChangePassword from "./changePassword";
 import { Tabs, Modal } from "antd";
 
