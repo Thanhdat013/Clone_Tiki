@@ -55,8 +55,8 @@ const Admin = () => {
   }, [dataTotalPrice]);
   return (
     <div className="admin">
-      <Row gutter={[16, 16]} align={"center"} style={{ marginTop: "24px" }}>
-        <Col span={11} xl={11} lg={11}>
+      <Row gutter={[16, 16]} align={"center"} style={{ padding: "24px 0" }}>
+        <Col md={22} xs={22} sm={22} lg={11}>
           <Card bordered={true}>
             <Statistic
               formatter={formatter}
@@ -68,7 +68,7 @@ const Admin = () => {
             />
           </Card>
         </Col>
-        <Col span={11} xl={11} lg={11}>
+        <Col md={22} xs={22} sm={22} lg={11}>
           <Card bordered={true}>
             <Statistic
               formatter={formatter}
@@ -80,7 +80,8 @@ const Admin = () => {
             />
           </Card>
         </Col>
-        <Col span={11} xl={11} lg={11}>
+        <Col md={22} xs={22} sm={22} lg={11}>
+          {" "}
           <Card bordered={true}>
             <Statistic
               formatter={formatter}
@@ -92,7 +93,8 @@ const Admin = () => {
             />
           </Card>
         </Col>
-        <Col span={11} xl={11} lg={11}>
+        <Col md={22} xs={22} sm={22} lg={11}>
+          {" "}
           <Card bordered={true}>
             <Statistic
               formatter={formatter}

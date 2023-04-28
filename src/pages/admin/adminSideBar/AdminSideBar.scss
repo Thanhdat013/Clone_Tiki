@@ -67,6 +67,9 @@ body {
   }
 
   .admin__sidebar {
+    display: none;
+    .admin__sidebar--bar {
+    }
     .admin__sidebar--wrap {
       .admin__sidebar--menu {
         display: none;

@@ -74,7 +74,9 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
             <div className="admin__header--user">
               <Avatar
                 size={42}
-                src={`http://localhost:8080/images/avatar/${avatar}`}
+                src={`${
+                  import.meta.env.VITE_BACKEND_URL
+                }/images/avatar/${avatar}`}
               />
               {fullName}
               <ul className="admin__user--list">

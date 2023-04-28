@@ -1,16 +1,23 @@
 import moment from "moment";
 import { Drawer, Badge, Descriptions, Divider } from "antd";
 import PreviewImage from "~/pages/manage/manageBook/previewImage";
+import { useEffect, useState } from "react";
 const DetailUser = ({ setOpen, open, dataViewUser, dataViewBook }) => {
   const onClose = () => {
     setOpen(false);
   };
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    if (window.innerWidth < 741) {
+      setIsMobile(true);
+    }
+  }, [window.innerWidth]);
 
   return (
     <>
       <Drawer
         placement="right"
-        width={"50vw"}
+        width={isMobile ? "90vw" : "60vw"}
         onClose={onClose}
         open={open}
         keyboard={13}
@@ -93,10 +100,11 @@ const DetailUser = ({ setOpen, open, dataViewUser, dataViewBook }) => {
               </Descriptions.Item>
             )}
           </Descriptions>
-          <Divider orientation={"left"} style={{ fontSize: "2rem" }}>
-            {" "}
-            Picture of book
-          </Divider>
+          {dataViewBook && (
+            <Divider orientation={"left"} style={{ fontSize: "2rem" }}>
+              Picture of book
+            </Divider>
+          )}
           {dataViewBook && <PreviewImage dataViewBook={dataViewBook} />}
         </>
       </Drawer>

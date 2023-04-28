@@ -25,7 +25,7 @@ const TableUserWithPaginate = () => {
   const totalPages = useSelector((state) => state.users.totalPages);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(6);
+  const [pageSize, setPageSize] = useState(10);
   const [filterInput, setFilterInput] = useState("");
   const [arrangeColumn, SetArrangeColumn] = useState("");
 
@@ -42,111 +42,154 @@ const TableUserWithPaginate = () => {
     let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
     dispatch(getAllUserWithPaginate(query));
   };
-  const columns = [
-    {
-      title: (text, record, index) => (
-        <header className="table__header">
-          <div className="table__container row">
-            <h2 className="table__header--title l-2">Table list</h2>
-            <div className="table__header--right l-o-4 l-6 ">
-              <div className="table__header--wrap row no-gutters">
-                <Button
-                  onClick={handleExportData}
-                  type="primary"
-                  className=" table__header--btn"
-                  disabled={listUsersPaginate.length === 0}
-                >
-                  <TfiExport className=" table__header--btn--icon" />
-                  <span className="table__header--btn--name">Export</span>
-                </Button>
-                <Button
-                  onClick={() => setIsModalImportFile(true)}
-                  type="primary"
-                  className=" table__header--btn"
-                >
-                  <TfiImport className=" table__header--btn--icon" />
-                  <span className="table__header--btn--name"> Import</span>
-                </Button>
-                <Button
-                  onClick={showModal}
-                  type="primary"
-                  className=" table__header--btn"
-                >
-                  <IoPersonAddOutline className=" table__header--btn--icon" />
-                  <span className="table__header--btn--name">Add</span>
-                </Button>
-                <Button
-                  className="table__header--btn--refresh l-2"
-                  icon={<GrRefresh />}
-                  onClick={handleRefresh}
-                  loading={isLoading}
-                  type="text"
-                ></Button>
-              </div>
+  const renderHeaderTitle = () => {
+    return (
+      <header className="table__header">
+        <div className="table__container row">
+          <h2 className="table__header--title l-2">Table list</h2>
+          <div className="table__header--right l-o-4 l-6 ">
+            <div className="table__header--wrap row no-gutters">
+              <Button
+                onClick={handleExportData}
+                type="primary"
+                className=" table__header--btn"
+                disabled={listUsersPaginate.length === 0}
+              >
+                <TfiExport className=" table__header--btn--icon" />
+                <span className="table__header--btn--name">Export</span>
+              </Button>
+              <Button
+                onClick={() => setIsModalImportFile(true)}
+                type="primary"
+                className=" table__header--btn"
+              >
+                <TfiImport className=" table__header--btn--icon" />
+                <span className="table__header--btn--name"> Import</span>
+              </Button>
+              <Button
+                onClick={showModal}
+                type="primary"
+                className=" table__header--btn"
+              >
+                <IoPersonAddOutline className=" table__header--btn--icon" />
+                <span className="table__header--btn--name">Add</span>
+              </Button>
+              <Button
+                className="table__header--btn--refresh l-2"
+                icon={<GrRefresh />}
+                onClick={handleRefresh}
+                loading={isLoading}
+                type="text"
+              ></Button>
             </div>
           </div>
-        </header>
+        </div>
+      </header>
+    );
+  };
+  const columns = [
+    // title: (text, record, index) => (
+    //   <header className="table__header">
+    //     <div className="table__container row">
+    //       <h2 className="table__header--title l-2">Table list</h2>
+    //       <div className="table__header--right l-o-4 l-6 ">
+    //         <div className="table__header--wrap row no-gutters">
+    //           <Button
+    //             onClick={handleExportData}
+    //             type="primary"
+    //             className=" table__header--btn"
+    //             disabled={listUsersPaginate.length === 0}
+    //           >
+    //             <TfiExport className=" table__header--btn--icon" />
+    //             <span className="table__header--btn--name">Export</span>
+    //           </Button>
+    //           <Button
+    //             onClick={() => setIsModalImportFile(true)}
+    //             type="primary"
+    //             className=" table__header--btn"
+    //           >
+    //             <TfiImport className=" table__header--btn--icon" />
+    //             <span className="table__header--btn--name"> Import</span>
+    //           </Button>
+    //           <Button
+    //             onClick={showModal}
+    //             type="primary"
+    //             className=" table__header--btn"
+    //           >
+    //             <IoPersonAddOutline className=" table__header--btn--icon" />
+    //             <span className="table__header--btn--name">Add</span>
+    //           </Button>
+    //           <Button
+    //             className="table__header--btn--refresh l-2"
+    //             icon={<GrRefresh />}
+    //             onClick={handleRefresh}
+    //             loading={isLoading}
+    //             type="text"
+    //           ></Button>
+    //         </div>
+    //       </div>
+    //     </div>
+    //   </header>
+    // ),
+    // width: "100%",
+    // align: "left",
+
+    {
+      title: "Id.",
+      dataIndex: "_id",
+      width: "7%",
+      fixed: "left",
+      render: (text, index, record) => (
+        <span
+          onClick={() => {
+            showDetailUser(text, record, index);
+            console.log("record,", record);
+          }}
+          className="table__detail"
+        >
+          {text}
+        </span>
       ),
-      width: "100%",
-      align: "left",
-      children: [
-        {
-          title: "Id.",
-          dataIndex: "_id",
-          width: "5%",
-          render: (text, index, record) => (
-            <span
-              onClick={() => {
-                showDetailUser(text, record, index);
-                console.log("record,", record);
-              }}
-              className="table__detail"
-            >
-              {text}
-            </span>
-          ),
-        },
-        {
-          title: "Email",
-          dataIndex: "email",
-          width: "20%",
-          sorter: true,
-        },
-        {
-          title: "Name",
-          dataIndex: "fullName",
-          width: "15%",
-          sorter: true,
-        },
-        {
-          title: "Phone number",
-          dataIndex: "phone",
-          width: "15%",
-          sorter: true,
-        },
-        {
-          title: "Role ",
-          dataIndex: "role",
-          width: "10%",
-          sorter: true,
-        },
-        {
-          title: "Action ",
-          width: "15%",
-          render: (text, record, index) => (
-            <div className="table__icon">
-              <AiOutlineDelete
-                onClick={() => showModalDelete(text, record, index)}
-                className="table__delete--user "
-              />
-              <AiOutlineEdit
-                onClick={() => showModalUpdate(text, record, index)}
-                className="table__edit--user "
-              />
-            </div>
-          ),
-        },
-      ],
+    },
+    {
+      title: "Email",
+      dataIndex: "email",
+      width: "10%",
+      sorter: true,
+    },
+    {
+      title: "Name",
+      dataIndex: "fullName",
+      width: "10%",
+      sorter: true,
+    },
+    {
+      title: "Phone number",
+      dataIndex: "phone",
+      width: "10%",
+      sorter: true,
+    },
+    {
+      title: "Role ",
+      dataIndex: "role",
+      width: "10%",
+      sorter: true,
+    },
+    {
+      title: "Action ",
+      width: "10%",
+      render: (text, record, index) => (
+        <div className="table__icon">
+          <AiOutlineDelete
+            onClick={() => showModalDelete(text, record, index)}
+            className="table__delete--user "
+          />
+          <AiOutlineEdit
+            onClick={() => showModalUpdate(text, record, index)}
+            className="table__edit--user "
+          />
+        </div>
+      ),
     },
   ];
   // refresh filter sort
@@ -227,12 +270,14 @@ const TableUserWithPaginate = () => {
         </Col>
         <Col span={24}>
           <Table
+            title={renderHeaderTitle}
             dataSource={listUsersPaginate}
             columns={columns}
             onChange={handleChange}
             rowKey="_id"
             style={{ padding: "12px 24px" }}
             bordered
+            scroll={{ x: 2000 }}
             pagination={{
               position: ["bottomCenter"],
               showQuickJumper: true,
@@ -244,7 +289,7 @@ const TableUserWithPaginate = () => {
               showTotal: (total, range) => {
                 return (
                   <div>
-                    {range[0]}-{range[1]} trên {total} trang
+                    {range[0]}-{range[1]} trên {total} người
                   </div>
                 );
               },
@@ -254,11 +299,11 @@ const TableUserWithPaginate = () => {
       </Row>
 
       <DetailItem open={open} setOpen={setOpen} dataViewUser={dataViewUser} />
-      <AddNewUser
+      {/* <AddNewUser
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         getAllUser={getAllUser}
-      />
+      /> */}
       <UpdateUser
         isModalOpenUpdate={isModalOpenUpdate}
         setIsModalOpenUpdate={setIsModalOpenUpdate}

@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
 import { Modal, Form, notification, message, Row, Col, Upload } from "antd";
 import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-
+import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
 import { getAllCategories, postNewBook, postUploadImage } from "~/services/Api";
 import FormInfor from "~/pages/manage/manageBook/components/form/";
+import { useDispatch } from "react-redux";
 
-const AddNewBook = ({ openAddBook, setOpenAddBook, getAllBook }) => {
+const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
+  const getAllBook = async () => {
+    let query = `pageSize=20&current=1&sort=-updatedAt`;
+    dispatch(getAllBookWithPaginate(query));
+  };
+
   // submit form to create new book
   const onFinish = async (values) => {
     const { mainText, author, price, sold, quantity, category } = values;

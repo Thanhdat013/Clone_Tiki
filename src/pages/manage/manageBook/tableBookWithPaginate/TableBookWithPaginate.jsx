@@ -47,15 +47,6 @@ const TableUserWithPaginate = () => {
               <h2 className="manageBook__header--title l-4">Table list</h2>
               <div className="manageBook__header--btn row l-3">
                 <Button
-                  className="manageBook__header--btn--add l-4"
-                  onClick={clickOpenAddBook}
-                  loading={isLoading}
-                  type="primary"
-                >
-                  <BiBookAdd className="manageBook__btn--add--title" />
-                  <span className="manageBook__btn--add--title">Add</span>
-                </Button>
-                <Button
                   className="manageBook__header--btn--refresh l-2"
                   icon={<GrRefresh />}
                   onClick={handleRefresh}
@@ -280,11 +271,7 @@ const TableUserWithPaginate = () => {
         </Col>
       </Row>
       <DetailItem dataViewBook={dataViewBook} open={open} setOpen={setOpen} />
-      <AddNewBook
-        getAllBook={getAllBook}
-        openAddBook={openAddBook}
-        setOpenAddBook={setOpenAddBook}
-      />
+
       <UpdateBook
         getAllBook={getAllBook}
         openUpdateBook={openUpdateBook}

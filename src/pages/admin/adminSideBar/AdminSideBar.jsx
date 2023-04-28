@@ -1,22 +1,20 @@
 import { useNavigate } from "react-router-dom";
-
-import { RxDashboard } from "react-icons/rx";
 import { useEffect, useState } from "react";
 import {
   AiOutlineUser,
   AiOutlineDollar,
   AiOutlineUserAdd,
-  AiOutlineUserDelete,
-  AiOutlineUserSwitch,
-  AiOutlineBars,
   AiOutlineArrowRight,
 } from "react-icons/ai";
+import { RxDashboard } from "react-icons/rx";
+import { BiBookAdd } from "react-icons/bi";
 import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
 
 import { FiBook } from "react-icons/fi";
-import { GrUserAdmin } from "react-icons/gr";
 import { Menu, Drawer } from "antd";
 import "./AdminSideBar.scss";
+import AddNewBook from "~/pages/manage/manageBook/addNewBook";
+import AddNewUser from "~/pages/manage/manageUser/addNewUser";
 
 const AdminSideBar = ({
   collapsed,
@@ -31,16 +29,48 @@ const AdminSideBar = ({
   }
 
   const items = [
-    getItem("Dashboard", "/admin", <RxDashboard />),
+    getItem("Dashboard", "admin", <RxDashboard />),
 
-    getItem("Manage user", "manage-user", <AiOutlineUser />),
-    getItem("Manage Book", "manage-book", <FiBook />),
+    getItem("Manage user", "user", <AiOutlineUser />, [
+      getItem("Table User", "manage-user", <AiOutlineUser />),
+      getItem("Add New User", "add-user", <AiOutlineUserAdd />),
+    ]),
+
+    getItem("Manage Book", "book", <FiBook />, [
+      getItem("Table book", "manage-book", <FiBook />),
+      getItem("Add New Book", "add-book", <BiBookAdd />),
+    ]),
     getItem("Manage order", "manage-order", <AiOutlineDollar />),
   ];
   const onClick = (e) => {
     console.log(e);
-    navigate(e.key);
-    setKeySideBar(e.key);
+
+    if (e.key === "admin") {
+      navigate("/admin");
+      setKeySideBar("/admin");
+    }
+    //manage user
+    if (e.key === "manage-user") {
+      navigate("manage-user");
+      setKeySideBar("manage-user");
+    }
+    if (e.key === "add-user") {
+      setOpenAddUser(true);
+      setKeySideBar("add-user");
+    }
+    //  manage book
+    if (e.key === "manage-book") {
+      navigate("manage-book");
+      setKeySideBar("manage-book");
+    }
+    if (e.key === "add-book") {
+      setOpenAddBook(true);
+      setKeySideBar("add-book");
+    }
+    if (e.key === "manage-order") {
+      navigate("manage-order");
+      setKeySideBar("manage-order");
+    }
   };
   const [keySideBar, setKeySideBar] = useState("/admin");
   const handleChange = (e) => {
@@ -57,8 +87,13 @@ const AdminSideBar = ({
       setKeySideBar("manage-order");
     }
   }, []);
+
+  // Add new user
+  const [openAddUser, setOpenAddUser] = useState(false);
+
   // Add new book
   const [openAddBook, setOpenAddBook] = useState(false);
+  // collapse side bar
   const toggleCollapsed = () => {
     setCollapsed(!collapsed);
   };
@@ -117,6 +152,8 @@ const AdminSideBar = ({
           </Drawer>
         </div>
       </div>
+      <AddNewUser openAddUser={openAddUser} setOpenAddUser={setOpenAddUser} />
+      <AddNewBook openAddBook={openAddBook} setOpenAddBook={setOpenAddBook} />
     </>
   );
 };

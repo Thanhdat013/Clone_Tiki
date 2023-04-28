@@ -131,7 +131,9 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                         size={78}
                         src={
                           users.avatar
-                            ? `http://localhost:8080/images/avatar/${users.avatar}`
+                            ? `${
+                                import.meta.env.VITE_BACKEND_URL
+                              }/images/avatar/${users.avatar}`
                             : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
                         }
                         className="logo__bar--avatar"
@@ -277,7 +279,9 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                     size={42}
                     src={
                       users.avatar
-                        ? `http://localhost:8080/images/avatar/${users.avatar}`
+                        ? `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
+                            users.avatar
+                          }`
                         : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
                     }
                     className="header__user--avatar"

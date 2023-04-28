@@ -3,10 +3,14 @@ import { Modal, Form, Input, notification, message } from "antd";
 import { useDispatch } from "react-redux";
 
 import { postCreateNewUser } from "~/services/Api";
-
-const AddNewUser = ({ isModalOpen, setIsModalOpen, getAllUser }) => {
+import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice";
+const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+  const getAllUser = async () => {
+    let query = `pageSize=10&current=1&sort=-updatedAt`;
+    dispatch(getAllUserWithPaginate(query));
+  };
 
   const onFinish = async (values) => {
     const res = await postCreateNewUser(
@@ -19,7 +23,7 @@ const AddNewUser = ({ isModalOpen, setIsModalOpen, getAllUser }) => {
     if (res && res.data) {
       message.success("You have successfully created an account");
       await getAllUser();
-      setIsModalOpen(false);
+      setOpenAddUser(false);
       form.resetFields();
     } else {
       notification.error({
@@ -31,7 +35,7 @@ const AddNewUser = ({ isModalOpen, setIsModalOpen, getAllUser }) => {
     }
   };
   const handleCancelModal = () => {
-    setIsModalOpen(false);
+    setOpenAddUser(false);
     form.resetFields();
   };
 
@@ -39,7 +43,7 @@ const AddNewUser = ({ isModalOpen, setIsModalOpen, getAllUser }) => {
     <>
       <Modal
         title="Add new user"
-        open={isModalOpen}
+        open={openAddUser}
         onOk={() => {
           form.submit();
         }}
