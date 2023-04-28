@@ -3,7 +3,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload, Modal, Table, notification } from "antd";
 import * as XLSX from "xlsx/xlsx.mjs";
 import { postImportData } from "~/services/Api";
-import templateFile from "./Template.xlsx/?url";
+import Template from "./Template.xlsx/?url";
 const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
   const { Dragger } = Upload;
   const handleCancelImport = () => {
@@ -122,11 +122,7 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
           </p>
           <p className="ant-upload-text">
             Support for a single upload. Only accept .csv, .xls, .xlsx or &nbsp;{" "}
-            <a
-              onClick={(e) => e.stopPropagation()}
-              href={templateFile}
-              download
-            >
+            <a onClick={(e) => e.stopPropagation()} href={Template} download>
               download template
             </a>
           </p>
