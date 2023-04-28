@@ -64,6 +64,46 @@ const CartOrder = ({ setCurrentStep }) => {
       {carts?.length > 0 && (
         <div className="cartOrder__container grid wide row">
           <section className="cartOrder__left l-9 m-12 c-12  ">
+            {/* for mobile */}
+            <div className="cartOrder__left--content display__mobile  c-12">
+              {carts &&
+                carts.length > 0 &&
+                carts.map((item) => (
+                  <div className="cartOrder__item--mobile c-12" key={item._id}>
+                    <div className="c-4" style={{ marginRight: "4px" }}>
+                      <img
+                        src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
+                          item.detail?.thumbnail
+                        }`}
+                        alt="cartOrder-image"
+                        className="cartOrder__left--img  "
+                      />
+                    </div>
+                    <div className="cartOrder__left--mobile c-7">
+                      <p className="cartOrder__left--desc  ">
+                        {item.detail?.mainText}
+                      </p>
+                      <div className="cartOrder__left--price ">
+                        {new Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(+item.detail.price)}
+                      </div>
+                      <div className="cartOrder__left--quant ">
+                        <p>{`Số lượng: ${item.quantity}`}</p>
+                        <div
+                          className="cartOrder__left--delete "
+                          onClick={() => handleDeleteItem(item)}
+                        >
+                          Xóa
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            {/* for pc and tablet */}
             <div className="cartOrder__left--content l-12">
               <div className="l-2 c-1">Sản phẩm</div>
               <p className="cartOrder__left--desc--header"></p>
