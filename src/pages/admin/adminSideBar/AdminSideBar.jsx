@@ -29,23 +29,65 @@ const AdminSideBar = ({
   }
 
   const items = [
-    getItem("Dashboard", "admin", <RxDashboard />),
+    window.innerWidth > 740 &&
+      getItem(
+        "Admin",
+        "admin",
+        collapsed ? (
+          <AiOutlineMenuUnfold style={{ fontSize: "2.2rem" }} />
+        ) : (
+          <AiOutlineMenuFold style={{ fontSize: "2.2rem" }} />
+        )
+      ),
 
-    getItem("Manage user", "user", <AiOutlineUser />, [
-      getItem("Table User", "manage-user", <AiOutlineUser />),
-      getItem("Add New User", "add-user", <AiOutlineUserAdd />),
-    ]),
+    getItem(
+      "Dashboard",
+      "dashboard",
+      <RxDashboard style={{ fontSize: "2.2rem" }} />
+    ),
 
-    getItem("Manage Book", "book", <FiBook />, [
-      getItem("Table book", "manage-book", <FiBook />),
-      getItem("Add New Book", "add-book", <BiBookAdd />),
+    getItem(
+      "Manage user",
+      "user",
+      <AiOutlineUser style={{ fontSize: "2.2rem" }} />,
+      [
+        getItem(
+          "Table User",
+          "manage-user",
+          <AiOutlineUser style={{ fontSize: "2.2rem" }} />
+        ),
+        getItem(
+          "Add New User",
+          "add-user",
+          <AiOutlineUserAdd style={{ fontSize: "2.2rem" }} />
+        ),
+      ]
+    ),
+
+    getItem("Manage Book", "book", <FiBook style={{ fontSize: "2.2rem" }} />, [
+      getItem(
+        "Table book",
+        "manage-book",
+        <FiBook style={{ fontSize: "2.2rem" }} />
+      ),
+      getItem(
+        "Add New Book",
+        "add-book",
+        <BiBookAdd style={{ fontSize: "2.2rem" }} />
+      ),
     ]),
-    getItem("Manage order", "manage-order", <AiOutlineDollar />),
+    getItem(
+      "Manage order",
+      "manage-order",
+      <AiOutlineDollar style={{ fontSize: "2.2rem" }} />
+    ),
   ];
   const onClick = (e) => {
     console.log(e);
-
     if (e.key === "admin") {
+      setCollapsed(!collapsed);
+    }
+    if (e.key === "dashboard") {
       navigate("/admin");
       setKeySideBar("/admin");
     }
@@ -93,14 +135,11 @@ const AdminSideBar = ({
 
   // Add new book
   const [openAddBook, setOpenAddBook] = useState(false);
-  // collapse side bar
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
+
   return (
     <>
       <div className="admin__sidebar">
-        <div className="admin__sidebar--bar  ">
+        {/* <div className="admin__sidebar--bar  ">
           {collapsed ? (
             <AiOutlineMenuUnfold
               style={{ fontSize: "2.2rem" }}
@@ -112,7 +151,7 @@ const AdminSideBar = ({
               style={{ fontSize: "2.2rem" }}
             />
           )}
-        </div>
+        </div> */}
         <div className="admin__sidebar--wrap">
           <Menu
             className="admin__sidebar--menu"
