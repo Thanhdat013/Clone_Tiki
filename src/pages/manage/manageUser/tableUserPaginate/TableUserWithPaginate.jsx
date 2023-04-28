@@ -4,7 +4,6 @@ import { GrRefresh } from "react-icons/gr";
 import * as XLSX from "xlsx/xlsx.mjs";
 
 import { TfiImport, TfiExport } from "react-icons/tfi";
-import { IoPersonAddOutline } from "react-icons/io5";
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 
 import { Table, Button, Row, Col } from "antd";
@@ -12,8 +11,7 @@ import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice";
 import FormFIlter from "~/pages/manage/manageUser/formFilter";
 import "./TableUserWithPaginate.scss";
 import DetailItem from "~/pages/manage/components/detailItem";
-import AddNewUser from "~/pages/manage/manageUser/addNewUser";
-import ImportFileExcel from "~/pages/manage/manageUser/importFileExcel";
+import ImportFileExcel from "~/pages/manage/manageUser/importFileExcel/ImportFileExcel";
 import UpdateUser from "~/pages/manage/manageUser/updateUser";
 import DeleteUser from "~/pages/manage/manageUser/deleteUser";
 
