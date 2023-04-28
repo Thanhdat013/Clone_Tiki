@@ -3,7 +3,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload, Modal, Table, notification } from "antd";
 import * as XLSX from "xlsx";
 import { postImportData } from "~/services/Api";
-import template from "./template.xlsx";
+import { template } from "./template.xlsx";
 
 const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
   const { Dragger } = Upload;
