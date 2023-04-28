@@ -46,9 +46,12 @@ const TableUserWithPaginate = () => {
     return (
       <header className="table__header">
         <div className="table__container row">
-          <h2 className="table__header--title l-2">Table list</h2>
-          <div className="table__header--right l-o-4 l-6 ">
-            <div className="table__header--wrap row no-gutters">
+          <h2 className="table__header--title l-2 m-4 c-4">Table list</h2>
+          <div className="table__header--right l-o-4 m-8  l-6 c-8 ">
+            <div
+              className="table__header--wrap row no-gutters"
+              style={{ justifyContent: "flex-end" }}
+            >
               <Button
                 onClick={handleExportData}
                 type="primary"
@@ -66,14 +69,7 @@ const TableUserWithPaginate = () => {
                 <TfiImport className=" table__header--btn--icon" />
                 <span className="table__header--btn--name"> Import</span>
               </Button>
-              <Button
-                onClick={showModal}
-                type="primary"
-                className=" table__header--btn"
-              >
-                <IoPersonAddOutline className=" table__header--btn--icon" />
-                <span className="table__header--btn--name">Add</span>
-              </Button>
+
               <Button
                 className="table__header--btn--refresh l-2"
                 icon={<GrRefresh />}
@@ -88,52 +84,6 @@ const TableUserWithPaginate = () => {
     );
   };
   const columns = [
-    // title: (text, record, index) => (
-    //   <header className="table__header">
-    //     <div className="table__container row">
-    //       <h2 className="table__header--title l-2">Table list</h2>
-    //       <div className="table__header--right l-o-4 l-6 ">
-    //         <div className="table__header--wrap row no-gutters">
-    //           <Button
-    //             onClick={handleExportData}
-    //             type="primary"
-    //             className=" table__header--btn"
-    //             disabled={listUsersPaginate.length === 0}
-    //           >
-    //             <TfiExport className=" table__header--btn--icon" />
-    //             <span className="table__header--btn--name">Export</span>
-    //           </Button>
-    //           <Button
-    //             onClick={() => setIsModalImportFile(true)}
-    //             type="primary"
-    //             className=" table__header--btn"
-    //           >
-    //             <TfiImport className=" table__header--btn--icon" />
-    //             <span className="table__header--btn--name"> Import</span>
-    //           </Button>
-    //           <Button
-    //             onClick={showModal}
-    //             type="primary"
-    //             className=" table__header--btn"
-    //           >
-    //             <IoPersonAddOutline className=" table__header--btn--icon" />
-    //             <span className="table__header--btn--name">Add</span>
-    //           </Button>
-    //           <Button
-    //             className="table__header--btn--refresh l-2"
-    //             icon={<GrRefresh />}
-    //             onClick={handleRefresh}
-    //             loading={isLoading}
-    //             type="text"
-    //           ></Button>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </header>
-    // ),
-    // width: "100%",
-    // align: "left",
-
     {
       title: "Id.",
       dataIndex: "_id",
@@ -257,9 +207,11 @@ const TableUserWithPaginate = () => {
   const handleExportData = () => {
     // export csv file
     if (listUsersPaginate.length > 0) {
+      console.log("export");
       const workbook = XLSX.utils.book_new();
       const worksheet = XLSX.utils.json_to_sheet(listUsersPaginate);
       XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+      XLSX.writeFile(workbook, "myExcel.csv");
     }
   };
   return (
