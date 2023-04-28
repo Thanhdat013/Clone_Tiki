@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload, Modal, Table, notification } from "antd";
-import * as XLSX from "xlsx/xlsx.mjs";
+import * as XLSX from "xlsx";
 import { postImportData } from "~/services/Api";
-import template from "~/pages/manage/manageUser/importFileExcel/template.xlsx?url";
+import template from "./template.xlsx?url";
 
 const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
   const { Dragger } = Upload;
