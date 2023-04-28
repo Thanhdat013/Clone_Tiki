@@ -74,7 +74,6 @@ const usersSlice = createSlice({
       };
     },
     doUpdateAvatarAction: (state, action) => {
-      console.log(action);
       state.user.avatar = action.payload.avatar;
     },
     doUpdateUser: (state, action) => {

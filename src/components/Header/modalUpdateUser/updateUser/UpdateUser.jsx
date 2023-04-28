@@ -30,17 +30,21 @@ const UpdateUser = ({ open, setOpen }) => {
   // submit update avatar
   const handleUpdateUser = async (values) => {
     console.log(values);
+    if (dataAvatar === "") setDataAvatar(user?.avatar);
     const { id, fullName, phone } = values;
     const res = await putUpdateUserByUser(id, fullName, phone, dataAvatar);
     console.log(res);
     if (res && res.data) {
-      message.success("Cập nhật người dùng thành công");
-      localStorage.removeItem("access_token");
+      //update redux
       dispatch(doUpdateUser({ fullName, phone, avatar: dataAvatar }));
-      setOpen(false);
+      message.success("Cập nhật người dùng thành công");
+
+      // force renew token
+      localStorage.removeItem("access_token");
     } else {
       message.error("Cập nhật người dùng thất bại");
     }
+    setOpen(false);
   };
   const formRef = useRef(null);
 
@@ -51,6 +55,7 @@ const UpdateUser = ({ open, setOpen }) => {
     const res = await postUpdateAvatar(file);
     if (res && res.data) {
       console.log(res);
+
       setDataAvatar(res.data.fileUploaded);
       dispatch(doUpdateAvatarAction({ avatar: res.data.fileUploaded }));
       onSuccess("ok");

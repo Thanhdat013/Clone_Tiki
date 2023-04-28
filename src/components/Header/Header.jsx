@@ -278,9 +278,9 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                   <Avatar
                     size={42}
                     src={
-                      users.avatar
+                      users?.avatar
                         ? `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
-                            users.avatar
+                            users?.avatar
                           }`
                         : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
                     }
