@@ -10,33 +10,18 @@
   flex-direction: column;
   justify-content: center;
   background-color: #ccc;
-  // &::before {
-  //   background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
-  //     url("https://img.freepik.com/premium-vector/mayan-patchwork-seamless-pattern-black-gold-colors_454705-917.jpg");
-  //   position: absolute;
-  //   background-size: cover;
-  //   content: "";
-  //   bottom: -5px;
-  //   left: -5px;
-  //   position: absolute;
-  //   right: -5px;
-  //   top: -5px;
-  //   z-index: -1;
-  //   filter: blur(1px);
-  // }
 
   .login__container {
-    --width: 560px;
     background: #fff;
     border-radius: 8px;
     max-width: calc(100vw - 32px);
     min-height: 480px;
     padding: 24px 16px;
     position: relative;
-    width: var(--width);
+    width: 460px;
     align-items: center;
     .login__form {
-      width: calc(var(--width) - 160px);
+      // width: calc(var(--width) - 160px);
       margin: auto;
       .login__desc {
         text-align: center;
@@ -72,5 +57,14 @@
     margin: 16px 0;
     width: 100%;
     background-color: #1dbfaf;
+  }
+}
+
+/* Mobile */
+@media (max-width: 739px) {
+  .login {
+    .login__container {
+      width: 100vw;
+    }
   }
 }

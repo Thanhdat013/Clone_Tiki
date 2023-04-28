@@ -15,12 +15,12 @@ const Cart = () => {
   useEffect(() => {
     if (window.location.pathname === "/cart") setCurrentStep(1);
     if (window.location.pathname === "/cart/payment") setCurrentStep(2);
-    if (window.location.pathname === "/cart/finish") setCurrentStep(3);
+    // if (window.location.pathname === "/cart/finish") setCurrentStep(3);
   }, [window.location.pathname]);
   return (
     <>
       <section className="cart">
-        {carts.length === 0 && <CartStart />}
+        {currentStep !== +3 && carts.length === 0 && <CartStart />}
         {carts && carts.length > 0 && (
           <div className="grid wide cart__container">
             <Steps
@@ -46,7 +46,7 @@ const Cart = () => {
               <CartOrder setCurrentStep={setCurrentStep} />
             )}
 
-            {currentStep === +3 && <CartFinish />}
+            {currentStep === +3 && carts.length === 0 && <CartFinish />}
           </div>
         )}
       </section>

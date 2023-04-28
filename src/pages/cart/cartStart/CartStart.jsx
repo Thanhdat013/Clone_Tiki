@@ -1,12 +1,14 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { InputNumber, Checkbox, Divider } from "antd";
+import { Link } from "react-router-dom";
+import { InputNumber, Checkbox, Divider, Breadcrumb } from "antd";
 import "./CartStart.scss";
 import {
   doUpdateCartAction,
   doDeleteCartAction,
 } from "~/redux/reducer/orderReducer/orderSlice";
 import { useNavigate } from "react-router-dom";
+import { HomeOutlined } from "@ant-design/icons";
 
 const CartStart = ({ setCurrentStep }) => {
   const carts = useSelector((state) => state.orders.carts);
@@ -64,7 +66,70 @@ const CartStart = ({ setCurrentStep }) => {
       {carts?.length > 0 && (
         <div className="cartStart__container grid wide row">
           <section className="cartStart__left l-9 m-12 c-12  ">
-            <div className="cartStart__left--content l-12">
+            {/* for mobile */}
+            <Breadcrumb
+              className="breadcrumb l-12 m-12 c-12"
+              style={{ marginTop: "12px " }}
+              items={[
+                {
+                  title: (
+                    <Link to="/">
+                      {" "}
+                      <HomeOutlined style={{ fontSize: "2rem" }} />
+                    </Link>
+                  ),
+                },
+
+                {
+                  title: <span style={{ fontSize: "1.6rem" }}> "Payment"</span>,
+                },
+              ]}
+            />
+            <div className="cartStart__left--content display__mobile  c-12">
+              {carts &&
+                carts.length > 0 &&
+                carts.map((item) => (
+                  <div className="cartStart__item--mobile c-12" key={item._id}>
+                    <div className="c-4">
+                      <img
+                        src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
+                          item.detail?.thumbnail
+                        }`}
+                        alt="cartStart-image"
+                        className="cartStart__left--img  "
+                      />
+                    </div>
+                    <div className="cartStart__left--mobile c-8">
+                      <p className="cartStart__left--desc  ">
+                        {item.detail?.mainText}
+                      </p>
+                      <div className="cartStart__left--price ">
+                        {new Intl.NumberFormat("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        }).format(+item.detail.price)}
+                      </div>
+                      <div className="cartStart__left--quant ">
+                        <InputNumber
+                          value={item.quantity}
+                          onChange={(value) =>
+                            handleChangeQuantityBook(value, item)
+                          }
+                        />
+                        <div
+                          className="cartStart__left--delete "
+                          onClick={() => handleDeleteItem(item)}
+                        >
+                          Xóa
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            {/* for pc and tablet */}
+            <div className="cartStart__left--content l-12 ">
               <div className="l-2 c-1">Sản phẩm</div>
               <p className="cartStart__left--desc--header"></p>
               <div className="cartStart__left--price ">Đơn giá</div>
@@ -76,12 +141,7 @@ const CartStart = ({ setCurrentStep }) => {
             {carts &&
               carts.length > 0 &&
               carts.map((item) => (
-                <div className="cartStart__left--content l-12" key={item._id}>
-                  {/* <Checkbox
-                  options={checkItem}
-                  onChange={handleChangeInput}
-                  className="cartStart__left--checked"
-                ></Checkbox> */}
+                <div className="cartStart__left--content l-12 " key={item._id}>
                   <img
                     src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
                       item.detail?.thumbnail

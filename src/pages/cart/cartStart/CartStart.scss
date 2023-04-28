@@ -171,8 +171,47 @@
       .cartStart__left {
         padding: 0 8px;
         .cartStart__left--content {
-          .cartStart__left--img {
-            display: none;
+          display: none;
+          &.display__mobile {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            background-color: #f5f5fa;
+          }
+          .cartStart__item--mobile {
+            background-color: #fff;
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            padding: 8px 4px;
+            border-radius: 4px;
+
+            .cartStart__left--img {
+              width: 100%;
+              height: 80%;
+              max-width: 100%;
+            }
+            .cartStart__left--mobile {
+              display: flex;
+              flex-direction: column;
+              .cartStart__left--desc {
+                width: 100%;
+                margin-bottom: 8px;
+              }
+              .cartStart__left--quant {
+                width: 60%;
+                margin: 8px 0;
+                .ant-input-number {
+                  .ant-input-number-input {
+                    text-align: center;
+                  }
+                }
+              }
+              .cartStart__left--delete {
+                width: 100%;
+                text-align: center;
+              }
+            }
           }
         }
       }

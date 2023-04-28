@@ -142,8 +142,8 @@ const BookPage = () => {
       {
         <div className="row grid wide">
           <Breadcrumb
-            className="breadcrumb l-12 m-12 c-0"
-            style={{ margin: "12px 0" }}
+            className="breadcrumb l-12 m-12 c-12"
+            style={{ marginTop: "12px " }}
             items={[
               {
                 title: (

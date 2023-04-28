@@ -56,8 +56,10 @@ const Login = () => {
           className="login__form"
           autoComplete="off"
           layout="vertical "
+          labelAlign={"center"}
         >
           <Form.Item
+            labelCol={{ md: 22, xs: 22, sm: 22, lg: 22 }}
             onKeyDown={handleKeyDown}
             label="Email"
             name="email"
@@ -67,6 +69,7 @@ const Login = () => {
           </Form.Item>
 
           <Form.Item
+            labelCol={{ md: 22, xs: 22, sm: 22, lg: 22 }}
             onKeyDown={handleKeyDown}
             label="Password"
             name="password"

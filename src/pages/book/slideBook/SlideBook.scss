@@ -46,3 +46,17 @@
 .slick-list {
   margin: 0 -10px;
 }
+
+/* Mobile */
+@media (max-width: 739px) {
+  .slideBook {
+    .slideBook__container {
+      .slideBook__left--arrow {
+        display: none;
+      }
+      .slideBook__right--arrow {
+        display: none;
+      }
+    }
+  }
+}
