@@ -6,3 +6,13 @@
     min-height: 60vh;
   }
 }
+/* Mobile */
+@media (max-width: 739px) {
+  .cart {
+    .cart__container {
+      .cart__steps {
+        display: none;
+      }
+    }
+  }
+}

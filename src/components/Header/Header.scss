@@ -283,6 +283,9 @@ body {
           display: flex;
           align-items: center;
           justify-content: flex-start;
+          .header__popover {
+            // display: none;
+          }
           .header__user--cart {
             margin: 0;
             .user__cart--icon {

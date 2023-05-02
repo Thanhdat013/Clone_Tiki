@@ -34,7 +34,7 @@ const Cart = () => {
         {carts && carts.length > 0 && (
           <div className="grid wide cart__container">
             <Steps
-              // responsive={true}
+              className="cart__steps"
               current={currentStep}
               items={[
                 {
