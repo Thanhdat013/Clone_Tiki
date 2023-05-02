@@ -44,17 +44,6 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
               onClick={showDrawer}
               className="admin__header--bar--btn"
             />
-            {/* {collapsed ? (
-              <AiOutlineMenuUnfold
-                className="admin__header--btn"
-                onClick={toggleCollapsed}
-              />
-            ) : (
-              <AiOutlineMenuFold
-                className="admin__header--btn"
-                onClick={toggleCollapsed}
-              />
-            )} */}
           </div>
           <img
             onClick={() => navigate("/")}

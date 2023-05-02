@@ -20,6 +20,7 @@ const Login = () => {
     setIsLoading(false);
     if (res?.data) {
       localStorage.setItem("access_token", res.data.access_token);
+      console.log(res.data.user);
       await dispatch(doLoginAction(res.data.user));
       message.success("Bạn đã đăng nhập thành công");
       navigate("/");
