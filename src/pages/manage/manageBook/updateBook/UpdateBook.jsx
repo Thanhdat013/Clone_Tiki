@@ -277,7 +277,7 @@ const UpdateBook = ({
               <FormInfor listCategory={listCategory} />
             </Col>
             <Col span={12}>
-              <Form.Item label="Thumbnail image" name="thumbnail">
+              <Form.Item label="Ảnh sách" name="thumbnail">
                 <Upload
                   name="thumbnail"
                   listType="picture-card"
@@ -301,7 +301,7 @@ const UpdateBook = ({
             </Col>
 
             <Col span={12}>
-              <Form.Item label="Slider images" name="slider">
+              <Form.Item label="Ảnh miêu tả sách" name="slider">
                 <Upload
                   name="slider"
                   listType="picture-card"

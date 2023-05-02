@@ -225,7 +225,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
             </div>
           </div>
           <div className="header__search col  l-7 m-10 c-8 ">
-            <div className="header__search--wrap row sm-gutter ">
+            <div className="header__search--wrap row  ">
               <span className="search__wrap--icon l-1 m-1 c-1">
                 <BsSearch className="search__wrap--icon--glasses" />
               </span>

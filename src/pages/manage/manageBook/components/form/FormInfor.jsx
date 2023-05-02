@@ -5,27 +5,27 @@ const FormInfor = ({ listCategory }) => {
       {" "}
       <Col span={12}>
         <Form.Item
-          label="Book title"
+          label="Tên sách"
           name="mainText"
-          rules={[{ required: true, message: "Please input your book title!" }]}
+          rules={[{ required: true, message: "Vui lòng nhập tên sách!" }]}
         >
           <Input />
         </Form.Item>
       </Col>
       <Col span={12}>
         <Form.Item
-          label="Author"
+          label="Tác giả"
           name="author"
-          rules={[{ required: true, message: "Please input your author!" }]}
+          rules={[{ required: true, message: "Vui lòng nhập tên tác giả!" }]}
         >
           <Input />
         </Form.Item>
       </Col>
       <Col span={6}>
         <Form.Item
-          label="Price"
+          label="Giá"
           name="price"
-          rules={[{ required: true, message: "Please input your price!" }]}
+          rules={[{ required: true, message: "Vui lòng nhập giá tiền!" }]}
         >
           <InputNumber
             addonAfter={"VND"}
@@ -38,13 +38,13 @@ const FormInfor = ({ listCategory }) => {
       </Col>
       <Col span={6}>
         <Form.Item
-          label="Category"
+          label="Thể loại"
           name="category"
           hasFeedback
-          rules={[{ required: true, message: "Please input your category!" }]}
+          rules={[{ required: true, message: "Vui lòng nhập thể loại!" }]}
         >
           <Select
-            placeholder="Please select category"
+            placeholder="Vui lòng chọn thể loại"
             allowClear
             showSearch
             options={listCategory}
@@ -53,9 +53,9 @@ const FormInfor = ({ listCategory }) => {
       </Col>
       <Col span={6}>
         <Form.Item
-          label="Quantity"
+          label="Số lượng"
           name="quantity"
-          rules={[{ required: true, message: "Please input your quantity!" }]}
+          rules={[{ required: true, message: "Vui lòng nhập số lượng!" }]}
         >
           <InputNumber
             min={1}
@@ -68,9 +68,11 @@ const FormInfor = ({ listCategory }) => {
       </Col>
       <Col span={6}>
         <Form.Item
-          label="Sold"
+          label="Đã bán"
           name="sold"
-          rules={[{ required: true, message: "Please input your sold!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập số lượng đã bán!" },
+          ]}
         >
           <InputNumber
             min={0}

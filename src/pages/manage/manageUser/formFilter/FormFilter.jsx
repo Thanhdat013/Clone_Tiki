@@ -36,17 +36,17 @@ const FormFIlter = ({ handleFilter }) => {
         {" "}
         <Col span={8}>
           <Form.Item name="Email" label="Email">
-            <Input placeholder="Enter email" />
+            <Input placeholder="Nhập email" />
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item name="Name" label="Name">
-            <Input placeholder="Enter name" />
+          <Form.Item name="Name" label="Tên người dùng">
+            <Input placeholder="Nhập tên người dùng" />
           </Form.Item>
         </Col>
         <Col span={8}>
-          <Form.Item name="Phone" label="Phone">
-            <Input placeholder="Enter phone" />
+          <Form.Item name="Phone" label="Số điện thoại">
+            <Input placeholder="Nhập số điện thoại" />
           </Form.Item>
         </Col>
       </Row>
