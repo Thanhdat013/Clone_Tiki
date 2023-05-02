@@ -3,7 +3,7 @@ import { InboxOutlined } from "@ant-design/icons";
 import { message, Upload, Modal, Table, notification } from "antd";
 import * as XLSX from "xlsx";
 import { postImportData } from "~/services/Api";
-// import template from "./template.xlsx";
+import template from "./template.xlsx?url";
 
 const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
   const { Dragger } = Upload;
@@ -125,11 +125,12 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
             Support for a single upload. Only accept .csv, .xls, .xlsx or &nbsp;{" "}
             <a
               onClick={(e) => e.stopPropagation()}
-              href={
-                "https://drive.google.com/drive/u/0/folders/1fU7QG90gSeasGM8GRoqp8uYf3afihxno"
-              }
-              target={"_blank"}
-              // download
+              // href={
+              //   "https://docs.google.com/spreadsheets/d/1eWJy0PocKGuQHg2wj71zsR3vBjhxZ3Jc/edit?usp=share_link&ouid=103221970939432023444&rtpof=true&sd=true"
+              // }
+              // target={"_blank"}
+              download
+              href={template}
             >
               download template
             </a>

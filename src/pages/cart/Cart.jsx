@@ -13,18 +13,28 @@ const Cart = () => {
   const carts = useSelector((state) => state.orders.carts);
 
   useEffect(() => {
-    if (window.location.pathname === "/cart") setCurrentStep(1);
-    if (window.location.pathname === "/cart/payment") setCurrentStep(2);
-    // if (window.location.pathname === "/cart/finish") setCurrentStep(3);
+    if (window.location.pathname === "/cart") {
+      setCurrentStep(1);
+    }
+    if (window.location.pathname === "/cart/payment") {
+      setCurrentStep(2);
+      console.log("current step 2.1");
+    }
+    if (window.location.pathname === "/cart/finish") {
+      console.log("current step 3");
+      setCurrentStep(3);
+      console.log("current step 3.1");
+    }
+    console.log(currentStep);
   }, [window.location.pathname]);
   return (
     <>
       <section className="cart">
-        {currentStep !== +3 && carts.length === 0 && <CartStart />}
+        {carts.length === 0 && <CartStart />}
         {carts && carts.length > 0 && (
           <div className="grid wide cart__container">
             <Steps
-              responsive={true}
+              // responsive={true}
               current={currentStep}
               items={[
                 {
@@ -42,11 +52,12 @@ const Cart = () => {
             {currentStep === +1 && (
               <CartStart setCurrentStep={setCurrentStep} />
             )}
+
             {currentStep === +2 && (
               <CartOrder setCurrentStep={setCurrentStep} />
             )}
 
-            {currentStep === +3 && carts.length === 0 && <CartFinish />}
+            {currentStep === +3 && <CartFinish />}
           </div>
         )}
       </section>

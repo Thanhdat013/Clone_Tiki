@@ -9,11 +9,11 @@ const FormFilterBook = ({ handleFilter }) => {
     if (values && values.author) {
       filter += `&author=/${values.author}/i`;
     }
-    if (values && values.Name) {
-      filter += `&fullName=/${values.Name}/i`;
+    if (values && values.mainText) {
+      filter += `&mainText=/${values.mainText}/i`;
     }
-    if (values && values.Phone) {
-      filter += `&phone=/${values.Phone}/i`;
+    if (values && values.category) {
+      filter += `&category=/${values.category}/i`;
     }
     if (filter) handleFilter(filter);
   };

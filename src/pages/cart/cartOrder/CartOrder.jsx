@@ -40,15 +40,15 @@ const CartOrder = ({ setCurrentStep }) => {
 
     const res = await postDataOrder(dataOrder);
     if (res && res.data) {
-      dispatch(doOrderCartAction());
-      navigate("finish");
-      setCurrentStep(3);
       message.success("Bạn đã đặt hàng thành công");
+      navigate("finish");
+      dispatch(doOrderCartAction());
     } else {
       message.error({
         message: "Đã có lỗi xảy ra",
         description: res.message,
       });
+      return;
     }
   };
   const formRef = useRef(null);
@@ -255,7 +255,10 @@ const CartOrder = ({ setCurrentStep }) => {
                 </Form.Item>
                 <Form.Item>
                   <Button
-                    onClick={() => form.submit()}
+                    onClick={() => {
+                      form.submit();
+                      setCurrentStep(3);
+                    }}
                     className="cartOrder__right--btn "
                   >
                     Thanh toán

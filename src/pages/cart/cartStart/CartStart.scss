@@ -56,6 +56,9 @@
         padding: 16px 8px 16px 12px;
         border: 1px solid transparent;
         margin-top: 12px;
+        &.display__mobile {
+          display: none;
+        }
         .cartStart__left--checked {
           width: 5%;
         }
