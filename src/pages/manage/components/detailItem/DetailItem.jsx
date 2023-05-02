@@ -57,7 +57,7 @@ const DetailUser = ({ setOpen, open, dataViewUser, dataViewBook }) => {
               </Descriptions.Item>
             ) : (
               <Descriptions.Item label="Bán">
-                <Badge status="processing" text="saĐang bánle" />
+                <Badge status="processing" text="Đang bán" />
               </Descriptions.Item>
             )}
             {dataViewBook && (
