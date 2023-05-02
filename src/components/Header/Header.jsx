@@ -18,14 +18,14 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
-  const users = useSelector((state) => state.users.user);
+  const user = useSelector((state) => state.users.user);
   const carts = useSelector((state) => state.orders.carts);
 
   const [open, setOpen] = useState(false);
   const showDrawer = () => {
     setOpen(true);
   };
-  const onClose = () => {
+  const onCloseDrawer = () => {
     setOpen(false);
   };
 
@@ -56,6 +56,10 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
 
   // modal for update user
   const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
+  const handleClickOpenUpdate = () => {
+    setIsModalOpenUpdate(true);
+    onCloseDrawer();
+  };
 
   // popover for cart
   const contentPopover = () => {
@@ -130,25 +134,25 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                       <Avatar
                         size={78}
                         src={
-                          users.avatar
+                          user.avatar
                             ? `${
                                 import.meta.env.VITE_BACKEND_URL
-                              }/images/avatar/${users.avatar}`
-                            : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
+                              }/images/avatar/${user.avatar}`
+                            : "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-male-icon.png"
                         }
                         className="logo__bar--avatar"
                       />
                     }
                     width={250}
                     closable={false}
-                    onClose={onClose}
+                    onClose={onCloseDrawer}
                     open={open}
                     placement={"left"}
                     keyboard={13}
-                    extra={users.fullName}
+                    extra={user.fullName}
                   >
                     <ul className="logo__bar--list">
-                      {users.role === "ADMIN" && (
+                      {user.role === "ADMIN" && (
                         <li
                           onClick={() => navigate("/admin")}
                           className="logo__bar--item"
@@ -158,9 +162,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                       )}
                       <li
                         className="logo__bar--item"
-                        onClick={() => {
-                          setIsModalOpenUpdate(true), onClose();
-                        }}
+                        onClick={handleClickOpenUpdate}
                       >
                         Quản lý tài khoản
                       </li>
@@ -193,7 +195,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                     }
                     width={250}
                     closable={false}
-                    onClose={onClose}
+                    onCloseDrawer={onCloseDrawer}
                     open={open}
                     placement={"left"}
                     keyboard={13}
@@ -278,15 +280,15 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                   <Avatar
                     size={42}
                     src={
-                      users?.avatar
+                      user?.avatar
                         ? `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
-                            users?.avatar
+                            user?.avatar
                           }`
                         : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
                     }
                     className="header__user--avatar"
                   />
-                  {users.fullName}
+                  {user.fullName}
                   <ul className="header__user--list">
                     <li
                       className="header__user--item"
@@ -300,7 +302,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                     >
                       Lịch sử mua hàng
                     </li>
-                    {users.role === "ADMIN" && (
+                    {user.role === "ADMIN" && (
                       <li
                         onClick={() => navigate("/admin")}
                         className="header__user--item"
