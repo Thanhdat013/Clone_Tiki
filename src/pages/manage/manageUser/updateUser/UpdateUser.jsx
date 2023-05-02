@@ -17,11 +17,11 @@ const UpdateUser = ({
     const res = await putUpdateUser(values._id, values.fullName, values.phone);
     console.log(res);
     if (res && +res.statusCode === 200) {
-      message.success("Updated user successfully");
+      message.success("Cập nhật người dùng thành công");
       await getAllUser();
       setIsModalOpenUpdate(false);
     } else {
-      message.error("Error updating user");
+      message.error("Cập nhật người dùng thất bại");
     }
   };
   const formRef = useRef(null);
@@ -40,14 +40,15 @@ const UpdateUser = ({
   return (
     <>
       <Modal
-        title="Update new user"
+        title="Cập nhật người dùng"
         open={isModalOpenUpdate}
         onOk={() => {
           form.submit();
         }}
         onCancel={handleCancelModal}
         width={500}
-        okText={"Update"}
+        okText={"Cập nhật"}
+        cancelText={"Hủy bỏ"}
       >
         <Form
           name="updateUserForm"
@@ -64,9 +65,7 @@ const UpdateUser = ({
           <Form.Item
             label="Full name"
             name="fullName"
-            rules={[
-              { required: true, message: "Please input your full name!" },
-            ]}
+            rules={[{ required: true, message: "Vui lòng nhập tên của bạn!" }]}
           >
             <Input />
           </Form.Item>
@@ -79,7 +78,10 @@ const UpdateUser = ({
             label="Phone number"
             name="phone"
             rules={[
-              { required: true, message: "Please input your phone number!" },
+              {
+                required: true,
+                message: "Vui lòng nhập số điện thoại của bạn!",
+              },
             ]}
           >
             <Input />

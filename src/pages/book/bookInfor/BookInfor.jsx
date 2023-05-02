@@ -15,43 +15,43 @@ const BookInfor = ({ dataBookDetail }) => {
           </div>
           <div className="bookInfor__content--infor">
             <p className="bookInfor__content--tag l-3 c-4">Tên sản phẩm</p>
-            <p className="bookInfor__content--name l-4 c-8">
+            <p className="bookInfor__content--name l-6 c-8">
               {dataBookDetail.mainText}
             </p>
           </div>
           <div className="bookInfor__content--infor">
             <p className="bookInfor__content--tag l-3 c-4">Tác giả</p>
-            <p className="bookInfor__content--name l-4 c-8 bookInfor__link">
+            <p className="bookInfor__content--name l-6 c-8 bookInfor__link">
               {dataBookDetail.author}
             </p>
           </div>
           <div className="bookInfor__content--infor">
             <p className="bookInfor__content--tag l-3 c-4">NXB</p>
-            <p className="bookInfor__content--name l-4 c-8">Hà Nội</p>
+            <p className="bookInfor__content--name l-6 c-8">Hà Nội</p>
           </div>
 
           <div className="bookInfor__content--infor">
             <p className="bookInfor__content--tag l-3 c-4">Trọng lượng (gr)</p>
-            <p className="bookInfor__content--name l-4 c-8">
+            <p className="bookInfor__content--name l-6 c-8">
               {" "}
               {Math.floor(+dataBookDetail.price / 200)}
             </p>
           </div>
           <div className="bookInfor__content--infor">
             <p className="bookInfor__content--tag l-3 c-4">Kích Thước Bao Bì</p>
-            <p className="bookInfor__content--name l-4 c-8">
+            <p className="bookInfor__content--name l-6 c-8">
               24 x 15.5 x 2.7 cm
             </p>
           </div>
           <div className="bookInfor__content--infor">
             <p className="bookInfor__content--tag l-3 c-4">Số trang</p>
-            <p className="bookInfor__content--name l-4 c-8">
+            <p className="bookInfor__content--name l-6 c-8">
               {Math.floor(+dataBookDetail.price / 400)}
             </p>
           </div>
           <div className="bookInfor__content--infor">
             <p className="bookInfor__content--tag l-3 c-4">Hình thức</p>
-            <p className="bookInfor__content--name l-4 c-8">Bìa mềm</p>
+            <p className="bookInfor__content--name l-6 c-8">Bìa mềm</p>
           </div>
           <div className="bookInfor__content--footer">
             Giá sản phẩm trên Tiki.com đã bao gồm thuế theo luật hiện hành. Bên

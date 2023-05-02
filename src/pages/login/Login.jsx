@@ -21,13 +21,15 @@ const Login = () => {
     if (res?.data) {
       localStorage.setItem("access_token", res.data.access_token);
       await dispatch(doLoginAction(res.data.user));
-      message.success("You have successfully login");
+      message.success("Bạn đã đăng nhập thành công");
       navigate("/");
     } else {
       notification.error({
-        message: "Login failed",
+        message: "Đăng nhập thất bại",
         description:
-          res?.message.length > 0 ? res.message : "An error has occurred",
+          res?.message.length > 0
+            ? res.message
+            : "Đã có lỗi xảy ra, vui lòng thử lại",
         duration: 5,
       });
     }
@@ -47,7 +49,7 @@ const Login = () => {
             className="login__logo"
             onClick={() => navigate("/")}
           />
-          <h3 className="login__title">Sign in to Tiki</h3>
+          <h3 className="login__title">Đăng nhập vào Tiki</h3>
         </div>
 
         <Form
@@ -63,7 +65,9 @@ const Login = () => {
             onKeyDown={handleKeyDown}
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập email của bạn!" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -73,7 +77,9 @@ const Login = () => {
             onKeyDown={handleKeyDown}
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập mật khẩu của bạns!" },
+            ]}
           >
             <Input.Password />
           </Form.Item>
@@ -85,17 +91,17 @@ const Login = () => {
               className="login__button"
               loading={isLoading}
             >
-              Log in
+              Đăng nhập
             </Button>
 
             <p className="login__desc">
               {" "}
-              Do not have an account?
+              Bạn chưa có tài khoản?
               <span
                 className="login__register"
                 onClick={() => navigate("/register")}
               >
-                Register
+                Đăng kí
               </span>
             </p>
           </Form.Item>

@@ -39,7 +39,7 @@ const TableUser = () => {
       },
     },
     {
-      title: "Name",
+      title: "Tên",
       dataIndex: "fullName",
       width: "20%",
       sorter: {
@@ -48,7 +48,7 @@ const TableUser = () => {
       },
     },
     {
-      title: "Phone number",
+      title: "Số điện thoại",
       dataIndex: "phone",
       width: "20%",
       compare: (a, b) => "a.Phone number" - "b.Phone number",

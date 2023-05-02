@@ -82,15 +82,15 @@ const UpdateBook = ({
     const { _id, mainText, author, price, sold, quantity, category } = values;
     if (dataImageThumb.length === 0) {
       notification.error({
-        message: "Update book failed",
-        description: "Please upload image for thumbnail",
+        message: "Cập nhật thất bại",
+        description: "Vui lòng tải hình ảnh cho sách",
       });
       return;
     }
     if (dataImageSlider.length === 0) {
       notification.error({
-        message: "Update book failed",
-        description: "Please upload image for slider",
+        message: "Cập nhật thất bại",
+        description: "Vui lòng tải các hình ảnh miêu tả sách",
       });
       return;
     }
@@ -110,16 +110,16 @@ const UpdateBook = ({
 
     if (res && +res.statusCode === 200) {
       notification.success({
-        message: "Update book successfully",
-        description: "You have updated the book successfully",
+        message: "Cập nhật thành công",
+        description: "Bạn đã cập nhật thành công cho cuốn sách",
       });
       form.resetFields();
       await getAllBook();
       setOpenUpdateBook(false);
     } else {
       notification.error({
-        message: "Update book failed",
-        description: "you have update failed",
+        message: "Cập nhật thất bại",
+        description: "Có vẻ đã có lỗi xảy ra, vui lòng thử lại",
       });
     }
   };
@@ -136,11 +136,11 @@ const UpdateBook = ({
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
+      message.error("Bạn chỉ có thể tải hình ảnh có định dạng JPG/PNG!");
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
+      message.error("Hình ảnh phải nhỏ hơn 2MB!");
     }
     return isJpgOrPng && isLt2M;
   };
@@ -247,7 +247,7 @@ const UpdateBook = ({
   return (
     <>
       <Modal
-        title="Update book"
+        title="Cập nhật sách"
         open={openUpdateBook}
         labelCol={{ span: 8 }}
         onOk={() => {
@@ -256,8 +256,8 @@ const UpdateBook = ({
         onCancel={handleCancelModal}
         width={"60vw"}
         maskClosable={false}
-        okText={"Update"}
-        cancelText={"Cancel"}
+        okText={"Cập nhật"}
+        cancelText={"Hủy bỏ"}
       >
         <Form
           name="updateBookForm"

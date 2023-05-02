@@ -30,13 +30,15 @@ const Register = () => {
     setIsLoading(false);
     if (res?.data?._id) {
       console.log(res);
-      message.success("You have successfully registered an account");
+      message.success("Bạn đã đăng ký tài khoản thành công");
       navigate("/login");
     } else {
       notification.error({
-        message: "Registration failed",
+        message: "Đăng ký tài khoản thất bại",
         description:
-          res?.message.length > 0 ? res.message : "An error has occurred",
+          res?.message.length > 0
+            ? res.message
+            : "Đã có lỗi xảy ra, vui lòng thử lại",
         duration: 5,
       });
     }
@@ -52,7 +54,7 @@ const Register = () => {
             className="register__logo"
             onClick={() => navigate("/")}
           />
-          <h3 className="register__title">Register for an account Tiki</h3>
+          <h3 className="register__title">Đăng ký tài khoản với Tiki</h3>
         </div>
 
         <Form
@@ -66,16 +68,16 @@ const Register = () => {
           <Form.Item
             label="Full name"
             name="fullName"
-            rules={[
-              { required: true, message: "Please input your full name!" },
-            ]}
+            rules={[{ required: true, message: "Vui lòng điền tên của bạn !" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+            rules={[
+              { required: true, message: "Vui lòng điền email của bạn!" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -83,7 +85,9 @@ const Register = () => {
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[
+              { required: true, message: "Vui lòng điền mật khẩu của bạn!" },
+            ]}
           >
             <Input.Password />
           </Form.Item>
@@ -91,7 +95,10 @@ const Register = () => {
             label="Phone number"
             name="phoneNumber"
             rules={[
-              { required: true, message: "Please input your phone number!" },
+              {
+                required: true,
+                message: "Vui lòng điền số điện thoại của bạn number!",
+              },
             ]}
           >
             <Input />
@@ -105,16 +112,16 @@ const Register = () => {
               className="register__button"
               loading={isLoading}
             >
-              Register
+              Đăng ký
             </Button>
             <p className="register__desc">
               {" "}
-              Do you already have an account?
+              Bạn đã có tài khoản?
               <span
                 className="register__login"
                 onClick={() => navigate("/login")}
               >
-                Log in
+                Đăng nhập
               </span>
             </p>
           </Form.Item>

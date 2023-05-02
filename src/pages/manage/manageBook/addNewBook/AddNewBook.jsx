@@ -19,21 +19,21 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
     const { mainText, author, price, sold, quantity, category } = values;
     if (dataImageThumb.length === 0) {
       notification.error({
-        message: "Create a new book failed",
-        description: "Please upload image for thumbnail",
+        message: "Tạo mới thất bại",
+        description: "Vui lòng tải hình ảnh của sách ",
       });
       return;
     }
     if (dataImageSlider.length === 0) {
       notification.error({
-        message: "Create a new book failed",
-        description: "Please upload image for slider",
+        message: "Tạo mới thất bại",
+        description: "Vui lòng tải các hình ảnh miêu tả cho sách",
       });
       return;
     }
     if (mainText.startsWith(" ")) {
       notification.error({
-        message: "Create a new book failed",
+        message: "Tạo mới thất bại",
         description: "Tên sách không được bắt đầu bằng khoảng trắng",
       });
       return;
@@ -53,8 +53,8 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
     console.log(res);
     if (res && res.statusCode === 201) {
       notification.success({
-        message: "Create a new book successfully",
-        description: "Bạn đã tạo mới thành công",
+        message: "Tạo mới thành công",
+        description: "Bạn đã tạo mới thành công một cuốn sách",
       });
       form.resetFields();
       await getAllBook();
@@ -63,8 +63,8 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
       setDataImageThumb([]);
     } else {
       notification.error({
-        message: "Create a new book failed",
-        description: "you have create failed",
+        message: "Tạo mới thất bại",
+        description: "Bạn đã tạo mới không thành công một cuốn sách",
       });
     }
   };
@@ -82,11 +82,11 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
   const beforeUpload = (file) => {
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
     if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
+      message.error("Bạn chỉ có thẻ tải lên JPG/PNG file!");
     }
     const isLt2M = file.size / 1024 / 1024 < 2;
     if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
+      message.error("Hình ảnh có dung lượng phải nhỏ hơn 2MB!");
     }
     return isJpgOrPng && isLt2M;
   };
@@ -110,9 +110,9 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
 
     if (res && res.data) {
       setDataImageThumb([{ name: res.data.fileUploaded, uid: file.uid }]);
-      onSuccess("ok");
+      onSuccess("Thành công");
     } else {
-      onError("Error");
+      onError("Thất bại");
     }
   };
   // set data image of slider into react for submit from
@@ -125,9 +125,9 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
         ...dataImageSlider,
         { name: res.data.fileUploaded, uid: file.uid },
       ]);
-      onSuccess("ok");
+      onSuccess("Thành công");
     } else {
-      onError("Error");
+      onError("Thất bại");
     }
   };
   //Preview image
@@ -182,7 +182,7 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
   return (
     <>
       <Modal
-        title="Add new book"
+        title="Tạo mới sách"
         open={openAddBook}
         labelCol={{ span: 8 }}
         onOk={() => {
@@ -191,8 +191,8 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
         onCancel={handleCancelModal}
         width={"60vw"}
         maskClosable={false}
-        okText={"Create"}
-        cancelText={"Cancel"}
+        okText={"Tạo mới"}
+        cancelText={"Hủy bỏ"}
       >
         <Form
           name="addNewBookForm"

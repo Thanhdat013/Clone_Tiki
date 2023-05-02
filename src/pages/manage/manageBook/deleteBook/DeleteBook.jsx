@@ -12,7 +12,7 @@ const DeleteBook = ({
     const res = await deleteBook(dataDeleteBook._id);
     console.log(res);
     if (res && +res.statusCode === 200) {
-      message.success("delete user successfully");
+      message.success("Xóa thành công");
       setOpenDeleteBook(false);
       await getAllBook();
     }
@@ -26,17 +26,17 @@ const DeleteBook = ({
   return (
     <>
       <Modal
-        title="Delete book"
+        title="Xóa sách"
         open={openUpdateBook}
         onOk={onFinish}
         onCancel={handleCancelModal}
         width={500}
-        okText={"Delete"}
-        cancelText={"Cancel"}
+        okText={"Xóa"}
+        cancelText={"Hủy bỏ"}
       >
         <p>
           {" "}
-          {`Are you sure delete book with name ${dataDeleteBook?.mainText}`}
+          {`Bạn có chắc muốn xóa cuốn sách với tên: ${dataDeleteBook?.mainText}`}
         </p>
       </Modal>
     </>

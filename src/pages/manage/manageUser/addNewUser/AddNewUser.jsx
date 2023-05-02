@@ -21,15 +21,17 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
     );
     console.log(res);
     if (res && res.data) {
-      message.success("You have successfully created an account");
+      message.success("Bạn đã tạo mới tâì khoản thành công");
       await getAllUser();
       setOpenAddUser(false);
       form.resetFields();
     } else {
       notification.error({
-        message: "Create failed",
+        message: "Tạo mới thất bại",
         description:
-          res?.message.length > 0 ? res.message : "An error has occurred",
+          res?.message.length > 0
+            ? res.message
+            : "Đã có lỗi xảy ra, vui lòng thử lại",
         duration: 5,
       });
     }
@@ -42,14 +44,15 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
   return (
     <>
       <Modal
-        title="Add new user"
+        title="Tạo mới người dùng"
         open={openAddUser}
         onOk={() => {
           form.submit();
         }}
         onCancel={handleCancelModal}
         width={1000}
-        okText={"Create"}
+        okText={"Tạo"}
+        cancelText={"Hủy bỏ"}
       >
         <Form
           name="addNewUserForm"
@@ -61,16 +64,16 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
           <Form.Item
             label="Full name"
             name="fullName"
-            rules={[
-              { required: true, message: "Please input your full name!" },
-            ]}
+            rules={[{ required: true, message: "Vui lòng nhập tên của bạn!" }]}
           >
             <Input />
           </Form.Item>
           <Form.Item
             label="Email"
             name="email"
-            rules={[{ required: true, message: "Please input your email!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập email của bạn!" },
+            ]}
           >
             <Input />
           </Form.Item>
@@ -78,7 +81,9 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
           <Form.Item
             label="Password"
             name="password"
-            rules={[{ required: true, message: "Please input your password!" }]}
+            rules={[
+              { required: true, message: "Vui lòng nhập mật khẩu của bạn!" },
+            ]}
           >
             <Input.Password />
           </Form.Item>
@@ -86,7 +91,10 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
             label="Phone number"
             name="phoneNumber"
             rules={[
-              { required: true, message: "Please input your phone number!" },
+              {
+                required: true,
+                message: "Vui lòng nhập số điện thoại của bạn number!",
+              },
             ]}
           >
             <Input />

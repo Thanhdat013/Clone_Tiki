@@ -12,7 +12,7 @@ const DeleteUser = ({
     const res = await deleteUser(dataDelete._id);
     console.log(res);
     if (res && res.data) {
-      message.success("delete user successfully");
+      message.success("Xóa người dùng thành công");
       setIsModalOpenDelete(false);
       await getAllUser();
     }
@@ -26,14 +26,18 @@ const DeleteUser = ({
   return (
     <>
       <Modal
-        title="Delete user"
+        title="Xóa người dùng"
         open={isModalOpenDelete}
         onOk={onFinish}
         onCancel={handleCancelModal}
         width={500}
-        okText={"Delete"}
+        okText={"Xóa"}
+        cancelText={"Hủy bỏ"}
       >
-        <p> {`Are you sure delete user with email ${dataDelete.email}`}</p>
+        <p>
+          {" "}
+          {`Bạn có chắc muốn xóa người dùng với email: ${dataDelete.email}`}
+        </p>
       </Modal>
     </>
   );

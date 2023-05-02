@@ -106,25 +106,25 @@ const TableUserWithPaginate = () => {
       sorter: true,
     },
     {
-      title: "Name",
+      title: "Tên",
       dataIndex: "fullName",
       width: "10%",
       sorter: true,
     },
     {
-      title: "Phone number",
+      title: "Số điện thoại",
       dataIndex: "phone",
       width: "10%",
       sorter: true,
     },
     {
-      title: "Role ",
+      title: "Phân quyền ",
       dataIndex: "role",
       width: "10%",
       sorter: true,
     },
     {
-      title: "Action ",
+      title: "Hành động ",
       width: "10%",
       render: (text, record, index) => (
         <div className="table__icon">

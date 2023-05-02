@@ -58,12 +58,12 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
       width: "30%",
     },
     {
-      title: "Name",
+      title: "Tên người dùng",
       dataIndex: "fullName",
       width: "40%",
     },
     {
-      title: "Phone number",
+      title: "Số điện thoại",
       dataIndex: "phone",
       width: "30%",
     },
@@ -81,22 +81,22 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
     console.log(res);
     if (res && res.data && res?.data.countSuccess > 0) {
       notification.success({
-        message: "import data successfully",
+        message: "Nhập dữ liệu thành công",
         description:
           res?.data.countSuccess > 0
-            ? `countSuccess ${res?.data.countSuccess}`
-            : "import data successfully",
+            ? `số lượng ${res?.data.countSuccess}`
+            : "Nhập dữ liệu thành công",
         duration: 5,
       });
       setDataImport("");
       handleCancelImport();
     } else {
       notification.error({
-        message: "import data failed",
+        message: "Nhập dữ liệu thất bại",
         description:
           res?.data.countError > 0
-            ? `countError ${res?.data.countError}`
-            : "import data failed",
+            ? `số lượng ${res?.data.countError}`
+            : "Nhập dữ liệu thất bại",
         duration: 5,
       });
     }
@@ -105,11 +105,12 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
   return (
     <>
       <Modal
-        title="Upload data"
+        title="Nhập dữ liêu"
         open={isModalImportFile}
         onCancel={handleCancelImport}
         width={1000}
-        okText={"Import data"}
+        okText={"Nhập"}
+        cancelText={"Hủy bỏ"}
         onOk={handleImportData}
         maskClosable={false}
         okButtonProps={{ disabled: dataImport.length === 0 }}
@@ -119,10 +120,11 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
             <InboxOutlined />
           </p>
           <p className="ant-upload-text">
-            Click or drag file to this area to upload
+            Nhấp hoặc kéo tệp vào khu vực này để tải lên
           </p>
           <p className="ant-upload-text">
-            Support for a single upload. Only accept .csv, .xls, .xlsx or &nbsp;{" "}
+            Hỗ trợ cho một lần tải lên. Chỉ chấp nhận .csv, .xls, .xlsx hoặc
+            &nbsp;{" "}
             <a
               onClick={(e) => e.stopPropagation()}
               href={
@@ -131,7 +133,7 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
               target={"_blank"}
               download
             >
-              download template
+              tải mẫu
             </a>
           </p>
         </Dragger>

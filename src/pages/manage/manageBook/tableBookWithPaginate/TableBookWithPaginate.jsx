@@ -79,7 +79,7 @@ const TableUserWithPaginate = () => {
     //   ),
     // },
     {
-      title: "Name book",
+      title: "Tên sách",
       dataIndex: "mainText",
       width: "15%",
       sorter: true,
@@ -97,13 +97,13 @@ const TableUserWithPaginate = () => {
       ),
     },
     {
-      title: "Author",
+      title: "Tác giả",
       dataIndex: "author",
       width: "10%",
       sorter: true,
     },
     {
-      title: "Price (VNĐ)",
+      title: "Giá (VNĐ)",
       dataIndex: "price",
       width: "8%",
       sorter: true,
@@ -114,13 +114,13 @@ const TableUserWithPaginate = () => {
       ),
     },
     {
-      title: "Category ",
+      title: "Thể loại ",
       dataIndex: "category",
       width: "10%",
       sorter: true,
     },
     {
-      title: "Created at ",
+      title: "Ngày tạo ",
       dataIndex: "createdAt",
       width: "15%",
       sorter: true,
@@ -129,7 +129,7 @@ const TableUserWithPaginate = () => {
       ),
     },
     {
-      title: "Updated at ",
+      title: "Ngày cập nhật ",
       dataIndex: "updatedAt",
       width: "15%",
       sorter: true,
@@ -138,20 +138,20 @@ const TableUserWithPaginate = () => {
       ),
     },
     {
-      title: "Quantity ",
+      title: "Số lượng ",
       dataIndex: "quantity",
       width: "10%",
       sorter: true,
     },
     {
-      title: "Sold ",
+      title: "Đã bán ",
       dataIndex: "sold",
       width: "10%",
 
       sorter: true,
     },
     {
-      title: "Action ",
+      title: "Hành động ",
       width: "10%",
       render: (text, record, index) => (
         <div className="manageBook__icon">
