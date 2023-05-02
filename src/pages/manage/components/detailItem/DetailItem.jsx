@@ -24,17 +24,17 @@ const DetailUser = ({ setOpen, open, dataViewUser, dataViewBook }) => {
         closable={false}
       >
         <>
-          <Descriptions title="User Information" bordered column={2}>
+          <Descriptions title="Thông tin" bordered column={2}>
             <Descriptions.Item label="Id">
               {dataViewUser?._id ? dataViewUser?._id : dataViewBook?._id}
             </Descriptions.Item>
 
-            <Descriptions.Item label={dataViewUser ? "Email" : "Author"}>
+            <Descriptions.Item label={dataViewUser ? "Email" : "Tác giả"}>
               {dataViewUser?.email ? dataViewUser?.email : dataViewBook?.author}
             </Descriptions.Item>
 
             <Descriptions.Item
-              label={dataViewUser ? "Full name" : "Book title"}
+              label={dataViewUser ? "Tên người dùng" : "Tên sách"}
             >
               {dataViewUser?.fullName
                 ? dataViewUser?.fullName
@@ -42,36 +42,36 @@ const DetailUser = ({ setOpen, open, dataViewUser, dataViewBook }) => {
             </Descriptions.Item>
 
             <Descriptions.Item
-              label={dataViewUser ? "Phone number" : "Book price"}
+              label={dataViewUser ? "Số điện thoại" : "Giá sách"}
             >
               {dataViewUser?.phone ? dataViewUser?.phone : dataViewBook?.price}
             </Descriptions.Item>
 
-            <Descriptions.Item label={dataViewUser ? "Role" : "Category"}>
+            <Descriptions.Item label={dataViewUser ? "Quyền" : "Thể loại"}>
               {dataViewUser?.role ? dataViewUser?.role : dataViewBook?.category}
             </Descriptions.Item>
 
             {dataViewUser ? (
-              <Descriptions.Item label="Acive">
-                <Badge status="processing" text="active" />
+              <Descriptions.Item label="Hoạt động">
+                <Badge status="processing" text="Đang hoạt động" />
               </Descriptions.Item>
             ) : (
-              <Descriptions.Item label="Sale">
-                <Badge status="processing" text="sale" />
+              <Descriptions.Item label="Bán">
+                <Badge status="processing" text="saĐang bánle" />
               </Descriptions.Item>
             )}
             {dataViewBook && (
-              <Descriptions.Item label={"Quantity"}>
+              <Descriptions.Item label={"Số lượng"}>
                 {dataViewBook?.quantity}
               </Descriptions.Item>
             )}
             {dataViewBook && (
-              <Descriptions.Item label={"Sold"}>
+              <Descriptions.Item label={"Đã bán"}>
                 {dataViewBook?.sold}
               </Descriptions.Item>
             )}
 
-            <Descriptions.Item label="Created at" span={2}>
+            <Descriptions.Item label="Ngày tạo" span={2}>
               {moment(
                 dataViewUser?.createdAt
                   ? dataViewUser?.createdAt
@@ -79,7 +79,7 @@ const DetailUser = ({ setOpen, open, dataViewUser, dataViewBook }) => {
               ).format("DD-MM-YYYY, HH:mm:ss a")}
             </Descriptions.Item>
 
-            <Descriptions.Item label="Updated at" span={2}>
+            <Descriptions.Item label="Ngày cập nhật" span={2}>
               {moment(
                 dataViewUser?.updatedAt
                   ? dataViewUser?.updatedAt
@@ -88,7 +88,7 @@ const DetailUser = ({ setOpen, open, dataViewUser, dataViewBook }) => {
             </Descriptions.Item>
 
             {dataViewUser && (
-              <Descriptions.Item label="Avatar">
+              <Descriptions.Item label="Ảnh đại điện">
                 <img
                   style={{
                     maxHeight: "250px",
@@ -102,7 +102,7 @@ const DetailUser = ({ setOpen, open, dataViewUser, dataViewBook }) => {
           </Descriptions>
           {dataViewBook && (
             <Divider orientation={"left"} style={{ fontSize: "2rem" }}>
-              Picture of book
+              Hình ảnh của sách
             </Divider>
           )}
           {dataViewBook && <PreviewImage dataViewBook={dataViewBook} />}

@@ -3,7 +3,6 @@ import { Rate } from "antd";
 import { useNavigate } from "react-router-dom";
 const BookItem = ({ item, setQuantityBook }) => {
   // remove vietnamese
-
   const nonAccentVietnamese = (str) => {
     str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
     str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
@@ -62,7 +61,7 @@ const BookItem = ({ item, setQuantityBook }) => {
       <div className="bookItem__container  ">
         <img
           src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
-            item?.thumbnail
+            item.thumbnail
           }`}
           alt=""
           className="bookItem__container--img"
