@@ -1,29 +1,31 @@
-import React, { useState } from "react";
-import { Button, Form, Input, notification, message } from "antd";
-import "./Login.scss";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, { useState } from "react"
+import { Button, Form, Input, notification, message } from "antd"
+import "./Login.scss"
+import { useNavigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
 // import { postLogin } from "~/redux/reducer/userReducer/userSlice";
-import { postLogin } from "~/services/Api";
-import { doLoginAction } from "~/redux/reducer/userReducer/userSlice";
+import { postLogin } from "~/services/Api"
+import { doLoginAction } from "~/redux/reducer/userReducer/userSlice"
 
 const Login = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
 
   const onFinish = async (values) => {
-    setIsLoading(true);
+    setIsLoading(true)
 
-    const { email, password } = values;
+    const { email, password } = values
 
-    let res = await postLogin(email, password, 500);
-    setIsLoading(false);
+    let res = await postLogin(email, password, 500)
+    setIsLoading(false)
     if (res?.data) {
-      localStorage.setItem("access_token", res.data.access_token);
-      console.log(res.data.user);
-      await dispatch(doLoginAction(res.data.user));
-      message.success("Bạn đã đăng nhập thành công");
-      navigate("/");
+      localStorage.setItem("access_token", res.data.access_token)
+      console.log("setAccessToken", res.data.access_token)
+
+      console.log(res.data.user)
+      await dispatch(doLoginAction(res.data.user))
+      message.success("Bạn đã đăng nhập thành công")
+      navigate("/")
     } else {
       notification.error({
         message: "Đăng nhập thất bại",
@@ -32,14 +34,14 @@ const Login = () => {
             ? res.message
             : "Đã có lỗi xảy ra, vui lòng thử lại",
         duration: 5,
-      });
+      })
     }
-  };
+  }
   const handleKeyDown = (e) => {
-    if (e.keyCode === 13) onFinish();
-  };
+    if (e.keyCode === 13) onFinish()
+  }
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <div className="login">
       <div className="login__container">
@@ -109,7 +111,7 @@ const Login = () => {
         </Form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

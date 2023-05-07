@@ -1,25 +1,25 @@
-import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
+import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice"
 
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import BookItem from "~/components/Home/bookItem";
-import "./SlideBook.scss";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
+import { useEffect, useState, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import BookItem from "~/components/Home/bookItem"
+import "./SlideBook.scss"
+import Slider from "react-slick"
+import "slick-carousel/slick/slick.css"
+import "slick-carousel/slick/slick-theme.css"
+import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai"
 
 const SlideBook = ({ dataBookDetail, setQuantityBook }) => {
-  const getCategory = dataBookDetail?.category;
+  const getCategory = dataBookDetail?.category
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   useEffect(() => {
-    let query = `pageSize=10&current=1&category=${getCategory}`;
-    dispatch(getAllBookWithPaginate(query));
-  }, [getCategory]);
+    let query = `pageSize=10&current=1&category=${getCategory}`
+    dispatch(getAllBookWithPaginate(query))
+  }, [getCategory])
 
-  const listBooks = useSelector((state) => state?.books?.listBooksPaginate);
-  const slider = useRef();
+  const listBooks = useSelector((state) => state?.books?.listBooksPaginate)
+  const slider = useRef()
   const settings = {
     slidesToShow: 5,
     slidesToScroll: 2,
@@ -54,7 +54,7 @@ const SlideBook = ({ dataBookDetail, setQuantityBook }) => {
         },
       },
     ],
-  };
+  }
 
   return (
     <div className="slideBook grid wide">
@@ -73,7 +73,7 @@ const SlideBook = ({ dataBookDetail, setQuantityBook }) => {
         <AiOutlineRight
           className=" slideBook__left--arrow"
           onClick={() => {
-            slider?.current?.slickNext();
+            slider?.current?.slickNext()
           }}
         />
         <AiOutlineLeft
@@ -82,7 +82,7 @@ const SlideBook = ({ dataBookDetail, setQuantityBook }) => {
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SlideBook;
+export default SlideBook

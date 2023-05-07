@@ -8,61 +8,61 @@ import {
   Upload,
   Button,
   message,
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { postUpdateAvatar, putUpdateUserByUser } from "~/services/Api";
+} from "antd"
+import { UploadOutlined } from "@ant-design/icons"
+import { useEffect, useState, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { postUpdateAvatar, putUpdateUserByUser } from "~/services/Api"
 import {
   doUpdateAvatarAction,
   doUpdateUser,
-} from "~/redux/reducer/userReducer/userSlice";
-import localStorage from "redux-persist/es/storage";
+} from "~/redux/reducer/userReducer/userSlice"
+import localStorage from "redux-persist/es/storage"
 
 const UpdateUser = ({ open, setOpen }) => {
-  const user = useSelector((state) => state.users.user);
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.user)
+  const dispatch = useDispatch()
 
   const handleCancelUpdate = () => {
-    form.resetFields();
-    setOpen(false);
-  };
+    form.resetFields()
+    setOpen(false)
+  }
   // submit update avatar
   const handleUpdateUser = async (values) => {
-    console.log(values);
-    if (dataAvatar === "") setDataAvatar(user?.avatar);
-    const { id, fullName, phone } = values;
-    const res = await putUpdateUserByUser(id, fullName, phone, dataAvatar);
-    console.log(res);
+    console.log(values)
+    if (dataAvatar === "") setDataAvatar(user?.avatar)
+    const { id, fullName, phone } = values
+    const res = await putUpdateUserByUser(id, fullName, phone, dataAvatar)
+    console.log(res)
     if (res && res.data) {
       //update redux
-      dispatch(doUpdateUser({ fullName, phone, avatar: dataAvatar }));
-      message.success("Cập nhật người dùng thành công");
+      dispatch(doUpdateUser({ fullName, phone, avatar: dataAvatar }))
+      message.success("Cập nhật người dùng thành công")
 
       // force renew token
-      localStorage.removeItem("access_token");
+      localStorage.removeItem("access_token")
     } else {
-      message.error("Cập nhật người dùng thất bại");
+      message.error("Cập nhật người dùng thất bại")
     }
-    setOpen(false);
-  };
-  const formRef = useRef(null);
+    setOpen(false)
+  }
+  const formRef = useRef(null)
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
   // set avatar when change avatar
-  const [dataAvatar, setDataAvatar] = useState("");
+  const [dataAvatar, setDataAvatar] = useState("")
   const handleRequestThumb = async ({ file, onSuccess, onError }) => {
-    const res = await postUpdateAvatar(file);
+    const res = await postUpdateAvatar(file)
     if (res && res.data) {
-      console.log(res);
+      console.log(res)
 
-      setDataAvatar(res.data.fileUploaded);
-      dispatch(doUpdateAvatarAction({ avatar: res.data.fileUploaded }));
-      onSuccess("ok");
+      setDataAvatar(res.data.fileUploaded)
+      dispatch(doUpdateAvatarAction({ avatar: res.data.fileUploaded }))
+      onSuccess("ok")
     } else {
-      onError("Error");
+      onError("Error")
     }
-  };
+  }
 
   // prop of Upload
   const props = {
@@ -73,19 +73,19 @@ const UpdateUser = ({ open, setOpen }) => {
     customRequest: handleRequestThumb,
     onChange(info) {
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList);
+        console.log(info.file, info.fileList)
       }
       if (info.file.status === "done") {
-        message.success(`cập nhật avatar thành công`);
+        message.success(`cập nhật avatar thành công`)
       } else if (info.file.status === "error") {
-        message.error(`cập nhật avatar thất bại`);
+        message.error(`cập nhật avatar thất bại`)
       }
     },
-  };
+  }
   // get information of user
   useEffect(() => {
-    form.setFieldsValue(user);
-  }, [user]);
+    form.setFieldsValue(user)
+  }, [user])
   return (
     <>
       <Row span={24} gutter={[8, 8]}>
@@ -161,7 +161,7 @@ const UpdateUser = ({ open, setOpen }) => {
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default UpdateUser;
+export default UpdateUser
