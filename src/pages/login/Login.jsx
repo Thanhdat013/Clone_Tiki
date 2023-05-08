@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import { Button, Form, Input, notification, message } from "antd"
 import "./Login.scss"
 import { useNavigate } from "react-router-dom"
@@ -20,7 +20,6 @@ const Login = () => {
     setIsLoading(false)
     if (res?.data) {
       localStorage.setItem("access_token", res.data.access_token)
-      console.log("setAccessToken", res.data.access_token)
 
       console.log(res.data.user)
       await dispatch(doLoginAction(res.data.user))
@@ -40,7 +39,22 @@ const Login = () => {
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) onFinish()
   }
+  // google
 
+  function handelCallbackResponse(response) {
+    console.log("Encode JWT ID token", response.credential)
+  }
+  useEffect(() => {
+    google.accounts.id.initialize({
+      client_id:
+        "33809345843-ielufpgnck33iva2r1oqi8e89tndv6dv.apps.googleusercontent.com",
+      callback: handelCallbackResponse,
+    })
+    google.accounts.id.renderButton(document.getElementById("signinDiv"), {
+      theme: "outline",
+      size: "large",
+    })
+  }, [])
   const navigate = useNavigate()
   return (
     <div className="login">
@@ -53,8 +67,8 @@ const Login = () => {
             onClick={() => navigate("/")}
           />
           <h3 className="login__title">Đăng nhập vào Tiki</h3>
+          <div id="signinDiv"></div>
         </div>
-
         <Form
           name="basic"
           onFinish={onFinish}
@@ -110,6 +124,8 @@ const Login = () => {
           </Form.Item>
         </Form>
       </div>
+
+      {/* google */}
     </div>
   )
 }
