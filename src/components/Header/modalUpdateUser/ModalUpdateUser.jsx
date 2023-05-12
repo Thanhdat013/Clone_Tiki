@@ -21,7 +21,7 @@ const ModalUpdateUser = ({ open, setOpen }) => {
   return (
     <>
       <Modal
-        title="Cập nhật người dùng"
+        title="Cập nhật tài khoản"
         open={open}
         footer={false}
         onCancel={() => setOpen(false)}

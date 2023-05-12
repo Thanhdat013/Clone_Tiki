@@ -1,36 +1,35 @@
-import React, { useEffect, useState, useOutletContext } from "react";
+import React, { useEffect, useState } from "react"
 
-import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom"
 
-import Login from "~/pages/login";
-import Register from "~/pages/register";
-import BookPage from "~/pages/book";
-import Header from "~/components/Header";
-import Home from "~/components/Home";
-import Footer from "~/components/Footer";
-import ErrorPage from "~/pages/Error";
-import Loading from "~/components/Loading/Loading";
+import Footer from "~/components/Footer"
+import Header from "~/components/Header"
+import Home from "~/components/Home"
+import Loading from "~/components/Loading/Loading"
+import BookPage from "~/pages/book"
+import ErrorPage from "~/pages/Error"
+import Login from "~/pages/login"
+import Register from "~/pages/register"
 
-import { useDispatch, useSelector } from "react-redux";
-import { getFetchAccount } from "~/services/Api";
-import { doFetchAccount } from "~/redux/reducer/userReducer/userSlice";
-import AdminSideBar from "~/pages/admin/adminSideBar/";
-import AdminHeader from "~/pages/admin/adminHeader/";
-import AdminFooter from "~/pages/admin/adminFooter/";
-import Admin from "~/pages/admin/admin/";
-import ProtectedPage from "~/pages/protectedPage/protectedPage";
-import ManageBook from "~/pages/manage/manageBook";
-import ManageUser from "~/pages/manage/manageUser";
-import ManageOrder from "~/pages/manage/manageOrder";
-import Cart from "~/pages/cart";
-import "./App.scss";
-import History from "~/pages/history/History";
-import CartStart from "~/pages/cart/cartStart";
-import CartOrder from "~/pages/cart/cartOrder";
-import CartFinish from "~/pages/cart/cartFinish";
+import { useDispatch, useSelector } from "react-redux"
+import Admin from "~/pages/admin/admin/"
+import AdminHeader from "~/pages/admin/adminHeader/"
+import AdminSideBar from "~/pages/admin/adminSideBar/"
+import Cart from "~/pages/cart"
+import CartFinish from "~/pages/cart/cartFinish"
+import CartOrder from "~/pages/cart/cartOrder"
+import CartStart from "~/pages/cart/cartStart"
+import History from "~/pages/history/History"
+import ManageBook from "~/pages/manage/manageBook"
+import ManageOrder from "~/pages/manage/manageOrder"
+import ManageUser from "~/pages/manage/manageUser"
+import ProtectedPage from "~/pages/protectedPage/protectedPage"
+import { doFetchAccount } from "~/redux/reducer/userReducer/userSlice"
+import { getFetchAccount } from "~/services/Api"
+import "./App.scss"
 // search from header to home
 const Layout = () => {
-  const [headerSearch, setHeaderSearch] = useState("");
+  const [headerSearch, setHeaderSearch] = useState("")
   return (
     <div>
       <Header headerSearch={headerSearch} setHeaderSearch={setHeaderSearch} />
@@ -38,18 +37,18 @@ const Layout = () => {
       <Outlet context={[headerSearch, setHeaderSearch]} />
       <Footer />
     </div>
-  );
-};
+  )
+}
 
 const LayoutAdmin = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [collapsed, setCollapsed] = useState(false)
+  const [open, setOpen] = useState(false)
   const showDrawer = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const onClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <>
@@ -74,8 +73,8 @@ const LayoutAdmin = () => {
       </div>
       <Footer />
     </>
-  );
-};
+  )
+}
 
 const router = createBrowserRouter([
   {
@@ -132,26 +131,26 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
-]);
+])
 
 function App() {
-  const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.users.isLoading);
+  const dispatch = useDispatch()
+  const isLoading = useSelector((state) => state.users.isLoading)
   // lấy lại data khi F5 lại trang
   const callFetchAccount = async () => {
     if (
       window.location.pathname === "/login" ||
       window.location.pathname === "/register"
     )
-      return;
-    const res = await getFetchAccount();
+      return
+    const res = await getFetchAccount()
     if (res && res.data) {
-      dispatch(doFetchAccount(res.data));
+      dispatch(doFetchAccount(res.data))
     }
-  };
+  }
   useEffect(() => {
-    callFetchAccount();
-  }, []);
+    callFetchAccount()
+  }, [])
   return (
     <>
       {isLoading === false ||
@@ -163,7 +162,7 @@ function App() {
         <Loading />
       )}
     </>
-  );
+  )
 }
 
-export default App;
+export default App

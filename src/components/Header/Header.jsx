@@ -1,65 +1,65 @@
-import { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { useSelector, useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
-import { BsSearch } from "react-icons/bs";
-import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai";
-import { Badge, Drawer, message, Avatar, Popover } from "antd";
-import ModalUpdateUser from "./modalUpdateUser";
-import { doClearCartAction } from "~/redux/reducer/orderReducer/orderSlice";
-import "./Header.scss";
+import { BsSearch } from "react-icons/bs"
+import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai"
+import { Badge, Drawer, message, Avatar, Popover } from "antd"
+import ModalUpdateUser from "./modalUpdateUser"
+import { doClearCartAction } from "~/redux/reducer/orderReducer/orderSlice"
+import "./Header.scss"
 
 import {
   postLogOut,
   doLogOutAction,
-} from "~/redux/reducer/userReducer/userSlice";
+} from "~/redux/reducer/userReducer/userSlice"
 
 const Header = ({ headerSearch, setHeaderSearch }) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
-  const user = useSelector((state) => state.users.user);
-  const carts = useSelector((state) => state.orders.carts);
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const isAuthenticated = useSelector((state) => state.users.isAuthenticated)
+  const user = useSelector((state) => state.users.user)
+  const carts = useSelector((state) => state.orders.carts)
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(false)
   const showDrawer = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
   const onCloseDrawer = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   const handleLogOut = async () => {
-    const res = await dispatch(postLogOut());
-    console.log(res);
+    const res = await dispatch(postLogOut())
+    console.log(res)
     if (+res.payload.statusCode === 201) {
-      dispatch(doLogOutAction());
-      dispatch(doClearCartAction());
-      message.success("You have successfully logged out");
-      navigate("./");
+      dispatch(doLogOutAction())
+      dispatch(doClearCartAction())
+      message.success("You have successfully logged out")
+      navigate("./")
     }
-  };
+  }
 
   // search header
   const handleSearchHeaderChange = (e) => {
-    console.log(e.target.value);
-    const searchValue = e.target.value;
+    console.log(e.target.value)
+    const searchValue = e.target.value
     if (searchValue.startsWith(" ")) {
       // check không cho ký tự đầu tiên nhập vào là space
-      return;
+      return
     } else {
-      setHeaderSearch(searchValue);
+      setHeaderSearch(searchValue)
     }
-  };
+  }
 
   // delay search
 
   // modal for update user
-  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
+  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false)
   const handleClickOpenUpdate = () => {
-    setIsModalOpenUpdate(true);
-    onCloseDrawer();
-  };
+    setIsModalOpenUpdate(true)
+    onCloseDrawer()
+  }
 
   // popover for cart
   const contentPopover = () => {
@@ -110,8 +110,8 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
           </div>
         )}
       </section>
-    );
-  };
+    )
+  }
 
   return (
     <header className="header grid  ">
@@ -152,6 +152,15 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                     extra={user.fullName}
                   >
                     <ul className="logo__bar--list">
+                      <li
+                        className="logo__bar--item"
+                        onClick={() => {
+                          navigate("/")
+                          onCloseDrawer()
+                        }}
+                      >
+                        Trang chủ
+                      </li>
                       {user.role === "ADMIN" && (
                         <li
                           onClick={() => navigate("/admin")}
@@ -168,11 +177,13 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                       </li>
                       <li
                         className="logo__bar--item"
-                        onClick={() => navigate("/history")}
+                        onClick={() => {
+                          navigate("/history")
+                          onCloseDrawer()
+                        }}
                       >
                         Lịch sử mua hàng
                       </li>
-                      <li className="logo__bar--item">Cài đặt</li>
                     </ul>
                     <ul className="logo__bar--list">
                       <li onClick={handleLogOut} className="logo__bar--item">
@@ -334,6 +345,6 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
         setOpen={setIsModalOpenUpdate}
       />
     </header>
-  );
-};
-export default Header;
+  )
+}
+export default Header

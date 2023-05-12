@@ -1,23 +1,13 @@
-import {
-  Modal,
-  Form,
-  Input,
-  Row,
-  Col,
-  Avatar,
-  Upload,
-  Button,
-  message,
-} from "antd"
 import { UploadOutlined } from "@ant-design/icons"
-import { useEffect, useState, useRef } from "react"
+import { Avatar, Button, Col, Form, Input, Row, Upload, message } from "antd"
+import { useEffect, useRef, useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { postUpdateAvatar, putUpdateUserByUser } from "~/services/Api"
+import localStorage from "redux-persist/es/storage"
 import {
   doUpdateAvatarAction,
   doUpdateUser,
 } from "~/redux/reducer/userReducer/userSlice"
-import localStorage from "redux-persist/es/storage"
+import { postUpdateAvatar, putUpdateUserByUser } from "~/services/Api"
 
 const UpdateUser = ({ open, setOpen }) => {
   const user = useSelector((state) => state.users.user)

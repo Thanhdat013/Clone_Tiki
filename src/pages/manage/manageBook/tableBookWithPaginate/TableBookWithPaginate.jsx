@@ -1,43 +1,41 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import moment from "moment";
+import moment from "moment"
+import { useEffect, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 
-import { GrRefresh } from "react-icons/gr";
+import { GrRefresh } from "react-icons/gr"
 
-import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
-import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
-import { BiBookAdd } from "react-icons/bi";
+import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai"
+import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice"
 
-import { Table, Button, Row, Col } from "antd";
-import FormFilterBook from "~/pages/manage/manageBook/formFilterBook";
-import DetailItem from "~/pages/manage/components/detailItem";
+import { Button, Col, Row, Table } from "antd"
+import DetailItem from "~/pages/manage/components/detailItem"
+import FormFilterBook from "~/pages/manage/manageBook/formFilterBook"
 
-import AddNewBook from "~/pages/manage/manageBook/addNewBook";
-import UpdateBook from "~/pages/manage/manageBook/updateBook";
-import DeleteBook from "~/pages/manage/manageBook/deleteBook";
-
-import "./TableBookWithPaginate.scss";
+import DeleteBook from "~/pages/manage/manageBook/deleteBook"
+import UpdateBook from "~/pages/manage/manageBook/updateBook"
+import { isMobile } from "react-device-detect"
+import "./TableBookWithPaginate.scss"
 
 const TableUserWithPaginate = () => {
-  const totalPages = useSelector((state) => state.books.totalPages);
-  const [isLoading, setIsLoading] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(20);
-  const [filterInput, setFilterInput] = useState("");
-  const [arrangeColumn, SetArrangeColumn] = useState("sort=-updatedAt");
+  const totalPages = useSelector((state) => state.books.totalPages)
+  const [isLoading, setIsLoading] = useState(false)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(20)
+  const [filterInput, setFilterInput] = useState("")
+  const [arrangeColumn, SetArrangeColumn] = useState("sort=-updatedAt")
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const listBooksPaginate = useSelector(
     (state) => state.books.listBooksPaginate
-  );
+  )
   useEffect(() => {
-    getAllBook();
-  }, [pageSize, currentPage, filterInput, arrangeColumn]);
+    getAllBook()
+  }, [pageSize, currentPage, filterInput, arrangeColumn])
 
   const getAllBook = async () => {
-    let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`;
-    dispatch(getAllBookWithPaginate(query));
-  };
+    let query = `pageSize=${pageSize}&current=${currentPage}&${filterInput}&${arrangeColumn}`
+    dispatch(getAllBookWithPaginate(query))
+  }
   const renderHeaderTitle = (text, record, index) => {
     return (
       <>
@@ -58,8 +56,8 @@ const TableUserWithPaginate = () => {
           </div>
         </header>
       </>
-    );
-  };
+    )
+  }
   const columns = [
     // {
     //   title: "Id.",
@@ -81,13 +79,13 @@ const TableUserWithPaginate = () => {
     {
       title: "Tên sách",
       dataIndex: "mainText",
-      width: "15%",
+      width: "10%",
       sorter: true,
       fixed: "left",
       render: (text, index, record) => (
         <span
           onClick={() => {
-            showDetailBook(text, record, index);
+            showDetailBook(text, record, index)
             // console.log("check record", record);
           }}
           className="table__detail"
@@ -140,13 +138,13 @@ const TableUserWithPaginate = () => {
     {
       title: "Số lượng ",
       dataIndex: "quantity",
-      width: "10%",
+      width: "7%",
       sorter: true,
     },
     {
       title: "Đã bán ",
       dataIndex: "sold",
-      width: "10%",
+      width: "7%",
 
       sorter: true,
     },
@@ -166,74 +164,74 @@ const TableUserWithPaginate = () => {
         </div>
       ),
     },
-  ];
+  ]
 
   // refresh filter sort
   const handleRefresh = () => {
-    setIsLoading(true);
-    SetArrangeColumn("");
-    setTimeout(() => setIsLoading(false), 300);
-  };
+    setIsLoading(true)
+    SetArrangeColumn("")
+    setTimeout(() => setIsLoading(false), 300)
+  }
 
   // change table
   const handleChange = (pagination, filters, sorter) => {
-    let sorterClick = "";
+    let sorterClick = ""
     if (sorter && sorter.field) {
-      console.log(sorter);
-      console.log(sorter.field);
+      console.log(sorter)
+      console.log(sorter.field)
       sorter.order === "ascend"
         ? (sorterClick += `sort=${sorter.field}`)
-        : (sorterClick += `sort=-${sorter.field}`);
+        : (sorterClick += `sort=-${sorter.field}`)
 
-      SetArrangeColumn(sorterClick);
+      SetArrangeColumn(sorterClick)
     }
 
     if (pagination && pagination.current !== currentPage)
-      setCurrentPage(pagination.current);
+      setCurrentPage(pagination.current)
 
     if (pagination && pagination.pageSize !== pageSize) {
-      setPageSize(pagination.pageSize);
-      setCurrentPage(1);
+      setPageSize(pagination.pageSize)
+      setCurrentPage(1)
     }
-  };
+  }
   // Filter
   const handleFilter = (filter) => {
-    setFilterInput(filter);
-  };
+    setFilterInput(filter)
+  }
 
   const onClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   // show detail book'
-  const [open, setOpen] = useState(false);
-  const [dataViewBook, setDataViewBook] = useState("");
+  const [open, setOpen] = useState(false)
+  const [dataViewBook, setDataViewBook] = useState("")
   const showDetailBook = (text, index, record) => {
-    console.log(record);
-    setDataViewBook(record);
-    setOpen(true);
-  };
+    console.log(record)
+    setDataViewBook(record)
+    setOpen(true)
+  }
   // show add new book
-  const [openAddBook, setOpenAddBook] = useState(false);
+  const [openAddBook, setOpenAddBook] = useState(false)
   const clickOpenAddBook = () => {
-    setOpenAddBook(true);
-  };
+    setOpenAddBook(true)
+  }
 
   // show update book
-  const [openUpdateBook, setOpenUpdateBook] = useState(false);
-  const [dataUpdateBook, setDataUpdateBook] = useState("");
+  const [openUpdateBook, setOpenUpdateBook] = useState(false)
+  const [dataUpdateBook, setDataUpdateBook] = useState("")
   const showModalUpdate = (record) => {
-    setOpenUpdateBook(true);
-    setDataUpdateBook(record);
-  };
+    setOpenUpdateBook(true)
+    setDataUpdateBook(record)
+  }
 
   // show update book
-  const [openDeleteBook, setOpenDeleteBook] = useState(false);
-  const [dataDeleteBook, setDataDeleteBook] = useState("");
+  const [openDeleteBook, setOpenDeleteBook] = useState(false)
+  const [dataDeleteBook, setDataDeleteBook] = useState("")
   const showModalDelete = (record) => {
-    setOpenDeleteBook(true);
-    setDataDeleteBook(record);
-  };
+    setOpenDeleteBook(true)
+    setDataDeleteBook(record)
+  }
   return (
     <>
       <Row className="manage__book">
@@ -249,7 +247,7 @@ const TableUserWithPaginate = () => {
             rowKey="_id"
             style={{ padding: "12px 24px" }}
             bordered
-            scroll={{ x: 2000 }}
+            scroll={isMobile === true && { x: 2000 }}
             pagination={{
               position: ["bottomCenter"],
               showQuickJumper: true,
@@ -259,18 +257,21 @@ const TableUserWithPaginate = () => {
               pageSizeOptions: [2, 4, 6, 10],
               showSizeChanger: true,
               responsive: true,
+
               showTotal: (total, range) => {
                 return (
                   <div>
                     {range[0]}-{range[1]} trên {total} cuốn
                   </div>
-                );
+                )
               },
             }}
           />
         </Col>
       </Row>
-      <DetailItem dataViewBook={dataViewBook} open={open} setOpen={setOpen} />
+      {isMobile === false && (
+        <DetailItem dataViewBook={dataViewBook} open={open} setOpen={setOpen} />
+      )}
 
       <UpdateBook
         getAllBook={getAllBook}
@@ -287,7 +288,7 @@ const TableUserWithPaginate = () => {
         setDataDeleteBook={setDataDeleteBook}
       />
     </>
-  );
-};
+  )
+}
 
-export default TableUserWithPaginate;
+export default TableUserWithPaginate

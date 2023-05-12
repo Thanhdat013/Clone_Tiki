@@ -6,6 +6,10 @@ import { useDispatch } from "react-redux"
 // import { postLogin } from "~/redux/reducer/userReducer/userSlice";
 import { postLogin } from "~/services/Api"
 import { doLoginAction } from "~/redux/reducer/userReducer/userSlice"
+import jwt_decode from "jwt-decode"
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google"
+
+import axios from "axios"
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -21,8 +25,9 @@ const Login = () => {
     if (res?.data) {
       localStorage.setItem("access_token", res.data.access_token)
 
-      console.log(res.data.user)
+      console.log("data user", res.data.user)
       await dispatch(doLoginAction(res.data.user))
+
       message.success("Bạn đã đăng nhập thành công")
       navigate("/")
     } else {
@@ -40,21 +45,73 @@ const Login = () => {
     if (e.keyCode === 13) onFinish()
   }
   // google
+  const [accessTokenGoogle, setAccessTokenGoogle] = useState("")
+  const [dataGoogle, setDataGoogle] = useState({})
+  const CLIENT_ID =
+    "33809345843-ielufpgnck33iva2r1oqi8e89tndv6dv.apps.googleusercontent.com"
+  const SCOPE = "storage-component.googleapis.com"
+  const CLIENT_SECRET = "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"
 
   function handelCallbackResponse(response) {
     console.log("Encode JWT ID token", response.credential)
+    setJwtToken(response.credential)
+    const userObject = jwt_decode(response.credential)
+    console.log(userObject)
   }
-  useEffect(() => {
-    google.accounts.id.initialize({
-      client_id:
-        "33809345843-ielufpgnck33iva2r1oqi8e89tndv6dv.apps.googleusercontent.com",
-      callback: handelCallbackResponse,
-    })
-    google.accounts.id.renderButton(document.getElementById("signinDiv"), {
-      theme: "outline",
-      size: "large",
-    })
-  }, [])
+
+  // async function verify(CLIENT_ID, jwtToken) {
+  //   const client = new OAuth2Client(CLIENT_ID)
+
+  //   const ticket = await client.verifyIdToken({
+  //     idToken: jwtToken,
+  //     audience: CLIENT_ID,
+  //   })
+  //   // Get the JSON with all the user info
+  //   const payload = ticket.getPayload()
+  //   // This is a JSON object that contains
+  //   // all the user info
+  //   console.log(payload)
+  //   return payload
+  // }
+  const loginGoogle = useGoogleLogin({
+    onSuccess: async (codeResponse) => {
+      console.log(codeResponse.access_token)
+      setAccessTokenGoogle(codeResponse.access_token)
+      const res = await axios(
+        `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${codeResponse.access_token}`
+      )
+      console.log(res.data)
+      setDataGoogle({
+        avatar: res.data.picture,
+        email: res.data.email,
+        fullName: res.data.name,
+        id: res.data.sub,
+        phone: "",
+        role: "USER",
+      })
+
+      localStorage.setItem("access_token", codeResponse.access_token)
+      await dispatch(doLoginAction(dataGoogle))
+      message.success("Bạn đã đăng nhập thành công")
+      navigate("/")
+    },
+  })
+
+  // useEffect(() => {
+  //   // global google
+  //   const google = window.google
+  //   google.accounts.id.initialize({
+  //     client_id: CLIENT_ID,
+  //     callback: loginGoogle,
+  //   })
+  //   google.accounts.id.renderButton(document.getElementById("signinDiv"), {
+  //     theme: "outline",
+  //     size: "large",
+  //   })
+
+  //   google.accounts.id.prompt()
+  // }, [])
+
   const navigate = useNavigate()
   return (
     <div className="login">
@@ -67,7 +124,9 @@ const Login = () => {
             onClick={() => navigate("/")}
           />
           <h3 className="login__title">Đăng nhập vào Tiki</h3>
-          <div id="signinDiv"></div>
+          <div id="signinDiv" onClick={() => loginGoogle()}></div>
+
+          <button onClick={() => loginGoogle()}>Log In Using Google</button>
         </div>
         <Form
           name="basic"
