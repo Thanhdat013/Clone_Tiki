@@ -8,11 +8,13 @@ import { Badge, Drawer, message, Avatar, Popover } from "antd"
 import ModalUpdateUser from "./modalUpdateUser"
 import { doClearCartAction } from "~/redux/reducer/orderReducer/orderSlice"
 import "./Header.scss"
-
+import defaultAvatar from "~/assets/defaultAvatar.png"
+import { auth } from "~/firebase"
 import {
   postLogOut,
   doLogOutAction,
 } from "~/redux/reducer/userReducer/userSlice"
+import { signOut } from "firebase/auth"
 
 const Header = ({ headerSearch, setHeaderSearch }) => {
   const navigate = useNavigate()
@@ -28,9 +30,14 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
   const onCloseDrawer = () => {
     setOpen(false)
   }
+  // logout with gg
+  // const logOutGoogle = () => {
+  //   signOutGoogle(auth)
+  // }
 
   const handleLogOut = async () => {
     const res = await dispatch(postLogOut())
+    signOut(auth)
     console.log(res)
     if (+res.payload.statusCode === 201) {
       dispatch(doLogOutAction())
@@ -79,9 +86,13 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
               carts.map((item) => (
                 <div className="popover__content" key={item._id}>
                   <img
-                    src={`${import.meta.env.VITE_BACKEND_URL}/images/book/${
-                      item.detail?.thumbnail
-                    }`}
+                    src={
+                      item.detail.thumbnail
+                        ? `${import.meta.env.VITE_BACKEND_URL}/images/book/${
+                            item.detail?.thumbnail
+                          }`
+                        : "https://static.vncommerce.com/avatar/90C74E26FB-default.jpg"
+                    }
                     alt="Item cart"
                     className="popover__img"
                   />
@@ -138,7 +149,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                             ? `${
                                 import.meta.env.VITE_BACKEND_URL
                               }/images/avatar/${user.avatar}`
-                            : "https://uxwing.com/wp-content/themes/uxwing/download/peoples-avatars/default-avatar-profile-picture-male-icon.png"
+                            : `${VITE_BACKEND_URL}/images/avatar/${defaultAvatar}`
                         }
                         className="logo__bar--avatar"
                       />
@@ -291,11 +302,11 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                   <Avatar
                     size={42}
                     src={
-                      user?.avatar
+                      user.avatar
                         ? `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
-                            user?.avatar
+                            user.avatar
                           }`
-                        : "https://haycafe.vn/wp-content/uploads/2022/03/Avatar-anime.jpg"
+                        : "https://anubis.gr/wp-content/uploads/2018/03/no-avatar.png"
                     }
                     className="header__user--avatar"
                   />
