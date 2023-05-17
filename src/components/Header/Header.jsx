@@ -30,10 +30,6 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
   const onCloseDrawer = () => {
     setOpen(false)
   }
-  // logout with gg
-  // const logOutGoogle = () => {
-  //   signOutGoogle(auth)
-  // }
 
   const handleLogOut = async () => {
     const res = await dispatch(postLogOut())
@@ -91,7 +87,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                         ? `${import.meta.env.VITE_BACKEND_URL}/images/book/${
                             item.detail?.thumbnail
                           }`
-                        : "https://static.vncommerce.com/avatar/90C74E26FB-default.jpg"
+                        : "https://anubis.gr/wp-content/uploads/2018/03/no-avatar.png"
                     }
                     alt="Item cart"
                     className="popover__img"
@@ -149,7 +145,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                             ? `${
                                 import.meta.env.VITE_BACKEND_URL
                               }/images/avatar/${user.avatar}`
-                            : `${VITE_BACKEND_URL}/images/avatar/${defaultAvatar}`
+                            : "https://anubis.gr/wp-content/uploads/2018/03/no-avatar.png"
                         }
                         className="logo__bar--avatar"
                       />
@@ -299,18 +295,30 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
             {isAuthenticated ? (
               <>
                 <div className="header__user--manage l-7">
-                  <Avatar
-                    size={42}
-                    src={
-                      user.avatar
-                        ? `${import.meta.env.VITE_BACKEND_URL}/images/avatar/${
-                            user.avatar
-                          }`
-                        : "https://anubis.gr/wp-content/uploads/2018/03/no-avatar.png"
-                    }
-                    className="header__user--avatar"
-                  />
-                  {user.fullName}
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <Avatar
+                      size={42}
+                      src={
+                        user.avatar
+                          ? `${
+                              import.meta.env.VITE_BACKEND_URL
+                            }/images/avatar/${user.avatar}`
+                          : "https://anubis.gr/wp-content/uploads/2018/03/no-avatar.png"
+                      }
+                      className="header__user--avatar"
+                    />
+                    <p
+                      style={{
+                        display: "-webkit-box",
+                        WebkitLineClamp: "1",
+                        overflow: "hidden",
+                        WebkitBoxOrient: "vertical",
+                      }}
+                    >
+                      {" "}
+                      {user.fullName}
+                    </p>
+                  </div>
                   <ul className="header__user--list">
                     <li
                       className="header__user--item"

@@ -36,9 +36,13 @@
     .login__form {
       // width: calc(var(--width) - 160px);
       margin: auto;
-      .login__desc {
+      .login__desc:first-child {
         text-align: center;
         margin-top: 12px;
+      }
+      .login__desc {
+        text-align: center;
+        margin-top: 8px;
       }
       .login__register {
         color: #f05123;
@@ -78,6 +82,30 @@
   .login {
     .login__container {
       width: 100vw;
+    }
+  }
+}
+
+// with select login
+.login {
+  .select__login_form {
+    margin-top: 36px;
+    .select__login-google {
+      width: 100% !important;
+      border-radius: 4px !important;
+      &:hover {
+        opacity: 0.8 !important;
+      }
+    }
+    .select__login-button {
+      width: 100% !important;
+      height: 50px;
+      margin: 16px 0;
+      background-color: #474e68;
+      &:hover {
+        opacity: 0.8;
+        background-color: #474e68;
+      }
     }
   }
 }

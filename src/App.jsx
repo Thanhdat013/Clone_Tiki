@@ -9,6 +9,7 @@ import Loading from "~/components/Loading/Loading"
 import BookPage from "~/pages/book"
 import ErrorPage from "~/pages/Error"
 import Login from "~/pages/login"
+import SelectLogin from "~/pages/login/SelectLogin"
 import Register from "~/pages/register"
 
 import { useDispatch, useSelector } from "react-redux"
@@ -122,7 +123,10 @@ const router = createBrowserRouter([
       { path: "manage-order", element: <ManageOrder /> },
     ],
   },
-
+  {
+    path: "/select",
+    element: <SelectLogin />,
+  },
   {
     path: "/login",
     element: <Login />,
@@ -140,6 +144,7 @@ function App() {
   const callFetchAccount = async () => {
     if (
       window.location.pathname === "/login" ||
+      window.location.pathname === "/select" ||
       window.location.pathname === "/register"
     )
       return
@@ -155,6 +160,7 @@ function App() {
     <>
       {isLoading === false ||
       window.location.pathname === "/login" ||
+      window.location.pathname === "/select" ||
       window.location.pathname === "/register" ||
       window.location.pathname === "/" ? (
         <RouterProvider router={router} />

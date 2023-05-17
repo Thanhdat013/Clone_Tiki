@@ -1,15 +1,11 @@
 import { Button, Form, Input, message, notification } from "antd"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import "./Login.scss"
 // import { postLogin } from "~/redux/reducer/userReducer/userSlice";
-import GoogleButton from "react-google-button"
 import { doLoginAction } from "~/redux/reducer/userReducer/userSlice"
 import { postLogin } from "~/services/Api"
-import { auth } from "~/firebase"
-import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth"
-import { useAuthState } from "react-firebase-hooks/auth"
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -44,32 +40,6 @@ const Login = () => {
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) onFinish()
   }
-  // google
-  const [user] = useAuthState(auth)
-  console.log(user)
-
-  const googleSignIn = async () => {
-    const provider = new GoogleAuthProvider()
-    signInWithRedirect(auth, provider)
-  }
-
-  useEffect(() => {
-    if (user) {
-      localStorage.setItem("access_token", user.accessToken)
-      dispatch(
-        doLoginAction({
-          email: user.email,
-          phone: user?.phoneNumber || "",
-          fullName: user.displayName,
-          role: "USER",
-          avatar: user.photoURL,
-          id: user.uid,
-        })
-      )
-      message.success("Bạn đã đăng nhập thành công")
-      navigate("/")
-    }
-  }, [user])
 
   const navigate = useNavigate()
   return (
@@ -83,9 +53,6 @@ const Login = () => {
             onClick={() => navigate("/")}
           />
           <h3 className="login__title">Đăng nhập vào Tiki</h3>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <GoogleButton onClick={googleSignIn} />
-          </div>
         </div>
         <Form
           name="basic"
@@ -137,6 +104,17 @@ const Login = () => {
                 onClick={() => navigate("/register")}
               >
                 Đăng kí
+              </span>
+            </p>
+            <p className="login__desc">Hoặc</p>
+            <p className="login__desc">
+              {" "}
+              Đăng nhập bằng
+              <span
+                className="login__register"
+                onClick={() => navigate("/select")}
+              >
+                tài khoản google
               </span>
             </p>
           </Form.Item>

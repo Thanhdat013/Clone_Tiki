@@ -65,7 +65,7 @@ instance.interceptors.response.use(
       +error.response.status === 400 &&
       error.config.url === "/api/v1/auth/refresh"
     ) {
-      window.location.href = "/login"
+      window.location.href = "/select"
     }
 
     // Any status codes that falls outside the range of 2xx cause this function to trigger
