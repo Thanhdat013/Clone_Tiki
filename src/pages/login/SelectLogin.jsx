@@ -71,6 +71,7 @@ const SelectLogin = () => {
               type="primary"
               className="select__login-button"
               onClick={() => navigate("/login")}
+              style={{ fontSize: "16px" }}
             >
               Đăng nhập bằng tài khoản Tiki
             </Button>
