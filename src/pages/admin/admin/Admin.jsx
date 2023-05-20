@@ -1,58 +1,55 @@
-import "./Admin.scss";
 import {
   BookOutlined,
-  UserOutlined,
-  ShoppingCartOutlined,
   DollarOutlined,
-} from "@ant-design/icons";
-import { Card, Col, Row, Statistic } from "antd";
-import { useEffect, useState } from "react";
-import moment from "moment";
-import CountUp from "react-countup";
-import { useSelector } from "react-redux";
-import { getDashboard, getManageOrder } from "~/services/Api";
+  ShoppingCartOutlined,
+  UserOutlined,
+} from "@ant-design/icons"
+import { Card, Col, Row, Statistic } from "antd"
+import { useEffect, useState } from "react"
+import CountUp from "react-countup"
+import { useSelector } from "react-redux"
+import { getDashboard, getManageOrder } from "~/services/Api"
+import "./Admin.scss"
 
 const Admin = () => {
-  const [counterOrder, setCounterOrder] = useState(0);
-  const [counterUser, setCounterUser] = useState(0);
-  const [totalPrice, setTotalPrice] = useState(0);
+  const [counterOrder, setCounterOrder] = useState(0)
+  const [counterUser, setCounterUser] = useState(0)
+  const [totalPrice, setTotalPrice] = useState(0)
   const formatter = (value) => (
     <CountUp end={value} duration={5} separator="," />
-  );
+  )
   useEffect(() => {
-    fetchDashboard();
-  }, []);
+    fetchDashboard()
+  }, [])
   const fetchDashboard = async () => {
-    const res = await getDashboard();
+    const res = await getDashboard()
     if (res && res.data) {
-      setCounterOrder(res.data.countOrder);
-      setCounterUser(res.data.countUser);
+      setCounterOrder(res.data.countOrder)
+      setCounterUser(res.data.countUser)
     }
-  };
+  }
 
-  const totalBooks = useSelector((state) => state.books.totalPages);
-  const [dataTotalPrice, setDataTotalPrice] = useState([]);
+  const totalBooks = useSelector((state) => state.books.totalPages)
+  const [dataTotalPrice, setDataTotalPrice] = useState([])
 
   // get total price
   useEffect(() => {
-    getHistory();
-  }, []);
+    getHistory()
+  }, [])
   const getHistory = async () => {
-    let query = `current=1&pageSize=9999`;
-    const res = await getManageOrder(query);
+    let query = `current=1&pageSize=9999`
+    const res = await getManageOrder(query)
     if (res && res.data) {
-      let raw = res.data;
-      console.log(raw);
-      console.log(raw.result);
-      setDataTotalPrice(raw.result);
+      let raw = res.data
+      setDataTotalPrice(raw.result)
     }
-  };
+  }
   useEffect(() => {
     let result = dataTotalPrice.reduce((total, price) => {
-      return total + price.totalPrice;
-    }, 0);
-    setTotalPrice(result);
-  }, [dataTotalPrice]);
+      return total + price.totalPrice
+    }, 0)
+    setTotalPrice(result)
+  }, [dataTotalPrice])
   return (
     <div className="admin">
       <Row gutter={[16, 16]} align={"center"} style={{ padding: "24px 0" }}>
@@ -108,7 +105,7 @@ const Admin = () => {
         </Col>
       </Row>
     </div>
-  );
-};
+  )
+}
 
-export default Admin;
+export default Admin

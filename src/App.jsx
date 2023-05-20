@@ -24,7 +24,7 @@ import History from "~/pages/history/History"
 import ManageBook from "~/pages/manage/manageBook"
 import ManageOrder from "~/pages/manage/manageOrder"
 import ManageUser from "~/pages/manage/manageUser"
-import ProtectedPage from "~/pages/protectedPage/protectedPage"
+import ProtectedPage from "~/pages/protectedPage/inProtectedPage"
 import { doFetchAccount } from "~/redux/reducer/userReducer/userSlice"
 import { getFetchAccount } from "~/services/Api"
 import "./App.scss"
@@ -123,6 +123,7 @@ const router = createBrowserRouter([
       { path: "manage-order", element: <ManageOrder /> },
     ],
   },
+
   {
     path: "/select",
     element: <SelectLogin />,

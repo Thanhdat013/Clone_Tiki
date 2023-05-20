@@ -6,16 +6,17 @@ import "./Login.scss"
 // import { postLogin } from "~/redux/reducer/userReducer/userSlice";
 import { doLoginAction } from "~/redux/reducer/userReducer/userSlice"
 import { postLogin } from "~/services/Api"
+import { values } from "lodash"
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const [disabledLogin, setDisabledLogin] = useState(true)
   const dispatch = useDispatch()
 
   const onFinish = async (values) => {
     setIsLoading(true)
 
     const { email, password } = values
-
     let res = await postLogin(email, password, 500)
     setIsLoading(false)
     if (res?.data) {
@@ -40,7 +41,9 @@ const Login = () => {
   const handleKeyDown = (e) => {
     if (e.keyCode === 13) onFinish()
   }
-
+  const handleValuesChange = (allValues) => {
+    if (allValues) setDisabledLogin(false)
+  }
   const navigate = useNavigate()
   return (
     <div className="login">
@@ -61,6 +64,7 @@ const Login = () => {
           autoComplete="off"
           layout="vertical "
           labelAlign={"center"}
+          onValuesChange={handleValuesChange}
         >
           <Form.Item
             labelCol={{ md: 22, xs: 22, sm: 22, lg: 22 }}
@@ -92,6 +96,7 @@ const Login = () => {
               htmlType="submit "
               className="login__button"
               loading={isLoading}
+              disabled={disabledLogin}
             >
               Đăng nhập
             </Button>
@@ -120,8 +125,6 @@ const Login = () => {
           </Form.Item>
         </Form>
       </div>
-
-      {/* google */}
     </div>
   )
 }

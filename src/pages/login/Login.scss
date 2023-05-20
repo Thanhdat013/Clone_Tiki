@@ -74,6 +74,10 @@
     margin: 16px 0;
     width: 100%;
     background-color: #1dbfaf;
+    &:hover {
+      background-color: #1dbfaf;
+      opacity: 0.8;
+    }
   }
 }
 

@@ -1,39 +1,35 @@
-import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import {
-  AiOutlineMenuFold,
-  AiOutlineMenuUnfold,
-  AiOutlineBars,
-} from "react-icons/ai";
+import { useState } from "react"
+import { AiOutlineBars } from "react-icons/ai"
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
 
-import "./AdminHeader.scss";
+import { Avatar, message } from "antd"
+import ModalUpdateUser from "~/components/Header/modalUpdateUser/ModalUpdateUser"
 import {
-  postLogOut,
   doLogOutAction,
-} from "~/redux/reducer/userReducer/userSlice";
-import { message, Avatar } from "antd";
-import ModalUpdateUser from "~/components/Header/modalUpdateUser/ModalUpdateUser";
+  postLogOut,
+} from "~/redux/reducer/userReducer/userSlice"
+import "./AdminHeader.scss"
 
 const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
-  const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.users.isAuthenticated)
   const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const avatar = useSelector((state) => state.users.user.avatar);
-  const fullName = useSelector((state) => state.users.user.fullName);
+    setCollapsed(!collapsed)
+  }
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const avatar = useSelector((state) => state.users.user.avatar)
+  const fullName = useSelector((state) => state.users.user.fullName)
   const handleLogOut = async () => {
-    const res = await dispatch(postLogOut());
-    console.log(res);
+    const res = await dispatch(postLogOut())
+
     if (res && res.payload) {
-      dispatch(doLogOutAction());
-      navigate("/");
-      message.success("You have successfully logged out");
+      dispatch(doLogOutAction())
+      navigate("/")
+      message.success("You have successfully logged out")
     }
-  };
-  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
+  }
+  const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false)
 
   return (
     <header className="admin__header grid ">
@@ -72,7 +68,7 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
                 <li
                   className="admin__user--item"
                   onClick={() => {
-                    setIsModalOpenUpdate(true), onClose();
+                    setIsModalOpenUpdate(true), onClose()
                   }}
                 >
                   Quản lý tài khoản
@@ -98,6 +94,6 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
         setOpen={setIsModalOpenUpdate}
       />
     </header>
-  );
-};
-export default AdminHeader;
+  )
+}
+export default AdminHeader
