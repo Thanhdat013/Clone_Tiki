@@ -51,7 +51,7 @@ const Login = () => {
             src="https://atplink.com/blog/wp-content/uploads/2021/06/z.jpg"
             alt="logo"
             className="login__logo"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/", { replace: true })}
           />
           <h3 className="login__title">Đăng nhập vào Tiki</h3>
         </div>
@@ -104,7 +104,7 @@ const Login = () => {
               Bạn chưa có tài khoản?
               <span
                 className="login__register"
-                onClick={() => navigate("/register")}
+                onClick={() => navigate("/register", { replace: true })}
               >
                 Đăng kí
               </span>

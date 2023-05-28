@@ -41,7 +41,7 @@ const CartOrder = ({ setCurrentStep }) => {
     const res = await postDataOrder(dataOrder);
     if (res && res.data) {
       message.success("Bạn đã đặt hàng thành công");
-      navigate("finish");
+      navigate("finish", { replace: true })
       dispatch(doOrderCartAction());
     } else {
       message.error({

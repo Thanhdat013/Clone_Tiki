@@ -3,17 +3,16 @@ import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
 import { Avatar, Badge, Drawer, Popover, message } from "antd"
-import { signOut } from "firebase/auth"
 import { AiOutlineBars, AiOutlineShoppingCart } from "react-icons/ai"
 import { BsSearch } from "react-icons/bs"
-import { auth } from "~/firebase.config"
+
 import { doClearCartAction } from "~/redux/reducer/orderReducer/orderSlice"
 import {
   doLogOutAction,
   postLogOut,
 } from "~/redux/reducer/userReducer/userSlice"
-import "./Header.scss"
 import ModalUpdateUser from "./modalUpdateUser"
+import "./Header.scss"
 
 const Header = ({ headerSearch, setHeaderSearch }) => {
   const navigate = useNavigate()
@@ -32,12 +31,11 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
 
   const handleLogOut = async () => {
     const res = await dispatch(postLogOut())
-    signOut(auth)
     if (+res.payload.statusCode === 201) {
       dispatch(doLogOutAction())
       dispatch(doClearCartAction())
       message.success("You have successfully logged out")
-      navigate("./")
+      navigate("./", { replace: true })
     }
   }
 
@@ -106,7 +104,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
               {" "}
               <button
                 className="popover__btn"
-                onClick={() => navigate("/cart")}
+                onClick={() => navigate("/cart", { replace: true })}
               >
                 Xem giỏ hàng
               </button>
@@ -126,7 +124,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
               className="header__logo--img"
               src="https://salt.tikicdn.com/ts/upload/e4/49/6c/270be9859abd5f5ec5071da65fab0a94.png"
               alt="Tiki_logo"
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/", { replace: true })}
             />
             <div className="header__logo--bar">
               <AiOutlineBars onClick={showDrawer} className="logo__bar--icon" />
@@ -159,7 +157,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                       <li
                         className="logo__bar--item"
                         onClick={() => {
-                          navigate("/")
+                          navigate("/", { replace: true })
                           onCloseDrawer()
                         }}
                       >
@@ -167,7 +165,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                       </li>
                       {user.role === "ADMIN" && (
                         <li
-                          onClick={() => navigate("/admin")}
+                          onClick={() => navigate("/admin", { replace: true })}
                           className="logo__bar--item"
                         >
                           Trang quản trị
@@ -182,7 +180,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                       <li
                         className="logo__bar--item"
                         onClick={() => {
-                          navigate("/history")
+                          navigate("/history", { replace: true })
                           onCloseDrawer()
                         }}
                       >
@@ -220,7 +218,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                       <li
                         style={{ backgroundColor: "#fadb14" }}
                         className="logo__bar--item logo__bar--item--sign"
-                        onClick={() => navigate("/login")}
+                        onClick={() => navigate("/login", { replace: true })}
                       >
                         Đăng nhập
                       </li>
@@ -229,7 +227,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                           backgroundColor: "#69b1ff",
                         }}
                         className="logo__bar--item logo__bar--item--sign"
-                        onClick={() => navigate("/register")}
+                        onClick={() => navigate("/register", { replace: true })}
                       >
                         Đăng ký
                       </li>
@@ -265,7 +263,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
               >
                 <div
                   className="header__user--cart"
-                  onClick={() => navigate("/cart")}
+                  onClick={() => navigate("/cart", { replace: true })}
                 >
                   <AiOutlineShoppingCart className="user__cart--icon" />
                   <div className="user__cart--quantity">
@@ -280,7 +278,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
             ) : (
               <div
                 className="header__user--cart"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/login", { replace: true })}
               >
                 <AiOutlineShoppingCart className="user__cart--icon" />
                 <div className="user__cart--quantity">
@@ -325,13 +323,13 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                     </li>
                     <li
                       className="header__user--item"
-                      onClick={() => navigate("/history")}
+                      onClick={() => navigate("/history", { replace: true })}
                     >
                       Lịch sử mua hàng
                     </li>
                     {user.role === "ADMIN" && (
                       <li
-                        onClick={() => navigate("/admin")}
+                        onClick={() => navigate("/admin", { replace: true })}
                         className="header__user--item"
                       >
                         Trang quản trị
@@ -346,7 +344,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
             ) : (
               <>
                 <div
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/login", { replace: true })}
                   className="header__user--manage l-7"
                 >
                   Tài Khoản

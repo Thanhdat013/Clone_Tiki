@@ -88,12 +88,12 @@ const AdminSideBar = ({
       setCollapsed(!collapsed)
     }
     if (e.key === "dashboard") {
-      navigate("/admin")
+      navigate("/admin", { replace: true })
       setKeySideBar("/admin")
     }
     //manage user
     if (e.key === "manage-user") {
-      navigate("manage-user")
+      navigate("manage-user", { replace: true })
       setKeySideBar("manage-user")
     }
     if (e.key === "add-user") {
@@ -102,7 +102,7 @@ const AdminSideBar = ({
     }
     //  manage book
     if (e.key === "manage-book") {
-      navigate("manage-book")
+      navigate("manage-book", { replace: true })
       setKeySideBar("manage-book")
     }
     if (e.key === "add-book") {
@@ -110,7 +110,7 @@ const AdminSideBar = ({
       setKeySideBar("add-book")
     }
     if (e.key === "manage-order") {
-      navigate("manage-order")
+      navigate("manage-order", { replace: true })
       setKeySideBar("manage-order")
     }
   }

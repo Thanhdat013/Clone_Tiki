@@ -10,12 +10,12 @@ const CartFinish = () => {
       icon={<SmileOutlined />}
       title="Tuyệt vời, bạn đã đặt hàng thành công"
       extra={
-        <Button type="primary" onClick={() => navigate("/")}>
+        <Button type="primary" onClick={() => navigate("/", { replace: true })}>
           Go back Home
         </Button>
       }
     />
-  );
+  )
 };
 
 export default CartFinish;

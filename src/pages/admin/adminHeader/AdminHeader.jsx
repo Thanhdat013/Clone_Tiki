@@ -25,7 +25,7 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
 
     if (res && res.payload) {
       dispatch(doLogOutAction())
-      navigate("/")
+      navigate("/", { replace: true })
       message.success("You have successfully logged out")
     }
   }
@@ -42,7 +42,7 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
             />
           </div>
           <img
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/", { replace: true })}
             className="admin__header--logo "
             src="https://salt.tikicdn.com/ts/upload/e4/49/6c/270be9859abd5f5ec5071da65fab0a94.png"
             alt="Tiki_logo"
@@ -80,7 +80,7 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
             </div>
           ) : (
             <div
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/login", { replace: true })}
               className="admin__header--user"
             >
               Tài Khoản

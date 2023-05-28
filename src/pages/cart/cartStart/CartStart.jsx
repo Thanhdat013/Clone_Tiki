@@ -1,31 +1,31 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { InputNumber, Checkbox, Divider, Breadcrumb } from "antd";
-import "./CartStart.scss";
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect, useState } from "react"
+import { Link } from "react-router-dom"
+import { InputNumber, Checkbox, Divider, Breadcrumb } from "antd"
+import "./CartStart.scss"
 import {
   doUpdateCartAction,
   doDeleteCartAction,
-} from "~/redux/reducer/orderReducer/orderSlice";
-import { useNavigate } from "react-router-dom";
-import { HomeOutlined } from "@ant-design/icons";
+} from "~/redux/reducer/orderReducer/orderSlice"
+import { useNavigate } from "react-router-dom"
+import { HomeOutlined } from "@ant-design/icons"
 
 const CartStart = ({ setCurrentStep }) => {
-  const carts = useSelector((state) => state.orders.carts);
+  const carts = useSelector((state) => state.orders.carts)
 
-  const navigate = useNavigate();
-  const [totalPrice, setTotalPrice] = useState(0);
+  const navigate = useNavigate()
+  const [totalPrice, setTotalPrice] = useState(0)
   useEffect(() => {
     let result = carts.reduce((total, price) => {
-      return total + price.detail.price * price.quantity;
-    }, 0);
-    setTotalPrice(result);
-  }, [carts]);
+      return total + price.detail.price * price.quantity
+    }, 0)
+    setTotalPrice(result)
+  }, [carts])
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
 
   const handleChangeQuantityBook = (value, bookOrder) => {
-    if (!value && value < 1) return;
+    if (!value && value < 1) return
     if (!isNaN(value)) {
       dispatch(
         doUpdateCartAction({
@@ -33,18 +33,18 @@ const CartStart = ({ setCurrentStep }) => {
           detail: bookOrder,
           _id: bookOrder._id,
         })
-      );
+      )
     }
-  };
+  }
   const handleDeleteItem = (item) => {
-    dispatch(doDeleteCartAction({ _id: item._id }));
-  };
+    dispatch(doDeleteCartAction({ _id: item._id }))
+  }
 
   //payment
   const clickPayment = () => {
-    navigate("payment");
-    setCurrentStep(2);
-  };
+    navigate("payment", { replace: true })
+    setCurrentStep(2)
+  }
 
   return (
     <section className="cartStart">
@@ -56,7 +56,7 @@ const CartStart = ({ setCurrentStep }) => {
           </div>
           <button
             className="cartStart__empty--btn"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/", { replace: true })}
           >
             Mua ngay
           </button>
@@ -232,7 +232,7 @@ const CartStart = ({ setCurrentStep }) => {
         </div>
       )}
     </section>
-  );
-};
+  )
+}
 
-export default CartStart;
+export default CartStart

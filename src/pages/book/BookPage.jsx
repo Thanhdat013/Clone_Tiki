@@ -1,55 +1,55 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Link, useLocation } from "react-router-dom"
 
-import { HomeOutlined } from "@ant-design/icons";
-import { Breadcrumb, Rate, message } from "antd";
-import { useRef, useState } from "react";
+import { HomeOutlined } from "@ant-design/icons"
+import { Breadcrumb, Rate, message } from "antd"
+import { useRef, useState } from "react"
 import {
   AiOutlineLine,
   AiOutlinePlus,
   AiOutlineShoppingCart,
-} from "react-icons/ai";
-import { GrDeliver } from "react-icons/gr";
-import ImageGallery from "react-image-gallery";
-import { useNavigate } from "react-router-dom";
-import { doAddCartAction } from "~/redux/reducer/orderReducer/orderSlice";
-import { getBookDetail } from "~/services/Api";
-import "./BookPage.scss";
-import BookInfor from "./bookInfor/BookInfor";
-import LoadingBookDetail from "./loadingBookDetail";
-import ModalImage from "./modalImage/ModalImage";
-import SlideBook from "./slideBook/SlideBook";
+} from "react-icons/ai"
+import { GrDeliver } from "react-icons/gr"
+import ImageGallery from "react-image-gallery"
+import { useNavigate } from "react-router-dom"
+import { doAddCartAction } from "~/redux/reducer/orderReducer/orderSlice"
+import { getBookDetail } from "~/services/Api"
+import "./BookPage.scss"
+import BookInfor from "./bookInfor/BookInfor"
+import LoadingBookDetail from "./loadingBookDetail"
+import ModalImage from "./modalImage/ModalImage"
+import SlideBook from "./slideBook/SlideBook"
 
 const BookPage = () => {
   // lấy thông tin xem đã đăng nhập tài khoản hay là chưa
-  const isAuthenticated = useSelector((state) => state.users.isAuthenticated);
-  const carts = useSelector((state) => state.orders.carts);
-  const [isLoadingBookDetail, setIsLoadingBookDetail] = useState(false);
-  const [dataBookDetail, setDataBookDetail] = useState({});
-  let location = useLocation();
-  let params = new URLSearchParams(location.search);
-  const id = params?.get("id"); // get book id
+  const isAuthenticated = useSelector((state) => state.users.isAuthenticated)
+  const carts = useSelector((state) => state.orders.carts)
+  const [isLoadingBookDetail, setIsLoadingBookDetail] = useState(false)
+  const [dataBookDetail, setDataBookDetail] = useState({})
+  let location = useLocation()
+  let params = new URLSearchParams(location.search)
+  const id = params?.get("id") // get book id
   // xử lý lấy số lượng sách đã được đặt theo id
 
-  const [quantityBookOrder, setQuantityBookOrder] = useState(0);
+  const [quantityBookOrder, setQuantityBookOrder] = useState(0)
   useEffect(() => {
-    getDataBook();
-  }, [id]);
+    getDataBook()
+  }, [id])
 
   const getDataBook = async () => {
-    setIsLoadingBookDetail(true);
-    const res = await getBookDetail(id);
+    setIsLoadingBookDetail(true)
+    const res = await getBookDetail(id)
     if (res && res?.data) {
-      let raw = res?.data;
-      setDataBookDetail(res?.data);
-      getImages(raw);
+      let raw = res?.data
+      setDataBookDetail(res?.data)
+      getImages(raw)
     }
-    setIsLoadingBookDetail(false);
-  };
-  const [images, setImages] = useState([]);
+    setIsLoadingBookDetail(false)
+  }
+  const [images, setImages] = useState([])
   const getImages = (raw) => {
-    let listSlide = [];
+    let listSlide = []
     if (raw && raw.thumbnail) {
       listSlide.push({
         original: `${import.meta.env.VITE_BACKEND_URL}/images/book/${
@@ -58,53 +58,53 @@ const BookPage = () => {
         thumbnail: `${import.meta.env.VITE_BACKEND_URL}/images/book/${
           raw?.thumbnail
         }`,
-      });
+      })
     }
     if (raw && raw?.slider?.length > 0) {
       raw.slider.map((item) => {
         listSlide.push({
           original: `${import.meta.env.VITE_BACKEND_URL}/images/book/${item}`,
           thumbnail: `${import.meta.env.VITE_BACKEND_URL}/images/book/${item}`,
-        });
-      });
+        })
+      })
     }
-    if (listSlide) setImages(listSlide);
-  };
+    if (listSlide) setImages(listSlide)
+  }
 
   // quantity order book
-  const [quantityBook, setQuantityBook] = useState(1);
-  const currentQuantityBook = dataBookDetail.quantity;
+  const [quantityBook, setQuantityBook] = useState(1)
+  const currentQuantityBook = dataBookDetail.quantity
   const handleChangeButton = (type) => {
     if (type === "DECREASE" && +quantityBook > 1) {
-      setQuantityBook(+quantityBook - 1);
+      setQuantityBook(+quantityBook - 1)
     }
     if (type === "INCREASE" && +quantityBook < +currentQuantityBook) {
-      setQuantityBook(+quantityBook + 1);
+      setQuantityBook(+quantityBook + 1)
     }
-  };
+  }
   const handleChangeQuantityBook = (e) => {
-    setQuantityBook(e.target.value);
+    setQuantityBook(e.target.value)
     if (e.target.value > +currentQuantityBook) {
-      setQuantityBook(+currentQuantityBook);
+      setQuantityBook(+currentQuantityBook)
     }
-  };
+  }
   // image
-  const refGallery = useRef();
-  const [openModalImage, setOpenModalImage] = useState(false);
-  const [currentIndex, setCurrentIndex] = useState();
+  const refGallery = useRef()
+  const [openModalImage, setOpenModalImage] = useState(false)
+  const [currentIndex, setCurrentIndex] = useState()
   const handleOnClickImage = () => {
-    setOpenModalImage(true);
-    setCurrentIndex(refGallery?.current?.getCurrentIndex() ?? 0);
+    setOpenModalImage(true)
+    setCurrentIndex(refGallery?.current?.getCurrentIndex() ?? 0)
     if (window.outerWidth < 739) {
-      setOpenModalImage(false);
+      setOpenModalImage(false)
     }
-  };
+  }
   // add to cart
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const handleAddToCart = (quantityBook, dataBookDetail) => {
     if (isAuthenticated === false) {
-      navigate("/login");
+      navigate("/login", { replace: true })
     }
     dispatch(
       doAddCartAction({
@@ -112,15 +112,15 @@ const BookPage = () => {
         detail: dataBookDetail,
         _id: dataBookDetail._id,
       })
-    );
+    )
 
-    message.success("Sản phẩm đã được thêm vào giỏ hàng ");
-    setQuantityBook(1);
-  };
+    message.success("Sản phẩm đã được thêm vào giỏ hàng ")
+    setQuantityBook(1)
+  }
 
   const handleBuyItem = (quantityBook, dataBookDetail) => {
     if (isAuthenticated === false) {
-      navigate("/login");
+      navigate("/login", { replace: true })
     }
     dispatch(
       doAddCartAction({
@@ -128,13 +128,13 @@ const BookPage = () => {
         detail: dataBookDetail,
         _id: dataBookDetail._id,
       })
-    );
-    setQuantityBook(1);
-    navigate("/cart");
-  };
+    )
+    setQuantityBook(1)
+    navigate("/cart", { replace: true })
+  }
   // random rate
   function getRandomInt(max) {
-    return Math.floor(Math.random() * max);
+    return Math.floor(Math.random() * max)
   }
   return (
     <section className="bookPage">
@@ -318,7 +318,7 @@ const BookPage = () => {
       />
       <BookInfor dataBookDetail={dataBookDetail} />
     </section>
-  );
-};
+  )
+}
 
-export default BookPage;
+export default BookPage
