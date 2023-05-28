@@ -109,17 +109,6 @@ const Login = () => {
                 Đăng kí
               </span>
             </p>
-            <p className="login__desc">Hoặc</p>
-            <p className="login__desc">
-              {" "}
-              Đăng nhập bằng
-              <span
-                className="login__register"
-                onClick={() => navigate("/select")}
-              >
-                tài khoản google
-              </span>
-            </p>
           </Form.Item>
         </Form>
       </div>
