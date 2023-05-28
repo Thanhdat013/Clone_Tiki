@@ -1,45 +1,45 @@
-import { useEffect, useState } from "react";
-import { Modal, Form, notification, message, Row, Col, Upload } from "antd";
-import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
-import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
-import { getAllCategories, postNewBook, postUploadImage } from "~/services/Api";
-import FormInfor from "~/pages/manage/manageBook/components/form/";
-import { useDispatch } from "react-redux";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons"
+import { Col, Form, Modal, Row, Upload, message, notification } from "antd"
+import { useEffect, useState } from "react"
+import { useDispatch } from "react-redux"
+import FormInfor from "~/pages/manage/manageBook/components/form/"
+import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice"
+import { getAllCategories, postNewBook, postUploadImage } from "~/services/Api"
 
 const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
-  const [form] = Form.useForm();
-  const dispatch = useDispatch();
+  const [form] = Form.useForm()
+  const dispatch = useDispatch()
   const getAllBook = async () => {
-    let query = `pageSize=20&current=1&sort=-updatedAt`;
-    dispatch(getAllBookWithPaginate(query));
-  };
+    let query = `pageSize=20&current=1&sort=-updatedAt`
+    dispatch(getAllBookWithPaginate(query))
+  }
 
   // submit form to create new book
   const onFinish = async (values) => {
-    const { mainText, author, price, sold, quantity, category } = values;
+    const { mainText, author, price, sold, quantity, category } = values
     if (dataImageThumb.length === 0) {
       notification.error({
         message: "Tạo mới thất bại",
         description: "Vui lòng tải hình ảnh của sách ",
-      });
-      return;
+      })
+      return
     }
     if (dataImageSlider.length === 0) {
       notification.error({
         message: "Tạo mới thất bại",
         description: "Vui lòng tải các hình ảnh miêu tả cho sách",
-      });
-      return;
+      })
+      return
     }
     if (mainText.startsWith(" ")) {
       notification.error({
         message: "Tạo mới thất bại",
         description: "Tên sách không được bắt đầu bằng khoảng trắng",
-      });
-      return;
+      })
+      return
     }
-    const thumbnail = dataImageThumb[0].name;
-    const slider = dataImageSlider.map((item) => item.name);
+    const thumbnail = dataImageThumb[0].name
+    const slider = dataImageSlider.map((item) => item.name)
     const res = await postNewBook(
       thumbnail,
       slider,
@@ -49,135 +49,134 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
       sold,
       quantity,
       category
-    );
-    console.log(res);
+    )
     if (res && res.statusCode === 201) {
       notification.success({
         message: "Tạo mới thành công",
         description: "Bạn đã tạo mới thành công một cuốn sách",
-      });
-      form.resetFields();
-      await getAllBook();
-      setOpenAddBook(false);
-      setDataImageSlider([]);
-      setDataImageThumb([]);
+      })
+      form.resetFields()
+      await getAllBook()
+      setOpenAddBook(false)
+      setDataImageSlider([])
+      setDataImageThumb([])
     } else {
       notification.error({
         message: "Tạo mới thất bại",
         description: "Bạn đã tạo mới không thành công một cuốn sách",
-      });
+      })
     }
-  };
+  }
 
   // load images
-  const [imageUrl, setImageUrl] = useState("");
-  const [loadingThumb, setLoadingThumb] = useState(false);
-  const [loadingSlider, setLoadingSlider] = useState(false);
+  const [imageUrl, setImageUrl] = useState("")
+  const [loadingThumb, setLoadingThumb] = useState(false)
+  const [loadingSlider, setLoadingSlider] = useState(false)
 
   const getBase64 = (img, callback) => {
-    const reader = new FileReader();
-    reader.addEventListener("load", () => callback(reader.result));
-    reader.readAsDataURL(img);
-  };
+    const reader = new FileReader()
+    reader.addEventListener("load", () => callback(reader.result))
+    reader.readAsDataURL(img)
+  }
   const beforeUpload = (file) => {
-    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png"
     if (!isJpgOrPng) {
-      message.error("Bạn chỉ có thẻ tải lên JPG/PNG file!");
+      message.error("Bạn chỉ có thẻ tải lên JPG/PNG file!")
     }
-    const isLt2M = file.size / 1024 / 1024 < 2;
+    const isLt2M = file.size / 1024 / 1024 < 2
     if (!isLt2M) {
-      message.error("Hình ảnh có dung lượng phải nhỏ hơn 2MB!");
+      message.error("Hình ảnh có dung lượng phải nhỏ hơn 2MB!")
     }
-    return isJpgOrPng && isLt2M;
-  };
+    return isJpgOrPng && isLt2M
+  }
   const handleChange = async (info, type) => {
     if (info.file.status === "uploading") {
-      type ? setLoadingSlider(true) : setLoadingThumb(true);
-      return;
+      type ? setLoadingSlider(true) : setLoadingThumb(true)
+      return
     }
     if (info.file.status === "done") {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (url) => {
-        type ? setLoadingSlider(false) : setLoadingThumb(false);
-        setImageUrl(url);
-      });
+        type ? setLoadingSlider(false) : setLoadingThumb(false)
+        setImageUrl(url)
+      })
     }
-  };
+  }
   // set data image of thumb into react for submit form
-  const [dataImageThumb, setDataImageThumb] = useState([]);
+  const [dataImageThumb, setDataImageThumb] = useState([])
   const handleRequestThumb = async ({ file, onSuccess, onError }) => {
-    const res = await postUploadImage(file);
+    const res = await postUploadImage(file)
 
     if (res && res.data) {
-      setDataImageThumb([{ name: res.data.fileUploaded, uid: file.uid }]);
-      onSuccess("Thành công");
+      setDataImageThumb([{ name: res.data.fileUploaded, uid: file.uid }])
+      onSuccess("Thành công")
     } else {
-      onError("Thất bại");
+      onError("Thất bại")
     }
-  };
+  }
   // set data image of slider into react for submit from
-  const [dataImageSlider, setDataImageSlider] = useState([]);
+  const [dataImageSlider, setDataImageSlider] = useState([])
   const handleRequestSlider = async ({ file, onSuccess, onError }) => {
-    const res = await postUploadImage(file);
+    const res = await postUploadImage(file)
 
     if (res && res.data) {
       setDataImageSlider((dataImageSlider) => [
         ...dataImageSlider,
         { name: res.data.fileUploaded, uid: file.uid },
-      ]);
-      onSuccess("Thành công");
+      ])
+      onSuccess("Thành công")
     } else {
-      onError("Thất bại");
+      onError("Thất bại")
     }
-  };
+  }
   //Preview image
-  const [previewOpen, setPreviewOpen] = useState(false);
-  const [previewImage, setPreviewImage] = useState("");
-  const [previewTitle, setPreviewTitle] = useState("");
+  const [previewOpen, setPreviewOpen] = useState(false)
+  const [previewImage, setPreviewImage] = useState("")
+  const [previewTitle, setPreviewTitle] = useState("")
   const handlePreview = async (file) => {
     getBase64(file.originFileObj, (url) => {
-      setPreviewImage(url);
-      setPreviewOpen(true);
+      setPreviewImage(url)
+      setPreviewOpen(true)
       setPreviewTitle(
         file.name || file.url.substring(file.url.lastIndexOf("/") + 1)
-      );
-    });
-  };
-  const handleCancelPreview = () => setPreviewOpen(false);
+      )
+    })
+  }
+  const handleCancelPreview = () => setPreviewOpen(false)
 
   // remove image
   const handleRemove = (file, type) => {
-    if (type === "thumbnail") setDataImageThumb("");
+    if (type === "thumbnail") setDataImageThumb("")
     if (type === "slider") {
       const newDataImageSlider = dataImageSlider.filter(
         (item) => item.uid !== file.uid
-      );
-      setDataImageSlider(newDataImageSlider);
+      )
+      setDataImageSlider(newDataImageSlider)
     }
-  };
+  }
 
   // get all categories
-  const [listCategory, setListCategory] = useState();
+  const [listCategory, setListCategory] = useState()
   useEffect(() => {
-    fetchAllCategories();
-  }, []);
+    fetchAllCategories()
+  }, [])
 
   const fetchAllCategories = async () => {
-    const res = await getAllCategories();
+    const res = await getAllCategories()
     if (res && res.data) {
       const allCategories = res.data.map((item) => {
-        return { label: item, value: item };
-      });
+        return { label: item, value: item }
+      })
 
-      setListCategory(allCategories);
+      setListCategory(allCategories)
     }
-  };
+  }
 
   // close modal add new book
   const handleCancelModal = () => {
-    setOpenAddBook(false);
-    form.resetFields();
-  };
+    setOpenAddBook(false)
+    form.resetFields()
+  }
 
   return (
     <>
@@ -186,7 +185,7 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
         open={openAddBook}
         labelCol={{ span: 8 }}
         onOk={() => {
-          form.submit();
+          form.submit()
         }}
         onCancel={handleCancelModal}
         width={"60vw"}
@@ -261,7 +260,7 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
         </Form>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default AddNewBook;
+export default AddNewBook

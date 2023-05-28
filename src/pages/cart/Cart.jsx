@@ -1,32 +1,28 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { Steps } from "antd";
-import "./Cart.scss";
-import { useNavigate } from "react-router-dom";
-import CartStart from "./cartStart";
-import CartOrder from "./cartOrder";
-import CartFinish from "./cartFinish";
+import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { Steps } from "antd"
+import "./Cart.scss"
+import { useNavigate } from "react-router-dom"
+import CartStart from "./cartStart"
+import CartOrder from "./cartOrder"
+import CartFinish from "./cartFinish"
 
 const Cart = () => {
-  const navigate = useNavigate();
-  const [currentStep, setCurrentStep] = useState(1);
-  const carts = useSelector((state) => state.orders.carts);
+  const navigate = useNavigate()
+  const [currentStep, setCurrentStep] = useState(1)
+  const carts = useSelector((state) => state.orders.carts)
 
   useEffect(() => {
     if (window.location.pathname === "/cart") {
-      setCurrentStep(1);
+      setCurrentStep(1)
     }
     if (window.location.pathname === "/cart/payment") {
-      setCurrentStep(2);
-      console.log("current step 2.1");
+      setCurrentStep(2)
     }
     if (window.location.pathname === "/cart/finish") {
-      console.log("current step 3");
-      setCurrentStep(3);
-      console.log("current step 3.1");
+      setCurrentStep(3)
     }
-    console.log(currentStep);
-  }, [window.location.pathname]);
+  }, [window.location.pathname])
   return (
     <>
       <section className="cart">
@@ -62,7 +58,7 @@ const Cart = () => {
         )}
       </section>
     </>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

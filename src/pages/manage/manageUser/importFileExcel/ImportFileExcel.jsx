@@ -1,21 +1,21 @@
-import { useState } from "react";
-import { InboxOutlined } from "@ant-design/icons";
-import { message, Upload, Modal, Table, notification } from "antd";
-import * as XLSX from "xlsx";
-import { postImportData } from "~/services/Api";
+import { InboxOutlined } from "@ant-design/icons"
+import { Modal, Table, Upload, message, notification } from "antd"
+import { useState } from "react"
+import * as XLSX from "xlsx"
+import { postImportData } from "~/services/Api"
 // import template from "./template.xlsx?url";
 
 const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
-  const { Dragger } = Upload;
+  const { Dragger } = Upload
   const handleCancelImport = () => {
-    setIsModalImportFile(false);
-    setDataImport("");
-  };
+    setIsModalImportFile(false)
+    setDataImport("")
+  }
   const dummyRequest = ({ file, onSuccess }) => {
     setTimeout(() => {
-      onSuccess("ok");
-    }, 700);
-  };
+      onSuccess("ok")
+    }, 700)
+  }
   const propsUpload = {
     name: "import-file",
     multiple: false,
@@ -24,32 +24,31 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
       ".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel",
     customRequest: dummyRequest, // để không add action của Upload
     onChange(info) {
-      const { status } = info.file;
+      const { status } = info.file
       if (status !== "uploading") {
-        console.log(info.file, info.fileList);
       }
       if (status === "done") {
-        message.success(`${info.file.name} file uploaded successfully.`);
-        const file = info.fileList[0].originFileObj;
-        var reader = new FileReader();
-        reader.readAsArrayBuffer(file);
+        message.success(`${info.file.name} file uploaded successfully.`)
+        const file = info.fileList[0].originFileObj
+        var reader = new FileReader()
+        reader.readAsArrayBuffer(file)
         reader.onload = function (e) {
-          const data = new Uint8Array(reader.result);
-          const workbook = XLSX.read(data, { type: "array" });
-          const sheetName = workbook.SheetNames[0];
-          const worksheet = workbook.Sheets[sheetName];
-          const jsonData = XLSX.utils.sheet_to_json(worksheet);
-          console.log(jsonData);
-          setDataImport(jsonData);
-        };
+          const data = new Uint8Array(reader.result)
+          const workbook = XLSX.read(data, { type: "array" })
+          const sheetName = workbook.SheetNames[0]
+          const worksheet = workbook.Sheets[sheetName]
+          const jsonData = XLSX.utils.sheet_to_json(worksheet)
+
+          setDataImport(jsonData)
+        }
       } else if (status === "error") {
-        message.error(`${info.file.name} file upload failed.`);
+        message.error(`${info.file.name} file upload failed.`)
       }
     },
     onDrop(e) {
-      console.log("Dropped files", e.dataTransfer.files);
+      console.log("Dropped files", e.dataTransfer.files)
     },
-  };
+  }
 
   const columns = [
     {
@@ -67,18 +66,17 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
       dataIndex: "phone",
       width: "30%",
     },
-  ];
+  ]
   // import data from excel file
-  const [dataImport, setDataImport] = useState([]);
+  const [dataImport, setDataImport] = useState([])
   const handleImportData = async () => {
     const data = dataImport.map((item) => {
       //set  default password
-      item.password = "123456";
-      return item;
-    });
-    console.log(data);
-    const res = await postImportData(data);
-    console.log(res);
+      item.password = "123456"
+      return item
+    })
+    const res = await postImportData(data)
+
     if (res && res.data && res?.data.countSuccess > 0) {
       notification.success({
         message: "Nhập dữ liệu thành công",
@@ -87,9 +85,9 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
             ? `số lượng ${res?.data.countSuccess}`
             : "Nhập dữ liệu thành công",
         duration: 5,
-      });
-      setDataImport("");
-      handleCancelImport();
+      })
+      setDataImport("")
+      handleCancelImport()
     } else {
       notification.error({
         message: "Nhập dữ liệu thất bại",
@@ -98,10 +96,10 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
             ? `số lượng ${res?.data.countError}`
             : "Nhập dữ liệu thất bại",
         duration: 5,
-      });
+      })
     }
-    handleCancelImport();
-  };
+    handleCancelImport()
+  }
   return (
     <>
       <Modal
@@ -147,7 +145,7 @@ const ImportFileExcel = ({ isModalImportFile, setIsModalImportFile }) => {
         />
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default ImportFileExcel;
+export default ImportFileExcel

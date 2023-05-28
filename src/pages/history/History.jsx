@@ -1,27 +1,26 @@
-import { Divider, Pagination, Tabs } from "antd";
-import { CiDeliveryTruck } from "react-icons/ci";
-import { useState, useEffect } from "react";
-import moment from "moment";
-import "./History.scss";
-import { getHistory } from "~/services/Api";
+import { Divider, Tabs } from "antd"
+import moment from "moment"
+import { useEffect, useState } from "react"
+import { CiDeliveryTruck } from "react-icons/ci"
+import { getHistory } from "~/services/Api"
+import "./History.scss"
 
 const History = () => {
-  const [dataHistory, setDataHistory] = useState([]);
-  const [dateHistory, SetDateHistory] = useState("sort=-createdAt");
+  const [dataHistory, setDataHistory] = useState([])
+  const [dateHistory, SetDateHistory] = useState("sort=-createdAt")
 
   useEffect(() => {
-    fetchHistory();
-  }, []);
+    fetchHistory()
+  }, [])
 
   const fetchHistory = async () => {
-    const res = await getHistory();
+    const res = await getHistory()
     if (res && res.data) {
-      let raw = res.data;
-      console.log(raw);
+      let raw = res.data
 
-      setDataHistory(raw);
+      setDataHistory(raw)
     }
-  };
+  }
 
   const items = [
     {
@@ -54,7 +53,7 @@ const History = () => {
       label: `Đang hủy`,
       children: <></>,
     },
-  ];
+  ]
   return (
     <section className="history">
       <div className="history__container grid wide  ">
@@ -118,7 +117,7 @@ const History = () => {
           ))}
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default History;
+export default History

@@ -1,5 +1,5 @@
-import { Modal, message } from "antd";
-import { deleteBook } from "~/services/Api";
+import { Modal, message } from "antd"
+import { deleteBook } from "~/services/Api"
 
 const DeleteBook = ({
   openUpdateBook,
@@ -9,20 +9,20 @@ const DeleteBook = ({
   getAllBook,
 }) => {
   const onFinish = async () => {
-    const res = await deleteBook(dataDeleteBook._id);
-    console.log(res);
+    const res = await deleteBook(dataDeleteBook._id)
+
     if (res && +res.statusCode === 200) {
-      message.success("Xóa thành công");
-      setOpenDeleteBook(false);
-      await getAllBook();
+      message.success("Xóa thành công")
+      setOpenDeleteBook(false)
+      await getAllBook()
     }
-  };
+  }
 
   const handleCancelModal = () => {
-    setOpenDeleteBook(false);
+    setOpenDeleteBook(false)
     // set lại data delete để không bị ghi nhớ dữ liệu => gây ra lỗi
-    setDataDeleteBook("");
-  };
+    setDataDeleteBook("")
+  }
   return (
     <>
       <Modal
@@ -40,7 +40,7 @@ const DeleteBook = ({
         </p>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default DeleteBook;
+export default DeleteBook

@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import { Button, Select, Form, Input, notification, message } from "antd";
-import "./Register.scss";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { postRegister } from "~/services";
+import { Button, Form, Input, Select, message, notification } from "antd"
+import React, { useState } from "react"
+import { useDispatch } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { postRegister } from "~/services"
+import "./Register.scss"
 
 const prefixSelector = (
   <Form.Item name="prefix" noStyle>
@@ -12,26 +12,25 @@ const prefixSelector = (
       <Select.Option value="85">+85</Select.Option>
     </Select>
   </Form.Item>
-);
+)
 
 const Register = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const onFinish = async (values) => {
-    setIsLoading(true);
+    setIsLoading(true)
     let res = await postRegister(
       values.fullName,
       values.email,
       values.password,
       values.phoneNumber
-    );
-    setIsLoading(false);
+    )
+    setIsLoading(false)
     if (res?.data?._id) {
-      console.log(res);
-      message.success("Bạn đã đăng ký tài khoản thành công");
-      navigate("/login");
+      message.success("Bạn đã đăng ký tài khoản thành công")
+      navigate("/login")
     } else {
       notification.error({
         message: "Đăng ký tài khoản thất bại",
@@ -40,9 +39,9 @@ const Register = () => {
             ? res.message
             : "Đã có lỗi xảy ra, vui lòng thử lại",
         duration: 5,
-      });
+      })
     }
-  };
+  }
 
   return (
     <div className="register">
@@ -128,7 +127,7 @@ const Register = () => {
         </Form>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

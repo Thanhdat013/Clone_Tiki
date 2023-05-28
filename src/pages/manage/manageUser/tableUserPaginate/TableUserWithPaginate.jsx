@@ -7,6 +7,7 @@ import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai"
 import { TfiExport, TfiImport } from "react-icons/tfi"
 
 import { Button, Col, Row, Table } from "antd"
+import { isMobile } from "react-device-detect"
 import DetailItem from "~/pages/manage/components/detailItem"
 import DeleteUser from "~/pages/manage/manageUser/deleteUser"
 import FormFIlter from "~/pages/manage/manageUser/formFilter"
@@ -14,7 +15,6 @@ import ImportFileExcel from "~/pages/manage/manageUser/importFileExcel/ImportFil
 import UpdateUser from "~/pages/manage/manageUser/updateUser"
 import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice"
 import "./TableUserWithPaginate.scss"
-import { isMobile } from "react-device-detect"
 
 const TableUserWithPaginate = () => {
   const listUsersPaginate = useSelector(
@@ -92,7 +92,6 @@ const TableUserWithPaginate = () => {
         <span
           onClick={() => {
             showDetailUser(text, record, index)
-            console.log("record,", record)
           }}
           className="table__detail"
         >
@@ -172,7 +171,6 @@ const TableUserWithPaginate = () => {
   const [open, setOpen] = useState(false)
   const [dataViewUser, setDataViewUser] = useState("")
   const showDetailUser = (text, index, record) => {
-    console.log(record)
     setDataViewUser(record)
     setOpen(true)
   }
@@ -206,7 +204,6 @@ const TableUserWithPaginate = () => {
   const handleExportData = () => {
     // export csv file
     if (listUsersPaginate.length > 0) {
-      console.log("export")
       const workbook = XLSX.utils.book_new()
       const worksheet = XLSX.utils.json_to_sheet(listUsersPaginate)
       XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1")

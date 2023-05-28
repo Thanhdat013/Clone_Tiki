@@ -1,8 +1,7 @@
-import { Modal, Form, Input, notification, message } from "antd";
-import { useEffect, useRef } from "react";
-import { putUpdateUser } from "~/services/Api";
-import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice";
-import { useDispatch } from "react-redux";
+import { Form, Input, Modal, message } from "antd"
+import { useEffect, useRef } from "react"
+import { useDispatch } from "react-redux"
+import { putUpdateUser } from "~/services/Api"
 
 const UpdateUser = ({
   isModalOpenUpdate,
@@ -11,39 +10,37 @@ const UpdateUser = ({
   setDataUpdate,
   getAllUser,
 }) => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   const onFinish = async (values) => {
-    console.log(values);
-    const res = await putUpdateUser(values._id, values.fullName, values.phone);
-    console.log(res);
+    const res = await putUpdateUser(values._id, values.fullName, values.phone)
+
     if (res && +res.statusCode === 200) {
-      message.success("Cập nhật người dùng thành công");
-      await getAllUser();
-      setIsModalOpenUpdate(false);
+      message.success("Cập nhật người dùng thành công")
+      await getAllUser()
+      setIsModalOpenUpdate(false)
     } else {
-      message.error("Cập nhật người dùng thất bại");
+      message.error("Cập nhật người dùng thất bại")
     }
-  };
-  const formRef = useRef(null);
+  }
+  const formRef = useRef(null)
   useEffect(() => {
     if (formRef.current) {
-      form.setFieldsValue(dataUpdate);
-      console.log(dataUpdate);
+      form.setFieldsValue(dataUpdate)
     }
-  }, [dataUpdate]);
+  }, [dataUpdate])
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
   const handleCancelModal = () => {
-    setDataUpdate("");
-    setIsModalOpenUpdate(false);
-  };
+    setDataUpdate("")
+    setIsModalOpenUpdate(false)
+  }
   return (
     <>
       <Modal
         title="Cập nhật người dùng"
         open={isModalOpenUpdate}
         onOk={() => {
-          form.submit();
+          form.submit()
         }}
         onCancel={handleCancelModal}
         width={500}
@@ -89,7 +86,7 @@ const UpdateUser = ({
         </Form>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default UpdateUser;
+export default UpdateUser

@@ -1,17 +1,18 @@
 import { Button, Form, message } from "antd"
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { useNavigate } from "react-router-dom"
 import "./Login.scss"
-// import { postLogin } from "~/redux/reducer/userReducer/userSlice";
-import GoogleButton from "react-google-button"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "~/firebase"
+
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth"
+import { useAuthState } from "react-firebase-hooks/auth"
+import GoogleButton from "react-google-button"
 import { useDispatch } from "react-redux"
+import { auth } from "~/firebase.config"
 import { doLoginAction } from "~/redux/reducer/userReducer/userSlice"
 
 const SelectLogin = () => {
   const [user] = useAuthState(auth)
+
   const dispatch = useDispatch()
 
   const googleSignIn = async () => {

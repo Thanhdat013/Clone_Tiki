@@ -1,20 +1,19 @@
-import { useEffect, useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
+import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
 
-import { BsSearch } from "react-icons/bs"
-import { AiOutlineShoppingCart, AiOutlineBars } from "react-icons/ai"
-import { Badge, Drawer, message, Avatar, Popover } from "antd"
-import ModalUpdateUser from "./modalUpdateUser"
-import { doClearCartAction } from "~/redux/reducer/orderReducer/orderSlice"
-import "./Header.scss"
-import defaultAvatar from "~/assets/defaultAvatar.png"
-import { auth } from "~/firebase"
-import {
-  postLogOut,
-  doLogOutAction,
-} from "~/redux/reducer/userReducer/userSlice"
+import { Avatar, Badge, Drawer, Popover, message } from "antd"
 import { signOut } from "firebase/auth"
+import { AiOutlineBars, AiOutlineShoppingCart } from "react-icons/ai"
+import { BsSearch } from "react-icons/bs"
+import { auth } from "~/firebase.config"
+import { doClearCartAction } from "~/redux/reducer/orderReducer/orderSlice"
+import {
+  doLogOutAction,
+  postLogOut,
+} from "~/redux/reducer/userReducer/userSlice"
+import "./Header.scss"
+import ModalUpdateUser from "./modalUpdateUser"
 
 const Header = ({ headerSearch, setHeaderSearch }) => {
   const navigate = useNavigate()
@@ -34,7 +33,6 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
   const handleLogOut = async () => {
     const res = await dispatch(postLogOut())
     signOut(auth)
-    console.log(res)
     if (+res.payload.statusCode === 201) {
       dispatch(doLogOutAction())
       dispatch(doClearCartAction())
@@ -45,7 +43,6 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
 
   // search header
   const handleSearchHeaderChange = (e) => {
-    console.log(e.target.value)
     const searchValue = e.target.value
     if (searchValue.startsWith(" ")) {
       // check không cho ký tự đầu tiên nhập vào là space
@@ -87,7 +84,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                         ? `${import.meta.env.VITE_BACKEND_URL}/images/book/${
                             item.detail?.thumbnail
                           }`
-                        : "https://anubis.gr/wp-content/uploads/2018/03/no-avatar.png"
+                        : "https://icon2.cleanpng.com/20180402/ggw/kisspng-united-states-avatar-organization-information-user-avatar-5ac20804802020.4270477515226654765248.jpg"
                     }
                     alt="Item cart"
                     className="popover__img"
@@ -145,7 +142,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                             ? `${
                                 import.meta.env.VITE_BACKEND_URL
                               }/images/avatar/${user.avatar}`
-                            : "https://anubis.gr/wp-content/uploads/2018/03/no-avatar.png"
+                            : "https://icon2.cleanpng.com/20180402/ggw/kisspng-united-states-avatar-organization-information-user-avatar-5ac20804802020.4270477515226654765248.jpg"
                         }
                         className="logo__bar--avatar"
                       />
@@ -303,7 +300,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                           ? `${
                               import.meta.env.VITE_BACKEND_URL
                             }/images/avatar/${user.avatar}`
-                          : "https://anubis.gr/wp-content/uploads/2018/03/no-avatar.png"
+                          : "https://icon2.cleanpng.com/20180402/ggw/kisspng-united-states-avatar-organization-information-user-avatar-5ac20804802020.4270477515226654765248.jpg"
                       }
                       className="header__user--avatar"
                     />

@@ -19,11 +19,10 @@ const UpdateUser = ({ open, setOpen }) => {
   }
   // submit update avatar
   const handleUpdateUser = async (values) => {
-    console.log(values)
     if (dataAvatar === "") setDataAvatar(user?.avatar)
     const { id, fullName, phone } = values
     const res = await putUpdateUserByUser(id, fullName, phone, dataAvatar)
-    console.log(res)
+
     if (res && res.data) {
       //update redux
       dispatch(doUpdateUser({ fullName, phone, avatar: dataAvatar }))
@@ -44,8 +43,6 @@ const UpdateUser = ({ open, setOpen }) => {
   const handleRequestThumb = async ({ file, onSuccess, onError }) => {
     const res = await postUpdateAvatar(file)
     if (res && res.data) {
-      console.log(res)
-
       setDataAvatar(res.data.fileUploaded)
       dispatch(doUpdateAvatarAction({ avatar: res.data.fileUploaded }))
       onSuccess("ok")
@@ -63,7 +60,6 @@ const UpdateUser = ({ open, setOpen }) => {
     customRequest: handleRequestThumb,
     onChange(info) {
       if (info.file.status !== "uploading") {
-        console.log(info.file, info.fileList)
       }
       if (info.file.status === "done") {
         message.success(`cập nhật avatar thành công`)

@@ -1,9 +1,9 @@
-import { Modal, Form, Input, notification, message } from "antd";
+import { Form, Input, Modal, message, notification } from "antd";
 
 import { useDispatch } from "react-redux";
 
-import { postCreateNewUser } from "~/services/Api";
 import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice";
+import { postCreateNewUser } from "~/services/Api";
 const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -19,7 +19,6 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
       values.password,
       values.phoneNumber
     );
-    console.log(res);
     if (res && res.data) {
       message.success("Bạn đã tạo mới tâì khoản thành công");
       await getAllUser();

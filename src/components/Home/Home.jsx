@@ -1,145 +1,138 @@
-import { useEffect, useState } from "react";
-import { useOutletContext } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 import {
-  Checkbox,
-  Form,
   Button,
-  InputNumber,
+  Checkbox,
   Divider,
+  Drawer,
+  Form,
+  InputNumber,
+  Pagination,
   Rate,
   Tabs,
-  Pagination,
-  Drawer,
-} from "antd";
-import { DownOutlined, UserOutlined } from "@ant-design/icons";
-import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice";
-import { getAllCategories } from "~/services/Api";
-import "./Home.scss";
-import { AiOutlineFilter } from "react-icons/ai";
-import { GrRefresh } from "react-icons/gr";
-import BookItem from "./bookItem/BookItem";
+} from "antd"
+import { useEffect, useState } from "react"
+import { AiOutlineFilter } from "react-icons/ai"
+import { GrRefresh } from "react-icons/gr"
+import { useDispatch, useSelector } from "react-redux"
+import { useOutletContext } from "react-router-dom"
+import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice"
+import { getAllCategories } from "~/services/Api"
+import "./Home.scss"
+import BookItem from "./bookItem/BookItem"
 
-import { useDebounce } from "~/hooks";
+import { useDebounce } from "~/hooks"
 
 const Home = () => {
   // get data book
-  const listBooks = useSelector((state) => state?.books?.listBooksPaginate);
-  const totalPages = useSelector((state) => state.books.totalPages);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [sizePage, setSizePage] = useState(20);
-  const [filterInput, setFilterInput] = useState("");
-  const [arrangeColumn, SetArrangeColumn] = useState("sort=-sold");
-  const [filterSearchHeader, SetFilterSearchHeader] = useState("");
+  const listBooks = useSelector((state) => state?.books?.listBooksPaginate)
+  const totalPages = useSelector((state) => state.books.totalPages)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [sizePage, setSizePage] = useState(20)
+  const [filterInput, setFilterInput] = useState("")
+  const [arrangeColumn, SetArrangeColumn] = useState("sort=-sold")
+  const [filterSearchHeader, SetFilterSearchHeader] = useState("")
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   useEffect(() => {
-    getAllBook();
-  }, [sizePage, currentPage, filterInput, arrangeColumn, filterSearchHeader]);
+    getAllBook()
+  }, [sizePage, currentPage, filterInput, arrangeColumn, filterSearchHeader])
   const getAllBook = async () => {
-    let query = `pageSize=${sizePage}&current=${currentPage}&${filterInput}&${arrangeColumn}&${filterSearchHeader}`;
+    let query = `pageSize=${sizePage}&current=${currentPage}&${filterInput}&${arrangeColumn}&${filterSearchHeader}`
 
-    dispatch(getAllBookWithPaginate(query));
-  };
+    dispatch(getAllBookWithPaginate(query))
+  }
 
   // Change the current page
   const handlePageChange = (page, pageSize) => {
-    if (page !== currentPage) setCurrentPage(page);
+    if (page !== currentPage) setCurrentPage(page)
     if (sizePage !== pageSize) {
-      setSizePage(pageSize);
-      setCurrentPage(1);
+      setSizePage(pageSize)
+      setCurrentPage(1)
     }
-  };
+  }
   // get all categories
-  const [listCategory, setListCategory] = useState();
+  const [listCategory, setListCategory] = useState()
   useEffect(() => {
-    fetchAllCategories();
-  }, []);
+    fetchAllCategories()
+  }, [])
 
   const fetchAllCategories = async () => {
-    const res = await getAllCategories();
+    const res = await getAllCategories()
     if (res && res.data) {
       const allCategories = res.data.map((item) => {
-        return { label: item, value: item };
-      });
-      setListCategory(allCategories);
+        return { label: item, value: item }
+      })
+      setListCategory(allCategories)
     }
-  };
+  }
 
   const handleFilterValue = (changeValues, values) => {
-    console.log(changeValues);
     // for PC
-    console.log(changeValues.category);
     if (changeValues?.category && changeValues?.category.length > 0) {
-      const cate = changeValues.category.join(",");
-      let filter = `category=${cate}`;
-      console.log(filter);
-      setFilterInput(filter);
+      const cate = changeValues.category.join(",")
+      let filter = `category=${cate}`
+      setFilterInput(filter)
     }
     // for mobile
     if (
       changeValues?.categoryMobile &&
       changeValues?.categoryMobile.length > 0
     ) {
-      const cate = changeValues.categoryMobile.join(",");
-      let filter = `category=${cate}`;
-      console.log(filter);
-      setFilterInput(filter);
+      const cate = changeValues.categoryMobile.join(",")
+      let filter = `category=${cate}`
+      setFilterInput(filter)
     }
     if (
       (changeValues?.category && changeValues?.category.length === 0) ||
       (changeValues?.categoryMobile &&
         changeValues?.categoryMobile.length === 0)
     ) {
-      setFilterInput("");
+      setFilterInput("")
     }
-  };
+  }
 
   // filter price
   const handleFilterPrice = (values) => {
-    console.log(values);
     if (values?.range?.from >= 0 && values?.range?.to >= 0) {
-      let price = `price>=${values?.range?.from}&price<=${values?.range?.to}`;
+      let price = `price>=${values?.range?.from}&price<=${values?.range?.to}`
       if (values?.category?.length > 0) {
-        const cate = values.category.join(",");
-        price += `&category=${cate}`;
+        const cate = values.category.join(",")
+        price += `&category=${cate}`
       }
       if (values?.categoryMobile?.length > 0) {
-        const cate = values.categoryMobile.join(",");
-        price += `&category=${cate}`;
+        const cate = values.categoryMobile.join(",")
+        price += `&category=${cate}`
       }
-      setFilterInput(price);
+      setFilterInput(price)
     }
-  };
+  }
   // filter mobile
   const handleCloseFilter = () => {
-    setOpenFilter(false);
-  };
-  const [openFilter, setOpenFilter] = useState(false);
+    setOpenFilter(false)
+  }
+  const [openFilter, setOpenFilter] = useState(false)
   const showDrawer = () => {
-    setOpenFilter(true);
-  };
+    setOpenFilter(true)
+  }
 
   // reset form
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
   const handleRefresh = () => {
-    form.resetFields();
-    setFilterInput("");
-    SetFilterSearchHeader("");
-  };
+    form.resetFields()
+    setFilterInput("")
+    SetFilterSearchHeader("")
+  }
 
   // get value to filter from header search
-  const [headerSearch, setHeaderSearch] = useOutletContext();
-  const debouncedValue = useDebounce(headerSearch, 300);
+  const [headerSearch, setHeaderSearch] = useOutletContext()
+  const debouncedValue = useDebounce(headerSearch, 300)
   useEffect(() => {
     if (headerSearch) {
-      console.log(headerSearch);
-      const query = `mainText=/${headerSearch}/i`;
-      SetFilterSearchHeader(query);
+      const query = `mainText=/${headerSearch}/i`
+      SetFilterSearchHeader(query)
     } else {
-      SetFilterSearchHeader("");
+      SetFilterSearchHeader("")
     }
-  }, [debouncedValue]);
+  }, [debouncedValue])
 
   const items = [
     {
@@ -162,7 +155,7 @@ const Home = () => {
       label: `Giá Cao Đến Thấp`,
       children: <></>,
     },
-  ];
+  ]
 
   return (
     <section className="home ">
@@ -459,6 +452,6 @@ const Home = () => {
         </section>
       </div>
     </section>
-  );
-};
-export default Home;
+  )
+}
+export default Home

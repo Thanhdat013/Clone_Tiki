@@ -52,14 +52,12 @@ const usersSlice = createSlice({
       state.isAuthenticated = true
       state.isLoading = false
       state.user = action.payload
-      console.log(action)
     },
     // dùng để fetch lại account khi F5 lại trang
     doFetchAccount: (state, action) => {
       state.isLoading = false
       state.isAuthenticated = true
       state.user = action.payload.user
-      console.log(action.payload)
     },
     doLogOutAction: (state, action) => {
       localStorage.removeItem("access_token")
@@ -78,7 +76,6 @@ const usersSlice = createSlice({
       state.user.avatar = action.payload.avatar
     },
     doUpdateUser: (state, action) => {
-      console.log(action)
       state.user.fullName = action.payload.fullName
       state.user.phone = action.payload.phone
       state.user.avatar = action.payload.avatar

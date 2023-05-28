@@ -1,5 +1,5 @@
-import { Modal, message } from "antd";
-import { deleteUser } from "~/services/Api";
+import { Modal, message } from "antd"
+import { deleteUser } from "~/services/Api"
 
 const DeleteUser = ({
   isModalOpenDelete,
@@ -9,20 +9,20 @@ const DeleteUser = ({
   getAllUser,
 }) => {
   const onFinish = async () => {
-    const res = await deleteUser(dataDelete._id);
-    console.log(res);
+    const res = await deleteUser(dataDelete._id)
+
     if (res && res.data) {
-      message.success("Xóa người dùng thành công");
-      setIsModalOpenDelete(false);
-      await getAllUser();
+      message.success("Xóa người dùng thành công")
+      setIsModalOpenDelete(false)
+      await getAllUser()
     }
-  };
+  }
 
   const handleCancelModal = () => {
-    setIsModalOpenDelete(false);
+    setIsModalOpenDelete(false)
     // set lại data delete để không bị ghi nhớ dữ liệu => gây ra lỗi
-    setDataDelete("");
-  };
+    setDataDelete("")
+  }
   return (
     <>
       <Modal
@@ -40,7 +40,7 @@ const DeleteUser = ({
         </p>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default DeleteUser;
+export default DeleteUser

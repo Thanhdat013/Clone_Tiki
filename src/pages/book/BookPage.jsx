@@ -1,25 +1,25 @@
-import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
 
-import "./BookPage.scss";
-import ImageGallery from "react-image-gallery";
-import { getBookDetail } from "~/services/Api";
-import { GrDeliver } from "react-icons/gr";
+import { HomeOutlined } from "@ant-design/icons";
+import { Breadcrumb, Rate, message } from "antd";
+import { useRef, useState } from "react";
 import {
   AiOutlineLine,
   AiOutlinePlus,
   AiOutlineShoppingCart,
 } from "react-icons/ai";
+import { GrDeliver } from "react-icons/gr";
+import ImageGallery from "react-image-gallery";
 import { useNavigate } from "react-router-dom";
-import { Breadcrumb, Rate, message } from "antd";
-import { useRef, useState } from "react";
-import ModalImage from "./modalImage/ModalImage";
-import LoadingBookDetail from "./loadingBookDetail";
-import BookInfor from "./bookInfor/BookInfor";
-import SlideBook from "./slideBook/SlideBook";
 import { doAddCartAction } from "~/redux/reducer/orderReducer/orderSlice";
-import { HomeOutlined, UserOutlined } from "@ant-design/icons";
+import { getBookDetail } from "~/services/Api";
+import "./BookPage.scss";
+import BookInfor from "./bookInfor/BookInfor";
+import LoadingBookDetail from "./loadingBookDetail";
+import ModalImage from "./modalImage/ModalImage";
+import SlideBook from "./slideBook/SlideBook";
 
 const BookPage = () => {
   // lấy thông tin xem đã đăng nhập tài khoản hay là chưa
@@ -42,7 +42,6 @@ const BookPage = () => {
     const res = await getBookDetail(id);
     if (res && res?.data) {
       let raw = res?.data;
-      console.log(raw);
       setDataBookDetail(res?.data);
       getImages(raw);
     }

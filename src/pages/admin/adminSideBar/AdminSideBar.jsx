@@ -1,20 +1,21 @@
-import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState } from "react"
 import {
-  AiOutlineUser,
-  AiOutlineDollar,
-  AiOutlineUserAdd,
   AiOutlineArrowRight,
-} from "react-icons/ai";
-import { RxDashboard } from "react-icons/rx";
-import { BiBookAdd } from "react-icons/bi";
-import { AiOutlineMenuFold, AiOutlineMenuUnfold } from "react-icons/ai";
+  AiOutlineDollar,
+  AiOutlineMenuFold,
+  AiOutlineMenuUnfold,
+  AiOutlineUser,
+  AiOutlineUserAdd,
+} from "react-icons/ai"
+import { BiBookAdd } from "react-icons/bi"
+import { RxDashboard } from "react-icons/rx"
+import { useNavigate } from "react-router-dom"
 
-import { FiBook } from "react-icons/fi";
-import { Menu, Drawer } from "antd";
-import "./AdminSideBar.scss";
-import AddNewBook from "~/pages/manage/manageBook/addNewBook";
-import AddNewUser from "~/pages/manage/manageUser/addNewUser";
+import { Drawer, Menu } from "antd"
+import { FiBook } from "react-icons/fi"
+import AddNewBook from "~/pages/manage/manageBook/addNewBook"
+import AddNewUser from "~/pages/manage/manageUser/addNewUser"
+import "./AdminSideBar.scss"
 
 const AdminSideBar = ({
   collapsed,
@@ -23,9 +24,9 @@ const AdminSideBar = ({
   showDrawer,
   setCollapsed,
 }) => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   function getItem(label, key, icon, children, type) {
-    return { key, icon, children, label, type };
+    return { key, icon, children, label, type }
   }
 
   const items = [
@@ -81,60 +82,57 @@ const AdminSideBar = ({
       "manage-order",
       <AiOutlineDollar style={{ fontSize: "2.2rem" }} />
     ),
-  ];
+  ]
   const onClick = (e) => {
-    console.log(e);
     if (e.key === "admin") {
-      setCollapsed(!collapsed);
+      setCollapsed(!collapsed)
     }
     if (e.key === "dashboard") {
-      navigate("/admin");
-      setKeySideBar("/admin");
+      navigate("/admin")
+      setKeySideBar("/admin")
     }
     //manage user
     if (e.key === "manage-user") {
-      navigate("manage-user");
-      setKeySideBar("manage-user");
+      navigate("manage-user")
+      setKeySideBar("manage-user")
     }
     if (e.key === "add-user") {
-      setOpenAddUser(true);
-      setKeySideBar("add-user");
+      setOpenAddUser(true)
+      setKeySideBar("add-user")
     }
     //  manage book
     if (e.key === "manage-book") {
-      navigate("manage-book");
-      setKeySideBar("manage-book");
+      navigate("manage-book")
+      setKeySideBar("manage-book")
     }
     if (e.key === "add-book") {
-      setOpenAddBook(true);
-      setKeySideBar("add-book");
+      setOpenAddBook(true)
+      setKeySideBar("add-book")
     }
     if (e.key === "manage-order") {
-      navigate("manage-order");
-      setKeySideBar("manage-order");
+      navigate("manage-order")
+      setKeySideBar("manage-order")
     }
-  };
-  const [keySideBar, setKeySideBar] = useState("/admin");
-  const handleChange = (e) => {
-    console.log(e);
-  };
+  }
+  const [keySideBar, setKeySideBar] = useState("/admin")
+  const handleChange = (e) => {}
   useEffect(() => {
     if (window.location.pathname.includes("user")) {
-      setKeySideBar("manage-user");
+      setKeySideBar("manage-user")
     }
     if (window.location.pathname.includes("book")) {
-      setKeySideBar("manage-book");
+      setKeySideBar("manage-book")
     }
     if (window.location.pathname.includes("order")) {
-      setKeySideBar("manage-order");
+      setKeySideBar("manage-order")
     }
-  }, []);
+  }, [])
 
   // Add new user
-  const [openAddUser, setOpenAddUser] = useState(false);
+  const [openAddUser, setOpenAddUser] = useState(false)
 
   // Add new book
-  const [openAddBook, setOpenAddBook] = useState(false);
+  const [openAddBook, setOpenAddBook] = useState(false)
 
   return (
     <>
@@ -194,7 +192,7 @@ const AdminSideBar = ({
       <AddNewUser openAddUser={openAddUser} setOpenAddUser={setOpenAddUser} />
       <AddNewBook openAddBook={openAddBook} setOpenAddBook={setOpenAddBook} />
     </>
-  );
-};
+  )
+}
 
-export default AdminSideBar;
+export default AdminSideBar

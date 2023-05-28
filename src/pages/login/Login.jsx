@@ -3,10 +3,9 @@ import React, { useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import "./Login.scss"
-// import { postLogin } from "~/redux/reducer/userReducer/userSlice";
+
 import { doLoginAction } from "~/redux/reducer/userReducer/userSlice"
 import { postLogin } from "~/services/Api"
-import { values } from "lodash"
 
 const Login = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -22,7 +21,6 @@ const Login = () => {
     if (res?.data) {
       localStorage.setItem("access_token", res.data.access_token)
 
-      console.log("data user", res.data.user)
       await dispatch(doLoginAction(res.data.user))
 
       message.success("Bạn đã đăng nhập thành công")

@@ -1,35 +1,33 @@
 import "./ManageOrder.scss";
 
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
+import { useEffect, useState } from "react";
 
 import { GrRefresh } from "react-icons/gr";
 
+import { Col, Row, Table } from "antd";
 import { getManageOrder } from "~/services/Api";
-import { Table, Button, Row, Col } from "antd";
 
 const ManageOrder = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  const [totalPage, setTotalPage] = useState();
-  const [dataOrder, setDataOrder] = useState([]);
-  const [arrangeColumn, SetArrangeColumn] = useState("sort=-updatedAt");
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+  const [totalPage, setTotalPage] = useState()
+  const [dataOrder, setDataOrder] = useState([])
+  const [arrangeColumn, SetArrangeColumn] = useState("sort=-updatedAt")
 
   useEffect(() => {
-    getHistory();
-  }, [currentPage, pageSize, arrangeColumn]);
+    getHistory()
+  }, [currentPage, pageSize, arrangeColumn])
   const getHistory = async () => {
-    let query = `current=${currentPage}&pageSize=${pageSize}&${arrangeColumn}`;
-    const res = await getManageOrder(query);
+    let query = `current=${currentPage}&pageSize=${pageSize}&${arrangeColumn}`
+    const res = await getManageOrder(query)
     if (res && res.data) {
-      let raw = res.data;
-      console.log(raw);
-      setPageSize(raw.meta.pageSize);
-      setTotalPage(raw.meta.total);
-      setDataOrder(raw.result);
+      let raw = res.data
+      setPageSize(raw.meta.pageSize)
+      setTotalPage(raw.meta.total)
+      setDataOrder(raw.result)
     }
-  };
+  }
 
   const renderHeaderTitle = (text, record, index) => {
     return (
@@ -48,8 +46,8 @@ const ManageOrder = () => {
           </div>
         </header>
       </>
-    );
-  };
+    )
+  }
   const columns = [
     {
       title: "Tên người dùng",
@@ -58,12 +56,7 @@ const ManageOrder = () => {
       sorter: true,
       fixed: "left",
       render: (text, index, record) => (
-        <span
-          onClick={() => {
-            // console.log("check record", record);
-          }}
-          className="table__detail"
-        >
+        <span onClick={() => {}} className="table__detail">
           {text}
         </span>
       ),
@@ -109,31 +102,31 @@ const ManageOrder = () => {
         <span>{moment(text).format("DD-MM-YYYY, HH:mm:ss a")}</span>
       ),
     },
-  ];
+  ]
 
   // change table
   const handleChange = (pagination, filters, sorter) => {
-    let sorterClick = "";
+    let sorterClick = ""
     if (sorter && sorter.field) {
       sorter.order === "ascend"
         ? (sorterClick += `sort=${sorter.field}`)
-        : (sorterClick += `sort=-${sorter.field}`);
-      SetArrangeColumn(sorterClick);
+        : (sorterClick += `sort=-${sorter.field}`)
+      SetArrangeColumn(sorterClick)
     }
     if (pagination && pagination.current !== currentPage)
-      setCurrentPage(pagination.current);
+      setCurrentPage(pagination.current)
     if (pagination && pagination.pageSize !== pageSize) {
-      setPageSize(pagination.pageSize);
-      setCurrentPage(1);
+      setPageSize(pagination.pageSize)
+      setCurrentPage(1)
     }
-  };
+  }
   // refresh filter sort
   const handleRefresh = () => {
-    SetArrangeColumn("");
-  };
+    SetArrangeColumn("")
+  }
   const onClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
   return (
     <div className="order">
@@ -158,7 +151,7 @@ const ManageOrder = () => {
         </Col>
       </Row>
     </div>
-  );
-};
+  )
+}
 
-export default ManageOrder;
+export default ManageOrder

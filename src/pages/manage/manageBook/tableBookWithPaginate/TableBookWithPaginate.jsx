@@ -11,9 +11,9 @@ import { Button, Col, Row, Table } from "antd"
 import DetailItem from "~/pages/manage/components/detailItem"
 import FormFilterBook from "~/pages/manage/manageBook/formFilterBook"
 
+import { isMobile } from "react-device-detect"
 import DeleteBook from "~/pages/manage/manageBook/deleteBook"
 import UpdateBook from "~/pages/manage/manageBook/updateBook"
-import { isMobile } from "react-device-detect"
 import "./TableBookWithPaginate.scss"
 
 const TableUserWithPaginate = () => {
@@ -59,23 +59,6 @@ const TableUserWithPaginate = () => {
     )
   }
   const columns = [
-    // {
-    //   title: "Id.",
-    //   dataIndex: "_id",
-    //   width: "15%",
-    //   fixed: "left",
-    //   render: (text, index, record) => (
-    //     <span
-    //       onClick={() => {
-    //         // showDetailUser(text, record, index)
-    //         console.log("check record", record);
-    //       }}
-    //       className="table__detail"
-    //     >
-    //       {text}
-    //     </span>
-    //   ),
-    // },
     {
       title: "Tên sách",
       dataIndex: "mainText",
@@ -86,7 +69,6 @@ const TableUserWithPaginate = () => {
         <span
           onClick={() => {
             showDetailBook(text, record, index)
-            // console.log("check record", record);
           }}
           className="table__detail"
         >
@@ -177,8 +159,6 @@ const TableUserWithPaginate = () => {
   const handleChange = (pagination, filters, sorter) => {
     let sorterClick = ""
     if (sorter && sorter.field) {
-      console.log(sorter)
-      console.log(sorter.field)
       sorter.order === "ascend"
         ? (sorterClick += `sort=${sorter.field}`)
         : (sorterClick += `sort=-${sorter.field}`)
@@ -207,7 +187,6 @@ const TableUserWithPaginate = () => {
   const [open, setOpen] = useState(false)
   const [dataViewBook, setDataViewBook] = useState("")
   const showDetailBook = (text, index, record) => {
-    console.log(record)
     setDataViewBook(record)
     setOpen(true)
   }
