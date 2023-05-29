@@ -224,7 +224,7 @@ const TableUserWithPaginate = () => {
             columns={columns}
             onChange={handleChange}
             rowKey="_id"
-            style={{ padding: "12px 24px" }}
+            style={{ padding: "12px 24px", minHeight: "50vh" }}
             bordered
             scroll={isMobile === true && { x: 2000 }}
             pagination={{
@@ -233,7 +233,7 @@ const TableUserWithPaginate = () => {
               current: currentPage,
               pageSize: pageSize,
               total: totalPages,
-              pageSizeOptions: [2, 4, 6, 10],
+              pageSizeOptions: [10, 20, 30],
               showSizeChanger: true,
               responsive: true,
 
