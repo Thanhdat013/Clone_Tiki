@@ -195,3 +195,26 @@ body {
     margin-right: 12px;
   }
 }
+
+body {
+  .home_loader {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .loader {
+      width: 150px;
+      height: 150px;
+      animation: spin 1s linear infinite;
+      --tw-text-opacity: 1;
+      color: rgb(229 231 235 / var(--tw-text-opacity));
+      fill: #10b981;
+    }
+  }
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

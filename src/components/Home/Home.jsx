@@ -18,6 +18,7 @@ import { getAllBookWithPaginate } from "~/redux/reducer/bookReducer/bookSlice"
 import { getAllCategories } from "~/services/Api"
 import "./Home.scss"
 import BookItem from "./bookItem/BookItem"
+import Loader from "./Loader"
 
 import { useDebounce } from "~/hooks"
 
@@ -157,7 +158,9 @@ const Home = () => {
     },
   ]
 
-  return (
+  return !listBooks ? (
+    <Loader />
+  ) : (
     <section className="home ">
       <div className="row grid wide">
         <section className="home__left col l-2 m-0 c-0">
