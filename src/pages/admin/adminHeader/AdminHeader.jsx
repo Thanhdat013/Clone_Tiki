@@ -68,7 +68,7 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
                 <li
                   className="admin__user--item"
                   onClick={() => {
-                    setIsModalOpenUpdate(true), onClose()
+                    setIsModalOpenUpdate(true)
                   }}
                 >
                   Quản lý tài khoản

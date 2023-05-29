@@ -141,9 +141,7 @@ function App() {
   const callFetchAccount = async () => {
     if (
       window.location.pathname === "/login" ||
-      window.location.pathname === "/register" ||
-      window.location.pathname === "/" ||
-      window.location.pathname === "/admin"
+      window.location.pathname === "/register"
     )
       return
 
