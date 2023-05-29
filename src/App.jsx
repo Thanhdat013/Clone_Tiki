@@ -23,10 +23,11 @@ import History from "~/pages/history/History"
 import ManageBook from "~/pages/manage/manageBook"
 import ManageOrder from "~/pages/manage/manageOrder"
 import ManageUser from "~/pages/manage/manageUser"
-import ProtectedPage from "~/pages/protectedPage/inProtectedPage"
 import { doFetchAccount } from "~/redux/reducer/userReducer/userSlice"
 import { getFetchAccount } from "~/services/Api"
 import "./App.scss"
+import ProtectedPageAdmin from "~/pages/protectedPage/inProtectedPage"
+import { ProtectedPageCart } from "./pages/protectedPage/inProtectedPage/ProtectedPage"
 // search from header to home
 const Layout = () => {
   const [headerSearch, setHeaderSearch] = useState("")
@@ -90,9 +91,9 @@ const router = createBrowserRouter([
       {
         path: "cart",
         element: (
-          <ProtectedPage>
+          <ProtectedPageCart>
             <Cart />
-          </ProtectedPage>
+          </ProtectedPageCart>
         ),
         children: [
           { index: true, element: <CartStart /> },
@@ -110,9 +111,9 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: (
-      <ProtectedPage>
+      <ProtectedPageAdmin>
         <LayoutAdmin />
-      </ProtectedPage>
+      </ProtectedPageAdmin>
     ),
     errorElement: <ErrorPage />,
     children: [
@@ -140,10 +141,14 @@ function App() {
   const callFetchAccount = async () => {
     if (
       window.location.pathname === "/login" ||
-      window.location.pathname === "/register"
+      window.location.pathname === "/register" ||
+      window.location.pathname === "/" ||
+      window.location.pathname === "/admin"
     )
       return
+
     const res = await getFetchAccount()
+    console.log(res)
     if (res && res.data) {
       dispatch(doFetchAccount(res.data))
     }

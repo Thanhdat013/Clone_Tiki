@@ -17,22 +17,24 @@ import NotPermit from "~/pages/protectedPage/notPermit"
 //   }
 // }
 
-const ProtectedPage = ({ children }) => {
+const ProtectedPageAdmin = ({ children }) => {
   const isAuthenticated = useSelector((state) => state.users.isAuthenticated)
-  const isAdminRoute = window.location.pathname.startsWith("/admin")
   const isRole = useSelector((state) => state.users.user.role)
-  if (isAuthenticated) {
-    if (
-      (isAdminRoute && isRole === "ADMIN") ||
-      (!isAdminRoute && (isRole === "ADMIN" || isRole === "USER"))
-    ) {
-      return <>{children}</>
-    } else {
-      return <NotPermit />
-    }
+  if (isAuthenticated && isRole === "ADMIN") {
+    return children
   } else {
-    ;<Navigate to="/login" />
+    return <NotPermit />
   }
 }
 
-export default ProtectedPage
+export default ProtectedPageAdmin
+
+export const ProtectedPageCart = ({ children }) => {
+  const isAuthenticated = useSelector((state) => state.users.isAuthenticated)
+
+  if (isAuthenticated) {
+    return <>{children}</>
+  } else {
+    ;<Navigate to={"/login"} />
+  }
+}
