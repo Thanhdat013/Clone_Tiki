@@ -112,7 +112,9 @@ const router = createBrowserRouter([
     path: "/admin",
     element: (
       <ProtectedPageAdmin>
-        <LayoutAdmin />
+        <>
+          <LayoutAdmin />
+        </>
       </ProtectedPageAdmin>
     ),
     errorElement: <ErrorPage />,
@@ -137,6 +139,8 @@ const router = createBrowserRouter([
 function App() {
   const dispatch = useDispatch()
   const isLoading = useSelector((state) => state.users.isLoading)
+  const user = useSelector((state) => state.users.user)
+
   // lấy lại data khi F5 lại trang
   const callFetchAccount = async () => {
     if (
@@ -146,11 +150,11 @@ function App() {
       return
 
     const res = await getFetchAccount()
-    console.log(res)
-    if (res && res.data) {
-      dispatch(doFetchAccount(res.data))
+    if (res && res.data?.user) {
+      dispatch(doFetchAccount(res.data?.user))
     }
   }
+
   useEffect(() => {
     callFetchAccount()
   }, [])

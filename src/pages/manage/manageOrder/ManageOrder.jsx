@@ -1,12 +1,12 @@
-import "./ManageOrder.scss";
+import "./ManageOrder.scss"
 
-import moment from "moment";
-import { useEffect, useState } from "react";
+import moment from "moment"
+import { useEffect, useState } from "react"
 
-import { GrRefresh } from "react-icons/gr";
+import { GrRefresh } from "react-icons/gr"
 
-import { Col, Row, Table } from "antd";
-import { getManageOrder } from "~/services/Api";
+import { Col, Row, Table } from "antd"
+import { getManageOrder } from "~/services/Api"
 
 const ManageOrder = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -14,10 +14,6 @@ const ManageOrder = () => {
   const [totalPage, setTotalPage] = useState()
   const [dataOrder, setDataOrder] = useState([])
   const [arrangeColumn, SetArrangeColumn] = useState("sort=-updatedAt")
-
-  useEffect(() => {
-    getHistory()
-  }, [currentPage, pageSize, arrangeColumn])
   const getHistory = async () => {
     let query = `current=${currentPage}&pageSize=${pageSize}&${arrangeColumn}`
     const res = await getManageOrder(query)
@@ -28,6 +24,9 @@ const ManageOrder = () => {
       setDataOrder(raw.result)
     }
   }
+  useEffect(() => {
+    getHistory()
+  }, [currentPage, pageSize, arrangeColumn])
 
   const renderHeaderTitle = (text, record, index) => {
     return (

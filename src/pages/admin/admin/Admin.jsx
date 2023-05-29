@@ -15,12 +15,19 @@ const Admin = () => {
   const [counterOrder, setCounterOrder] = useState(0)
   const [counterUser, setCounterUser] = useState(0)
   const [totalPrice, setTotalPrice] = useState(0)
+
   const formatter = (value) => (
     <CountUp end={value} duration={5} separator="," />
   )
-  useEffect(() => {
-    fetchDashboard()
-  }, [])
+
+  const getHistory = async () => {
+    let query = `current=1&pageSize=109`
+    const res = await getManageOrder(query)
+    if (res && res.data) {
+      let raw = res.data
+      setDataTotalPrice(raw.result)
+    }
+  }
   const fetchDashboard = async () => {
     const res = await getDashboard()
     if (res && res.data) {
@@ -28,22 +35,13 @@ const Admin = () => {
       setCounterUser(res.data.countUser)
     }
   }
-
+  useEffect(() => {
+    fetchDashboard()
+    getHistory()
+  }, [])
   const totalBooks = useSelector((state) => state.books.totalPages)
   const [dataTotalPrice, setDataTotalPrice] = useState([])
 
-  // get total price
-  useEffect(() => {
-    getHistory()
-  }, [])
-  const getHistory = async () => {
-    let query = `current=1&pageSize=9999`
-    const res = await getManageOrder(query)
-    if (res && res.data) {
-      let raw = res.data
-      setDataTotalPrice(raw.result)
-    }
-  }
   useEffect(() => {
     let result = dataTotalPrice.reduce((total, price) => {
       return total + price.totalPrice

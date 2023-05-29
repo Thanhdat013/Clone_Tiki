@@ -38,11 +38,12 @@ instance.interceptors.response.use(
   function (response) {
     return response.data ? response.data : response
   },
+
   async function (error) {
     console.log(error)
     // refresh token
     if (
-      error?.config &&
+      error.config &&
       error.response &&
       +error.response.status === 401 &&
       !error.config.headers[NO_RETRY_HEADER]

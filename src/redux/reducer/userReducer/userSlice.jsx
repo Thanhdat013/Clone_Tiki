@@ -57,7 +57,7 @@ const usersSlice = createSlice({
     doFetchAccount: (state, action) => {
       state.isLoading = false
       state.isAuthenticated = true
-      state.user = action.payload.user
+      state.user = action.payload
     },
     doLogOutAction: (state, action) => {
       localStorage.removeItem("access_token")
