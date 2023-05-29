@@ -10,6 +10,8 @@ const instance = axios.create({
 const handleRefreshToken = async () => {
   try {
     const res = await instance.get("/api/v1/auth/refresh")
+    console.log("check refresh token", res.data)
+
     if (res && res.data) return res.data.access_token
   } catch (e) {
     console.log("Error", e)
@@ -49,10 +51,11 @@ instance.interceptors.response.use(
       !error.config.headers[NO_RETRY_HEADER]
     ) {
       const access_token = await handleRefreshToken()
+      console.log("checking access token", access_token)
       error.config.headers[NO_RETRY_HEADER] = "true"
       if (access_token) {
-        localStorage.setItem("access_token", access_token)
         error.config.headers["Authorization"] = `Bearer ${access_token}`
+        localStorage.setItem("access_token", access_token)
         return instance.request(error.config)
       }
     }
@@ -65,6 +68,7 @@ instance.interceptors.response.use(
       +error.response.status === 400 &&
       error.config.url === "/api/v1/auth/refresh"
     ) {
+      console.log("check url", error.config.url)
       window.location.href = "/login"
     }
 

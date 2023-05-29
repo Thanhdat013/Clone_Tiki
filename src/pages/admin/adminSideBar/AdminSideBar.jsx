@@ -11,12 +11,17 @@ import { BiBookAdd } from "react-icons/bi"
 import { RxDashboard } from "react-icons/rx"
 import { useNavigate } from "react-router-dom"
 
-import { Drawer, Menu } from "antd"
+import { Drawer, Menu, message } from "antd"
 import { FiBook } from "react-icons/fi"
 import AddNewBook from "~/pages/manage/manageBook/addNewBook"
 import AddNewUser from "~/pages/manage/manageUser/addNewUser"
 import "./AdminSideBar.scss"
-
+import { useDispatch } from "react-redux"
+import { doClearCartAction } from "~/redux/reducer/orderReducer/orderSlice"
+import {
+  doLogOutAction,
+  postLogOut,
+} from "~/redux/reducer/userReducer/userSlice"
 const AdminSideBar = ({
   collapsed,
   onClose,
@@ -25,6 +30,17 @@ const AdminSideBar = ({
   setCollapsed,
 }) => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const handleLogOut = async () => {
+    const res = await dispatch(postLogOut())
+    if (res) {
+      dispatch(doLogOutAction())
+      dispatch(doClearCartAction())
+      message.success("You have successfully logged out")
+      onClose()
+      navigate("/", { replace: true })
+    }
+  }
   function getItem(label, key, icon, children, type) {
     return { key, icon, children, label, type }
   }
@@ -183,7 +199,7 @@ const AdminSideBar = ({
             <ul className="admin__sidebar--list">
               <li className="admin__sidebar--item">
                 <AiOutlineArrowRight className="admin__sidebar--item--icon" />
-                <span>Đăng xuất</span>
+                <span onClick={handleLogOut}>Đăng xuất</span>
               </li>
             </ul>
           </Drawer>

@@ -22,6 +22,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
   const carts = useSelector((state) => state.orders.carts)
 
   const [open, setOpen] = useState(false)
+
   const showDrawer = () => {
     setOpen(true)
   }
@@ -31,7 +32,7 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
 
   const handleLogOut = async () => {
     const res = await dispatch(postLogOut())
-    if (+res.payload.statusCode === 201) {
+    if (res) {
       dispatch(doLogOutAction())
       dispatch(doClearCartAction())
       message.success("You have successfully logged out")
@@ -204,14 +205,17 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                           "https://atplink.com/blog/wp-content/uploads/2021/06/z.jpg"
                         }
                         className="logo__bar--avatar"
+                        onClick={() => {
+                          navigate("/", { replace: true })
+                          setOpen(false)
+                        }}
                       />
                     }
                     width={250}
                     closable={false}
-                    onCloseDrawer={onCloseDrawer}
+                    onClose={onCloseDrawer}
                     open={open}
                     placement={"left"}
-                    keyboard={13}
                     extra={"Chào mừng bạn đến với Tiki"}
                   >
                     <ul className="logo__bar--list">
