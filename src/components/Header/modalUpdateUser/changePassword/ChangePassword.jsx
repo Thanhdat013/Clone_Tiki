@@ -1,46 +1,45 @@
-import { Form, Input, Row, Col, message, Button, notification } from "antd";
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { postChangePassword } from "~/services/Api";
+import { Form, Input, Row, Col, message, Button, notification } from "antd"
+import { useEffect, useState, useRef } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { postChangePassword } from "~/services/Api"
 
 const ChangePassword = ({ open, setOpen }) => {
-  const user = useSelector((state) => state.users.user);
-  const dispatch = useDispatch();
+  const user = useSelector((state) => state.users.user)
+  const dispatch = useDispatch()
 
   const handleCancelDelete = () => {
-    form.resetFields();
-    setOpen(false);
-  };
+    form.resetFields()
+    setOpen(false)
+  }
   const handleChangePassword = async (values) => {
-    console.log(values);
-    const { email, password, newPassword, rePassword } = values;
+    const { email, password, newPassword, rePassword } = values
     if (newPassword !== rePassword) {
       notification.error({
         message: "Thay đổi mật khẩu thất bại",
         description: "Mật khẩu mới không trùng khớp, vui lòng thử lại",
-      });
-      return;
+      })
+      return
     }
-    const res = await postChangePassword(email, password, newPassword);
-    console.log(res);
+    const res = await postChangePassword(email, password, newPassword)
+
     if (res && res.data) {
-      message.success("Thay đổi mật khẩu thành công");
-      form.resetFields();
-      setOpen(false);
+      message.success("Thay đổi mật khẩu thành công")
+      form.resetFields()
+      setOpen(false)
     } else {
       notification.error({
         message: "Thay đổi mật khẩu thất bại",
         description: res.message,
-      });
+      })
     }
-  };
+  }
 
-  const [form] = Form.useForm();
+  const [form] = Form.useForm()
 
   // get information of user
   useEffect(() => {
-    form.setFieldsValue(user);
-  }, [user]);
+    form.setFieldsValue(user)
+  }, [user])
   return (
     <>
       <Row gutter={8}>
@@ -107,7 +106,7 @@ const ChangePassword = ({ open, setOpen }) => {
         </Col>
       </Row>
     </>
-  );
-};
+  )
+}
 
-export default ChangePassword;
+export default ChangePassword

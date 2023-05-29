@@ -147,7 +147,6 @@ const BookPage = () => {
               {
                 title: (
                   <Link to="/">
-                    {" "}
                     <HomeOutlined style={{ fontSize: "2rem" }} />
                   </Link>
                 ),
@@ -155,7 +154,10 @@ const BookPage = () => {
 
               {
                 title: (
-                  <span style={{ fontSize: "1.6rem" }}> "Detail book"</span>
+                  <span style={{ fontSize: "1.6rem", color: "#2CD3E1" }}>
+                    {" "}
+                    Detail book
+                  </span>
                 ),
               },
             ]}

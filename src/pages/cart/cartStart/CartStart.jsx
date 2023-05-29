@@ -74,14 +74,13 @@ const CartStart = ({ setCurrentStep }) => {
                 {
                   title: (
                     <Link to="/">
-                      {" "}
                       <HomeOutlined style={{ fontSize: "2rem" }} />
                     </Link>
                   ),
                 },
 
                 {
-                  title: <span style={{ fontSize: "1.6rem" }}> "Payment"</span>,
+                  title: <span style={{ fontSize: "1.6rem" ,color: "#2CD3E1" }}> "Payment"</span>,
                 },
               ]}
             />
