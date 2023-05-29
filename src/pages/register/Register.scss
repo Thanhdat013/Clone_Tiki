@@ -31,8 +31,7 @@
     padding: 24px 16px;
     position: relative;
     width: 460px;
-    align-items: center;
-    transform: translateY(-20%);
+    transform: translateY(-8%);
     .register__form {
       width: calc(var(--width) - 160px);
       margin: auto;
@@ -67,9 +66,19 @@
     }
   }
   .register__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
     margin: 16px 0;
     width: 100%;
-    background-color: #1dbfaf;
+    color: #ddd;
+    font-size: 1.6rem;
+    background-color: #4096ff;
+    &:hover {
+      background-color: #4096ff;
+      opacity: 0.8;
+    }
   }
 }
 

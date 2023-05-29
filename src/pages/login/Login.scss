@@ -71,11 +71,17 @@
     }
   }
   .login__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
     margin: 16px 0;
     width: 100%;
-    background-color: #1dbfaf;
+    color: #ddd;
+    font-size: 1.6rem;
+    background-color: #4096ff;
     &:hover {
-      background-color: #1dbfaf;
+      background-color: #4096ff;
       opacity: 0.8;
     }
   }
