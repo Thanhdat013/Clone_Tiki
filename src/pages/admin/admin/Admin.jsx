@@ -51,58 +51,70 @@ const Admin = () => {
   }, [dataTotalPrice])
   return (
     <div className="admin">
-      <Row align={"center"} style={{ padding: "24px 0", gap: "24px" }}>
-        <Col md={22} xs={22} sm={22} lg={11}>
-          <Card bordered={true}>
-            <Statistic
-              formatter={formatter}
-              title="Tổng số người dùng"
-              value={counterUser}
-              precision={2}
-              valueStyle={{ color: "#3f8600" }}
-              prefix={<UserOutlined />}
-            />
-          </Card>
-        </Col>
-        <Col md={22} xs={22} sm={22} lg={11}>
-          <Card bordered={true}>
-            <Statistic
-              formatter={formatter}
-              title="Tổng số đơn hàng"
-              value={counterOrder}
-              precision={2}
-              valueStyle={{ color: "#faad14" }}
-              prefix={<ShoppingCartOutlined />}
-            />
-          </Card>
-        </Col>
-        <Col md={22} xs={22} sm={22} lg={11}>
-          {" "}
-          <Card bordered={true}>
-            <Statistic
-              formatter={formatter}
-              title="Tổng số sách"
-              value={totalBooks}
-              precision={2}
-              valueStyle={{ color: "#1677ff" }}
-              prefix={<BookOutlined />}
-            />
-          </Card>
-        </Col>
-        <Col md={22} xs={22} sm={22} lg={11}>
-          {" "}
-          <Card bordered={true}>
-            <Statistic
-              formatter={formatter}
-              title="Doanh thu"
-              value={totalPrice}
-              precision={2}
-              valueStyle={{ color: "#cf1322" }}
-              prefix={<DollarOutlined />}
-            />
-          </Card>
-        </Col>
-      </Row>
+      <>
+        <Row align={"center"} style={{ padding: "24px 0" }}>
+          <Col span={22}>
+            <p className="admin__note">
+              Chú ý: Do server Backend đc build miễn phí trên https://render.com
+              nên có thể xảy ra lỗi không lấy được dữ liệu. Khi gặp phải trường
+              hợp này vui lòng reload (F5) lại trang web. Rất xin lỗi mọi người
+              vị sự cố này!
+            </p>
+          </Col>
+        </Row>
+        <Row align={"center"} style={{ padding: "24px 0", gap: "24px" }}>
+          <Col md={22} xs={22} sm={22} lg={11}>
+            <Card bordered={true}>
+              <Statistic
+                formatter={formatter}
+                title="Tổng số người dùng"
+                value={counterUser}
+                precision={2}
+                valueStyle={{ color: "#3f8600" }}
+                prefix={<UserOutlined />}
+              />
+            </Card>
+          </Col>
+          <Col md={22} xs={22} sm={22} lg={11}>
+            <Card bordered={true}>
+              <Statistic
+                formatter={formatter}
+                title="Tổng số đơn hàng"
+                value={counterOrder}
+                precision={2}
+                valueStyle={{ color: "#faad14" }}
+                prefix={<ShoppingCartOutlined />}
+              />
+            </Card>
+          </Col>
+          <Col md={22} xs={22} sm={22} lg={11}>
+            {" "}
+            <Card bordered={true}>
+              <Statistic
+                formatter={formatter}
+                title="Tổng số sách"
+                value={totalBooks}
+                precision={2}
+                valueStyle={{ color: "#1677ff" }}
+                prefix={<BookOutlined />}
+              />
+            </Card>
+          </Col>
+          <Col md={22} xs={22} sm={22} lg={11}>
+            {" "}
+            <Card bordered={true}>
+              <Statistic
+                formatter={formatter}
+                title="Doanh thu"
+                value={totalPrice}
+                precision={2}
+                valueStyle={{ color: "#cf1322" }}
+                prefix={<DollarOutlined />}
+              />
+            </Card>
+          </Col>
+        </Row>
+      </>
     </div>
   )
 }

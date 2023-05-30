@@ -105,8 +105,8 @@ const AdminSideBar = ({
       onClose()
     }
     if (e.key === "dashboard") {
-      navigate("/admin", { replace: true })
-      setKeySideBar("/admin")
+      navigate("/dashboard", { replace: true })
+      setKeySideBar("dashboard")
       onClose()
     }
     //manage user
@@ -136,9 +136,12 @@ const AdminSideBar = ({
       onClose()
     }
   }
-  const [keySideBar, setKeySideBar] = useState("/admin")
+  const [keySideBar, setKeySideBar] = useState("")
   const handleChange = (e) => {}
   useEffect(() => {
+    if (window.location.pathname.includes("dashboard")) {
+      setKeySideBar("dashboard")
+    }
     if (window.location.pathname.includes("user")) {
       setKeySideBar("manage-user")
     }
@@ -159,19 +162,6 @@ const AdminSideBar = ({
   return (
     <>
       <div className="admin__sidebar">
-        {/* <div className="admin__sidebar--bar  ">
-          {collapsed ? (
-            <AiOutlineMenuUnfold
-              style={{ fontSize: "2.2rem" }}
-              onClick={toggleCollapsed}
-            />
-          ) : (
-            <AiOutlineMenuFold
-              onClick={toggleCollapsed}
-              style={{ fontSize: "2.2rem" }}
-            />
-          )}
-        </div> */}
         <div className="admin__sidebar--wrap">
           <Menu
             className="admin__sidebar--menu"
@@ -180,6 +170,7 @@ const AdminSideBar = ({
             mode="inline"
             theme="light"
             inlineCollapsed={collapsed}
+            defaultSelectedKeys={"dashboard"}
             items={items}
             onClick={onClick}
           />

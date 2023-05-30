@@ -166,7 +166,9 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                       </li>
                       {user.role === "ADMIN" && (
                         <li
-                          onClick={() => navigate("/admin", { replace: true })}
+                          onClick={() =>
+                            navigate("/dashboard", { replace: true })
+                          }
                           className="logo__bar--item"
                         >
                           Trang quản trị
@@ -333,7 +335,9 @@ const Header = ({ headerSearch, setHeaderSearch }) => {
                     </li>
                     {user.role === "ADMIN" && (
                       <li
-                        onClick={() => navigate("/admin", { replace: true })}
+                        onClick={() =>
+                          navigate("/dashboard", { replace: true })
+                        }
                         className="header__user--item"
                       >
                         Trang quản trị
