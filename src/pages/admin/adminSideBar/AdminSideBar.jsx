@@ -102,24 +102,29 @@ const AdminSideBar = ({
   const onClick = (e) => {
     if (e.key === "admin") {
       setCollapsed(!collapsed)
+      onClose()
     }
     if (e.key === "dashboard") {
       navigate("/admin", { replace: true })
       setKeySideBar("/admin")
+      onClose()
     }
     //manage user
     if (e.key === "manage-user") {
       navigate("manage-user", { replace: true })
       setKeySideBar("manage-user")
+      onClose()
     }
     if (e.key === "add-user") {
       setOpenAddUser(true)
       setKeySideBar("add-user")
+      onClose()
     }
     //  manage book
     if (e.key === "manage-book") {
       navigate("manage-book", { replace: true })
       setKeySideBar("manage-book")
+      onClose()
     }
     if (e.key === "add-book") {
       setOpenAddBook(true)
@@ -128,6 +133,7 @@ const AdminSideBar = ({
     if (e.key === "manage-order") {
       navigate("manage-order", { replace: true })
       setKeySideBar("manage-order")
+      onClose()
     }
   }
   const [keySideBar, setKeySideBar] = useState("/admin")

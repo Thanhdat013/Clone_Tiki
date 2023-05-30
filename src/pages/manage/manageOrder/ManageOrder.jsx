@@ -14,6 +14,7 @@ const ManageOrder = () => {
   const [totalPage, setTotalPage] = useState()
   const [dataOrder, setDataOrder] = useState([])
   const [arrangeColumn, SetArrangeColumn] = useState("sort=-updatedAt")
+  const [isMobile, setIsMobile] = useState(false)
   const getHistory = async () => {
     let query = `current=${currentPage}&pageSize=${pageSize}&${arrangeColumn}`
     const res = await getManageOrder(query)
@@ -24,6 +25,9 @@ const ManageOrder = () => {
       setDataOrder(raw.result)
     }
   }
+  useEffect(() => {
+    if (window.innerWidth < 739) setIsMobile(true)
+  }, [window.innerWidth])
   useEffect(() => {
     getHistory()
   }, [currentPage, pageSize, arrangeColumn])
@@ -51,7 +55,7 @@ const ManageOrder = () => {
     {
       title: "Tên người dùng",
       dataIndex: "name",
-      width: "15%",
+      width: "4%",
       sorter: true,
       fixed: "left",
       render: (text, index, record) => (
@@ -63,13 +67,13 @@ const ManageOrder = () => {
     {
       title: "Số điện thoại",
       dataIndex: "phone",
-      width: "15%",
+      width: "5%",
       sorter: true,
     },
     {
       title: "Tổng tiền (VNĐ)",
       dataIndex: "totalPrice",
-      width: "15%",
+      width: "5%",
       sorter: true,
       render: (text, index, record) => (
         <>
@@ -86,7 +90,7 @@ const ManageOrder = () => {
     {
       title: "Ngày mua hàng ",
       dataIndex: "createdAt",
-      width: "20%",
+      width: "10%",
       sorter: true,
       render: (text, index, record) => (
         <span>{moment(text).format("DD-MM-YYYY, HH:mm:ss a")}</span>
@@ -95,7 +99,7 @@ const ManageOrder = () => {
     {
       title: "Ngày giao hàng ",
       dataIndex: "updatedAt",
-      width: "20%",
+      width: "10%",
       sorter: true,
       render: (text, index, record) => (
         <span>{moment(text).format("DD-MM-YYYY, HH:mm:ss a")}</span>
@@ -139,6 +143,7 @@ const ManageOrder = () => {
             rowKey="_id"
             style={{ padding: "12px 24px" }}
             bordered
+            scroll={isMobile === true && { x: 2000 }}
             pagination={{
               position: ["bottomCenter"],
               current: currentPage,

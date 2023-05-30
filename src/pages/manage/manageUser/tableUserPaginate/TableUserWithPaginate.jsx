@@ -86,7 +86,7 @@ const TableUserWithPaginate = () => {
     {
       title: "Id.",
       dataIndex: "_id",
-      width: "7%",
+      width: "5%",
       fixed: "left",
       render: (text, index, record) => (
         <span
@@ -108,24 +108,24 @@ const TableUserWithPaginate = () => {
     {
       title: "Tên",
       dataIndex: "fullName",
-      width: "20%",
+      width: "10%",
       sorter: true,
     },
     {
       title: "Số điện thoại",
       dataIndex: "phone",
-      width: "15%",
+      width: "10%",
       sorter: true,
     },
     {
       title: "Phân quyền ",
       dataIndex: "role",
-      width: "15%",
+      width: "10%",
       sorter: true,
     },
     {
       title: "Hành động ",
-      width: "25%",
+      width: "10%",
       render: (text, record, index) => (
         <div className="table__icon">
           <AiOutlineDelete

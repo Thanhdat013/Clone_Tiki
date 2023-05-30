@@ -1,4 +1,4 @@
-import { Form, Input, InputNumber, Row, Col, Select } from "antd";
+import { Form, Input, InputNumber, Row, Col, Select } from "antd"
 const FormInfor = ({ listCategory }) => {
   return (
     <Row gutter={24}>
@@ -84,7 +84,7 @@ const FormInfor = ({ listCategory }) => {
         </Form.Item>
       </Col>
     </Row>
-  );
-};
+  )
+}
 
-export default FormInfor;
+export default FormInfor

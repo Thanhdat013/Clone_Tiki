@@ -188,7 +188,7 @@ const AddNewBook = ({ openAddBook, setOpenAddBook }) => {
           form.submit()
         }}
         onCancel={handleCancelModal}
-        width={"60vw"}
+        width={{ md: "60vw", sm: "100vw" }}
         maskClosable={false}
         okText={"Tạo mới"}
         cancelText={"Hủy bỏ"}

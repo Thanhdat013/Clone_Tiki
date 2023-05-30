@@ -112,9 +112,7 @@ const router = createBrowserRouter([
     path: "/admin",
     element: (
       <ProtectedPageAdmin>
-        <>
-          <LayoutAdmin />
-        </>
+        <LayoutAdmin />
       </ProtectedPageAdmin>
     ),
     errorElement: <ErrorPage />,

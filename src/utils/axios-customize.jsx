@@ -1,4 +1,5 @@
 import axios from "axios"
+import { Navigate } from "react-router-dom"
 
 const baseURL = import.meta.env.VITE_BACKEND_URL
 
@@ -8,13 +9,14 @@ const instance = axios.create({
 })
 
 const handleRefreshToken = async () => {
-  try {
-    const res = await instance.get("/api/v1/auth/refresh")
-    console.log("check refresh token", res.data)
+  const res = await instance.get("/api/v1/auth/refresh")
+  console.log("check refresh token", res.data)
 
-    if (res && res.data) return res.data.access_token
-  } catch (e) {
-    console.log("Error", e)
+  if (res && res.data) {
+    console.log("refresh token", res.data)
+    return res.data.access_token
+  } else {
+    return null
   }
 }
 
@@ -68,8 +70,7 @@ instance.interceptors.response.use(
       +error.response.status === 400 &&
       error.config.url === "/api/v1/auth/refresh"
     ) {
-      console.log("check url", error.config.url)
-      window.location.href = "/login"
+      ;<Navigate to={"/login"} />
     }
 
     // Any status codes that falls outside the range of 2xx cause this function to trigger
