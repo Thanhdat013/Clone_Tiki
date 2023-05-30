@@ -7,7 +7,7 @@ import {
 import { Card, Col, Row, Statistic } from "antd"
 import { useEffect, useState } from "react"
 import CountUp from "react-countup"
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { getDashboard, getManageOrder } from "~/services/Api"
 import "./Admin.scss"
 
@@ -23,10 +23,8 @@ const Admin = () => {
   const getHistory = async () => {
     let query = `current=1&pageSize=109`
     const res = await getManageOrder(query)
-    console.log("check error data  history", res)
 
     if (res && res.data) {
-      console.log("check data history", res.data)
       let raw = res.data
       setDataTotalPrice(raw.result)
     }
@@ -34,7 +32,6 @@ const Admin = () => {
   const fetchDashboard = async () => {
     const res = await getDashboard()
     if (res && res.data) {
-      console.log("check data dashboard", res.data)
       setCounterOrder(res.data.countOrder)
       setCounterUser(res.data.countUser)
     }

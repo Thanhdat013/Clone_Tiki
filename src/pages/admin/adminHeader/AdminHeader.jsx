@@ -73,6 +73,14 @@ const AdminHeader = ({ collapsed, setCollapsed, showDrawer }) => {
                 >
                   Quản lý tài khoản
                 </li>
+                <li
+                  className="admin__user--item"
+                  onClick={() => {
+                    navigate("/history", { replace: true })
+                  }}
+                >
+                  Lịch sử mua hàng
+                </li>
                 <div onClick={handleLogOut} className="admin__user--item">
                   Đăng Xuất
                 </div>
