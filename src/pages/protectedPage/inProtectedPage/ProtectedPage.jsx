@@ -18,9 +18,9 @@ import NotPermit from "~/pages/protectedPage/notPermit"
 // }
 
 const ProtectedPageAdmin = ({ children }) => {
-  const isRole = useSelector((state) => state.users.user.role)
+  const user = useSelector((state) => state.users.user)
 
-  if (isRole === "ADMIN") {
+  if (user?.role === "ADMIN") {
     return children
   } else {
     return <NotPermit />

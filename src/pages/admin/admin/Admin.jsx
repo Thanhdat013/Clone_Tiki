@@ -54,7 +54,7 @@ const Admin = () => {
   }, [dataTotalPrice])
   return (
     <div className="admin">
-      <Row gutter={[16, 16]} align={"center"} style={{ padding: "24px 0" }}>
+      <Row align={"center"} style={{ padding: "24px 0", gap: "24px" }}>
         <Col md={22} xs={22} sm={22} lg={11}>
           <Card bordered={true}>
             <Statistic
