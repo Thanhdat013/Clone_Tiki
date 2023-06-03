@@ -2,8 +2,7 @@ import { Form, Input, InputNumber, Row, Col, Select } from "antd"
 const FormInfor = ({ listCategory }) => {
   return (
     <Row gutter={24}>
-      {" "}
-      <Col span={12}>
+      <Col xs={24} sm={12}>
         <Form.Item
           label="Tên sách"
           name="mainText"
@@ -12,7 +11,7 @@ const FormInfor = ({ listCategory }) => {
           <Input />
         </Form.Item>
       </Col>
-      <Col span={12}>
+      <Col xs={24} sm={12}>
         <Form.Item
           label="Tác giả"
           name="author"
@@ -21,7 +20,7 @@ const FormInfor = ({ listCategory }) => {
           <Input />
         </Form.Item>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12}>
         <Form.Item
           label="Giá"
           name="price"
@@ -36,7 +35,7 @@ const FormInfor = ({ listCategory }) => {
           />
         </Form.Item>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12}>
         <Form.Item
           label="Thể loại"
           name="category"
@@ -51,7 +50,7 @@ const FormInfor = ({ listCategory }) => {
           ></Select>
         </Form.Item>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12}>
         <Form.Item
           label="Số lượng"
           name="quantity"
@@ -66,7 +65,7 @@ const FormInfor = ({ listCategory }) => {
           />
         </Form.Item>
       </Col>
-      <Col span={6}>
+      <Col xs={24} sm={12}>
         <Form.Item
           label="Đã bán"
           name="sold"

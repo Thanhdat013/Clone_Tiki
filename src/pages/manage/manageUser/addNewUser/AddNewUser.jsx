@@ -1,16 +1,16 @@
-import { Form, Input, Modal, message, notification } from "antd";
+import { Form, Input, Modal, message, notification } from "antd"
 
-import { useDispatch } from "react-redux";
+import { useDispatch } from "react-redux"
 
-import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice";
-import { postCreateNewUser } from "~/services/Api";
+import { getAllUserWithPaginate } from "~/redux/reducer/userReducer/userSlice"
+import { postCreateNewUser } from "~/services/Api"
 const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
-  const dispatch = useDispatch();
-  const [form] = Form.useForm();
+  const dispatch = useDispatch()
+  const [form] = Form.useForm()
   const getAllUser = async () => {
-    let query = `pageSize=10&current=1&sort=-updatedAt`;
-    dispatch(getAllUserWithPaginate(query));
-  };
+    let query = `pageSize=10&current=1&sort=-updatedAt`
+    dispatch(getAllUserWithPaginate(query))
+  }
 
   const onFinish = async (values) => {
     const res = await postCreateNewUser(
@@ -18,12 +18,12 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
       values.email,
       values.password,
       values.phoneNumber
-    );
+    )
     if (res && res.data) {
-      message.success("Bạn đã tạo mới tâì khoản thành công");
-      await getAllUser();
-      setOpenAddUser(false);
-      form.resetFields();
+      message.success("Bạn đã tạo mới tâì khoản thành công")
+      await getAllUser()
+      setOpenAddUser(false)
+      form.resetFields()
     } else {
       notification.error({
         message: "Tạo mới thất bại",
@@ -32,13 +32,13 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
             ? res.message
             : "Đã có lỗi xảy ra, vui lòng thử lại",
         duration: 5,
-      });
+      })
     }
-  };
+  }
   const handleCancelModal = () => {
-    setOpenAddUser(false);
-    form.resetFields();
-  };
+    setOpenAddUser(false)
+    form.resetFields()
+  }
 
   return (
     <>
@@ -46,10 +46,10 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
         title="Tạo mới người dùng"
         open={openAddUser}
         onOk={() => {
-          form.submit();
+          form.submit()
         }}
         onCancel={handleCancelModal}
-        width={1000}
+        width={600}
         okText={"Tạo"}
         cancelText={"Hủy bỏ"}
       >
@@ -101,7 +101,7 @@ const AddNewUser = ({ openAddUser, setOpenAddUser }) => {
         </Form>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default AddNewUser;
+export default AddNewUser
